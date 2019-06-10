@@ -121,7 +121,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'fire_intel/static/'),
+    os.path.join(BASE_DIR, 'project_space_crab/static'),
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')

@@ -1,0 +1,17 @@
+{% extends 'fire_intel/base.html' %}
+{% block content %}
+{% load static %}
+
+      <div class="container py-5">
+        <div class="row">
+          <div class="col-lg-12">
+              <h1 class="font-weight-bold">DNR Wildfire Intel</h1>
+              <p>This site is used to display the most current data regarding the wildfire situation in WA State. This information authoritative to the date specified.</p>
+              <img src="{% static 'logos/dnr.png' %}" style="width:20em; height:auto;" />
+              <br>
+              <small class="text-muted">note: data is updated regularly by 8am and 4pm each day during fire season</small>
+          </div>
+        </div>
+        
+      </div><!-- /.container -->
+{% endblock %}

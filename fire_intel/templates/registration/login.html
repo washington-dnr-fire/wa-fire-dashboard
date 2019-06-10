@@ -1,0 +1,15 @@
+{% extends 'fire_intel/base.html' %}
+{% block content %}
+<div class="container py-5">
+<h1>Log in to Fire Intel site</h1>
+<p></p>
+<form method="post">
+{% csrf_token %}
+{{ form.as_p }}
+<button type="submit" class="btn btn-secondary m-2">Log-in</button>
+</form>
+<hr>
+<p class="text-muted small">Don't have a log-in? Contact <a href="mailto:kirk.davis@dnr.wa.gov?subject=Profile needed for Fire Intel App!">Kirk Davis</a></p>
+</div>
+
+{% endblock %}

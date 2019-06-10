@@ -1,0 +1,25 @@
+{% extends 'fire_intel/base.html' %}
+{% block content %}
+
+      <div class="container py-5">
+        <h1>User Profile and Administration</h1>
+      {% if user.is_authenticated %}
+      <br>
+            <h4><strong> Hi {{ first_name }}! </strong></h4>
+            <br>
+            <p><strong>username: </strong>{{ username }}</p>
+            <p><strong>name: </strong> {{ first_name }} {{ last_name }}</p>
+            <p><strong>email: </strong> {{ email }}</p>
+            <p><strong>last login: </strong> {{ user.last_login }}</p>
+            <br>
+            <hr>
+            <p>
+                <button type="button" class="btn btn-secondary m-2" onclick="location.href='{% url 'admin:index' %}'">Go to Admin Page</button>
+                <button type="button" class="btn btn-secondary m-2" onclick="location.href='{% url 'logout' %}'">Log Out</button>
+            </p>
+        {% else %}
+            <h4> Hi there anonymous!</h4><br>
+          <p>Please <a href="{% url 'login' %}">log-in</a> to view profile details!</p>
+        {% endif %}
+      </div><!-- /.container -->
+{% endblock %}

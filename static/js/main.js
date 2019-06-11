@@ -2,24 +2,18 @@
 
 
     var counties = L.esri.featureLayer({
-        url: "https://gis.dnr.wa.gov/site3/rest/services/Public_Boundaries/WADNR_PUBLIC_Cadastre_OpenData/MapServer/11"
+        url: "https://gis.dnr.wa.gov/site3/rest/services/Public_Boundaries/WADNR_PUBLIC_Cadastre_OpenData/MapServer/11",
+        style: function (feature) {
+            return {color: '#000000', weight: 2};
+        }
     });
 
-    var wa_large_fires = L.esri.featureLayer({
-        url: 'https://gis.dnr.wa.gov/site3/rest/services/Public_Wildfire/WADNR_PUBLIC_WD_WildFire_Data/MapServer/0'
+    var regions = L.esri.featureLayer({
+        url: "https://gis.dnr.wa.gov/site3/rest/services/Public_Boundaries/WADNR_PUBLIC_Cadastre_OpenData/MapServer/3/",
+        style: function (feature) {
+            return {weight: 2};
+        }
     });
-
-    wa_large_fires.bindPopup(function(evt) {
-        return L.Util.template('<strong>{FIRENAME}</strong><hr /><p>Fire Year: {YEAR} <br> Acres Burned: {ACRES}</p>', evt.feature.properties);
-    }); 
-
-    var wa_fire_statistics = L.esri.featureLayer({
-        url:'https://gis.dnr.wa.gov/site3/rest/services/Public_Wildfire/WADNR_PUBLIC_WD_WildFire_Data/MapServer/2'
-    });
-
-    wa_fire_statistics.bindPopup(function(evt) {
-        return L.Util.template('<strong>{INCIDENT_NM}</strong><hr /><p>Cause: {FIREGCAUSE_LABEL_NM} <br> Acres Burned: {ACRES_BURNED}</p>', evt.feature.properties);
-    }); 
 
     var baseLayers = {
         "Topographic": L.esri.basemapLayer("Topographic"),
@@ -30,8 +24,9 @@
 
     var overlays = {
         "Counties": counties,
-        "WA Fire Stats (2019)": wa_fire_statistics,
-        "WA Large Fires": wa_large_fires,
+        "DNR Regions": regions,
+        "Large Fires": counties,
+        "DNR IA Fires": counties,
     };
 
     var home = {
@@ -43,7 +38,7 @@
         center: [home.lat, home.lng],
         zoom: home.zoom,
         minZoom: 6,
-        layers: [wa_fire_statistics]
+        layers: [L.esri.basemapLayer("Topographic"), counties]
     });
 
     L.easyButton('fa-home', function (btn, map) {

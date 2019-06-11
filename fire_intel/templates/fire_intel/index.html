@@ -14,11 +14,11 @@
                           <table class="table table-borderless text-center align-items-center">
                               <tr>
                                   <td>
-                                        <h5 class="card-title" style="text-align: center;font-size: 3.5rem;">3</h5><small>National</small>
+                                        <h5 class="card-title" style="text-align: center;font-size: 3.5rem;">{{ preparedness_level_national }}</h5><small>National</small>
                                         
                                   </td>
                                   <td>
-                                        <h5 class="card-title" style="text-align: center;font-size: 3.5rem;  border-left:2px solid red;">2</h5><small>Northwest</small>
+                                        <h5 class="card-title" style="text-align: center;font-size: 3.5rem;  border-left:2px solid red;">{{ preparedness_level_nw }}</h5><small>Northwest</small>
                                        
                                   </td>
                               </tr>
@@ -36,11 +36,11 @@
                             <table class="table table-borderless text-center align-items-center">
                                     <tr>
                                         <td>
-                                              <h5 class="card-title" style="text-align: center;font-size: 3.5rem;">0 <small style="font-size:1rem;"> of 5</small></h5><small>Type 1</small>
+                                              <h5 class="card-title" style="text-align: center;font-size: 3.5rem;">{{type_1_teams_assigned}} <small style="font-size:1rem;"> of 5</small></h5><small>Type 1</small>
                                               
                                         </td>
                                         <td>
-                                              <h5 class="card-title" style="text-align: center;font-size: 3.5rem;  border-left:2px solid black;">2 <small style="font-size:1rem;"> of 8</small></h5><small>Type 2</small>
+                                              <h5 class="card-title" style="text-align: center;font-size: 3.5rem;  border-left:2px solid black;">{{ type_2_teams_assigned }} <small style="font-size:1rem;"> of 8</small></h5><small>Type 2</small>
                                              
                                         </td>
                                     </tr>
@@ -50,12 +50,12 @@
             </div>
 
             <div class="col-md-3 col-sm-6">
-                <div class="card info-card text-dark rounded-0" style="height: 100%;">
+                <div class="card info-card text-dark rounded-0 d-flex" style="height: 100%;">
                       <div class="card-header border-0 info-card" style="font-size: 1.5rem;">
                         WA Large Fires
                       </div>
                       <div class="card-body">
-                        <h5 class="card-title" style="text-align: center;font-size: 3.5rem;">4</h5>
+                        <h5 class="card-title" style="text-align: center;font-size: 3.5rem;">{{ wa_large_fires }}</h5>
                       </div>
                 </div>
             </div>
@@ -66,7 +66,7 @@
                         DNR IA Fires
                       </div>
                       <div class="card-body">
-                        <h5 class="card-title" style="text-align: center; font-size: 3.5rem;">18</h5>
+                        <h5 class="card-title" style="text-align: center; font-size: 3.5rem;">{{ dnr_ia_fires }}</h5>
                       </div>
                 </div>
             </div>
@@ -108,45 +108,45 @@
                                         <tbody>
                                             <tr>
                                                 <th scope="row">Northeast</th>
-                                                <td>37</td>
-                                                <td>2</td>
-                                                <td>10</td>
-                                                <td>1</td>
+                                                <td>{{ ne_committed_engines }}</td>
+                                                <td>{{ ne_committed_crews }}</td>
+                                                <td>{{ ne_available_engines }}</td>
+                                                <td>{{ ne_available_crews }}</td>
                                             </tr>
                                             <tr>
                                                 <th scope="row">Southeast</th>
-                                                <td>14</td>
-                                                <td>1</td>
-                                                <td>9</td>
-                                                <td>0</td>
+                                                <td>{{ se_committed_engines }}</td>
+                                                <td>{{ se_committed_crews }}</td>
+                                                <td>{{ se_available_engines }}</td>
+                                                <td>{{ se_available_crews }}</td>
                                             </tr>
                                             <tr>
                                                 <th scope="row">Northwest</th>
-                                                <td>14</td>
-                                                <td>1</td>
-                                                <td>9</td>
-                                                <td>0</td>
+                                                <td>{{ nw_committed_engines }}</td>
+                                                <td>{{ nw_committed_crews }}</td>
+                                                <td>{{ nw_available_engines }}</td>
+                                                <td>{{ nw_available_crews }}</td>
                                             </tr>
                                             <tr>
                                                 <th scope="row">Olympic</th>
-                                                <td>14</td>
-                                                <td>1</td>
-                                                <td>9</td>
-                                                <td>0</td>
+                                                <td>{{ oly_committed_engines }}</td>
+                                                <td>{{ oly_committed_crews }}</td>
+                                                <td>{{ oly_available_engines }}</td>
+                                                <td>{{ oly_available_crews }}</td>
                                             </tr>
                                             <tr>
                                                 <th scope="row">South Puget</th>
-                                                <td>14</td>
-                                                <td>1</td>
-                                                <td>9</td>
-                                                <td>0</td>
+                                                <td>{{ sps_committed_engines }}</td>
+                                                <td>{{ sps_committed_crews }}</td>
+                                                <td>{{ sps_available_engines }}</td>
+                                                <td>{{ sps_available_crews }}</td>
                                             </tr>
                                             <tr>
                                                 <th scope="row">Pacific Cascade</th>
-                                                <td>14</td>
-                                                <td>1</td>
-                                                <td>9</td>
-                                                <td>0</td>
+                                                <td>{{ pc_committed_engines }}</td>
+                                                <td>{{ pc_committed_crews }}</td>
+                                                <td>{{ pc_available_engines }}</td>
+                                                <td>{{ pc_available_crews }}</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -172,24 +172,24 @@
                                         <tbody>
                                             <tr>
                                                 <th scope="row">Westside</th>
-                                                <td>1</td>
-                                                <td>10</td>
-                                                <td>1</td>
-                                                <td>1</td>
+                                                <td>{{ westside_rotors }}</td>
+                                                <td>{{ westside_firebosses }}</td>
+                                                <td>{{ westside_vlat }}</td>
+                                                <td>1{{ westside_ang }}</td>
                                             </tr>
                                             <tr>
                                                 <th scope="row">Eastside</th>
-                                                <td>1</td>
-                                                <td>9</td>
-                                                <td>0</td>
-                                                <td>1</td>
+                                                <td>{{ eastside_rotors }}</td>
+                                                <td>{{ eastside_firebosses }}</td>
+                                                <td>{{ eastside_vlat }}</td>
+                                                <td>1{{ eastside_ang }}</td>
                                             </tr>
                                             <tr>
                                                 <th scope="row">In Region</th>
-                                                <td>1</td>
-                                                <td>9</td>
-                                                <td>0</td>
-                                                <td>1</td>
+                                                <td>{{ in_region_rotors }}</td>
+                                                <td>{{ in_region_firebosses }}</td>
+                                                <td>{{ in_region_vlat }}</td>
+                                                <td>1{{ in_region_ang }}</td>
                                             </tr>
                                         </tbody>
                                     </table>

@@ -2,6 +2,7 @@
 # Created by https://www.gitignore.io/api/django,python,pycharm,visualstudiocode
 # Edit at https://www.gitignore.io/?templates=django,python,pycharm,visualstudiocode
 
+
 ### Django ###
 *.log
 *.pot
@@ -116,6 +117,10 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+OpsDB_venv/
+.OpsDB_venv/
+
+
 
 # Spyder project settings
 .spyderproject

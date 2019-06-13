@@ -74,18 +74,15 @@ class IntelReport(models.Model):
 
     westside_rotors = models.SmallIntegerField(blank=False, validators= [MinValueValidator(0), MaxValueValidator(100)])
     westside_firebosses = models.SmallIntegerField(blank=False, validators= [MinValueValidator(0), MaxValueValidator(100)])
-    westside_vlat = models.SmallIntegerField(blank=False, validators= [MinValueValidator(0), MaxValueValidator(100)])
-    westside_ang = models.SmallIntegerField(blank=False, validators= [MinValueValidator(0), MaxValueValidator(100)])
-
+    westside_atgs = models.SmallIntegerField(blank=False, validators= [MinValueValidator(0), MaxValueValidator(100)])
+   
     eastside_rotors = models.SmallIntegerField(blank=False, validators= [MinValueValidator(0), MaxValueValidator(100)])
     eastside_firebosses = models.SmallIntegerField(blank=False, validators= [MinValueValidator(0), MaxValueValidator(100)])
-    eastside_vlat = models.SmallIntegerField(blank=False, validators= [MinValueValidator(0), MaxValueValidator(100)])
-    eastside_ang = models.SmallIntegerField(blank=False, validators= [MinValueValidator(0), MaxValueValidator(100)])
-
-    in_region_rotors = models.SmallIntegerField(blank=False, validators= [MinValueValidator(0), MaxValueValidator(100)])
-    in_region_firebosses = models.SmallIntegerField(blank=False, validators= [MinValueValidator(0), MaxValueValidator(100)])
+    eastside_atgs = models.SmallIntegerField(blank=False, validators= [MinValueValidator(0), MaxValueValidator(100)])
+        
     in_region_vlat = models.SmallIntegerField(blank=False, validators= [MinValueValidator(0), MaxValueValidator(100)])
-    in_region_ang = models.SmallIntegerField(blank=False, validators= [MinValueValidator(0), MaxValueValidator(100)])
+    in_region_lat = models.SmallIntegerField(blank=False, validators= [MinValueValidator(0), MaxValueValidator(100)])
+
 
     def __str__(self):
          return "Intel Report: {}".format(self.date_of_report.strftime("%m/%d/%Y, %H:%M:%S"))

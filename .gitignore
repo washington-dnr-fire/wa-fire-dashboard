@@ -1,4 +1,6 @@
-
+.idea/
+.idea/*
+idea
 # Created by https://www.gitignore.io/api/django,python,pycharm,visualstudiocode
 # Edit at https://www.gitignore.io/?templates=django,python,pycharm,visualstudiocode
 

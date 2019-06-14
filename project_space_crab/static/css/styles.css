@@ -88,6 +88,11 @@ body{
     border-color: #003d6b; /*set the color you want here*/
 }
 
+.btn.focus, .btn:focus {
+    outline: 0;
+    box-shadow: none!important;
+}
+
 .bottom-table{
     font-size: 0.9em;
 }

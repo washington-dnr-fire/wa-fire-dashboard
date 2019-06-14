@@ -51,10 +51,12 @@ body{
 }
 
 .card-title-other{
-    font-size: 1.2em;
+    font-size: 1.4em;
     font-weight: 700;
     background: #003d6b;
     color: white;
+    padding-top: 6px;
+    padding-bottom: 6px;
 }
 .remove-padding{
     padding: 0;

@@ -1,6 +1,7 @@
 {% extends 'fire_intel/base.html' %}
 {% block content %}
 {% load static %}
+{% load humanize %}
 
     <div class="container-fluid">
         <!-- Top row, cards -->
@@ -232,25 +233,25 @@
                                         <tbody>
                                             <tr>
                                                 <th scope="row">Westside</th>
-                                                <td class="text-center">{{ westside_dnr_responses_count }}</td>
-                                                <td class="text-center">{{ westside_dnr_fire_count }}</td>
-                                                <td class="text-center">{{ westside_dnr_fire_acres }}</td>
-                                                <td class="text-center">{{ westside_all_fire_acres }}</td>
+                                                <td class="text-center">{{ westside_dnr_responses_count|intcomma }}</td>
+                                                <td class="text-center">{{ westside_dnr_fire_count|intcomma }}</td>
+                                                <td class="text-center">{{ westside_dnr_fire_acres|intcomma }} ac.</td>
+                                                <td class="text-center">{{ westside_all_fire_acres|intcomma }} ac.</td>
 
                                             </tr>
                                             <tr>
                                                 <th scope="row">Eastside</th>
-                                                <td class="text-center">{{ eastside_dnr_responses_count }}</td>
-                                                <td class="text-center">{{ eastside_dnr_fire_count }}</td>
-                                                <td class="text-center">{{ eastside_dnr_fire_acres }}</td>
-                                                <td class="text-center">{{ eastside_all_fire_acres }}</td>
+                                                <td class="text-center">{{ eastside_dnr_responses_count|intcomma }}</td>
+                                                <td class="text-center">{{ eastside_dnr_fire_count|intcomma }}</td>
+                                                <td class="text-center">{{ eastside_dnr_fire_acres|intcomma }} ac.</td>
+                                                <td class="text-center">{{ eastside_all_fire_acres|intcomma }} ac.</td>
                                             </tr>
                                             <tr>
                                                 <th scope="row">Totals</th>
-                                                <td class="text-center">{{sum_dnr_response_count}}</td>
-                                                <td class="text-center">{{sum_dnr_fire_count}}</td>
-                                                <td class="text-center">{{sum_dnr_fire_acres}}</td>
-                                                <td class="text-center">{{sum_all_fire_acres}}</td>
+                                                <td class="text-center">{{sum_dnr_response_count|intcomma}}</td>
+                                                <td class="text-center">{{sum_dnr_fire_count|intcomma}}</td>
+                                                <td class="text-center">{{sum_dnr_fire_acres|intcomma}} ac.</td>
+                                                <td class="text-center">{{sum_all_fire_acres|intcomma}} ac.</td>
                                             </tr>
                                         </tbody>
                                     </table>

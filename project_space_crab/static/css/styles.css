@@ -1,10 +1,12 @@
+/*OVERRIDES*/
+
 html{
     position: relative;
     min-height: 100%;
 }
 
 body{
-    font-family: 'Roboto', sans-serif;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
     background-color: #F1F1F1;
     margin-bottom: 60px;
 }
@@ -14,32 +16,88 @@ body{
 }
 
 .table{
-    font-size: 1.2rem;
-    padding-top: 0;
+    font-size: 1.5rem;
+    padding-top: 10px;
     margin-bottom: 0;
-    font-family: 'Lato', sans-serif;
 }
 
 .card-title{
     font-size: 1.5rem;
-    line-height: 2rem;
+    line-height: 1.5rem;
+    margin-bottom: 0.4em;
+}
+.card-footer{
+    padding: 0;
+}
+.card-body{
+    padding: 0;
+}
+/*-------------- LOCAL DIVS --------------*/
+.top-card-title{
+    font-size: 1.5em;
+    text-align: center;
+
 }
 
-/*-------------- LOCAL DIVS --------------*/
+.single-num{
+    font-size: 7em;
+    text-align: center;
+}
+
+.dual-num{
+    font-size: 4em;
+    text-align: center;
+    margin-top:10px;
+}
+
+.card-title-other{
+    font-size: 1.2em;
+    font-weight: 700;
+    background: #003d6b;
+    color: white;
+}
 .remove-padding{
     padding: 0;
+}
+
+.fa-rotate-45 {
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    transform: rotate(-45deg);
 }
 
 .dnr-blue-bg{
     background-color: #003d6b!important;
 }
 
+.btn-primary{
+    color: #ffffff; background: #1A5786; border-color: #1A5786;
+}
+
+.nav-item:hover{
+    color:#1DA1F2;
+}
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .btn-primary:active:focus, .open>.dropdown-toggle.btn-primary {
+    color: #fff;
+    background-color: #003d6b;
+    border-color: #003d6b; /*set the color you want here*/
+}
+
+.bottom-table{
+    font-size: 0.9em;
+}
+.btn:focus:active {
+  outline: none;
+}
+
 .dnr-grey-bg{
-    background-color:#dbdbdb !important; 
+    background-color:#dbdbdb!important;
 }
 
 .bg-red{
-    background-color:crimson!important; 
+    background-color:#C8102E!important;
 }
 
 .info-card{
@@ -47,7 +105,7 @@ body{
 }
 
 .card-title-no-margin{
-    margin-bottom: 0px;
+    margin-bottom: 0;
 }
 
 #mapdiv{
@@ -66,9 +124,10 @@ body{
 .red {
 color: coral;
 }
-  
+
 .green {
 color: seagreen;
 }
+
 
 

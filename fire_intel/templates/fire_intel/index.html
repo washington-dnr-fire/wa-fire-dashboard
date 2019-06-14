@@ -4,70 +4,80 @@
 
     <div class="container-fluid">
         <!-- Top row, cards -->
-        <div class="row" style="padding-top: 15px">
-            <div class="col-md-3 col-sm-6">
-                <div class="card info-card text-dark rounded-0" style="height: 100%;">
-                      <div class="card-header border-0 info-card" style="font-size: 1.5rem;">
+        <div class="row mt-2">
+            <div class="col-lg-3 col-md-6 my-2">
+                <div class="card dnr-blue-bg text-light rounded-0">
+                    <div class="dnr-blue-bg card-header border-0 top-card-title">
                         Preparedness Levels
-                      </div>
-                      <div class="card-body">
-                          <table class="table table-borderless text-center align-items-center">
-                              <tr>
-                                  <td>
-                                        <h5 class="card-title" style="text-align: center;font-size: 3.5rem;">{{ preparedness_level_national }}</h5><small>National</small>
-                                        
-                                  </td>
-                                  <td>
-                                        <h5 class="card-title" style="text-align: center;font-size: 3.5rem;  border-left:2px solid red;">{{ preparedness_level_nw }}</h5><small>Northwest</small>
-                                       
-                                  </td>
-                              </tr>
-                          </table>
-                      </div>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-borderless text-center">
+                            <tr>
+                                <td>
+                                    <h5 class="card-title dual-num">{{ preparedness_level_national }}</h5>
+                                    <small>National</small>
+                                </td>
+                                <td>
+                                    <h5 class="card-title dual-num">{{ preparedness_level_nw }}</h5>
+                                    <small>Northwest</small>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="card-footer dnr-blue-bg">
+                        <a class="btn btn-primary btn-block rounded-0 text-left" href="https://gacc.nifc.gov/nwcc/content/products/intelligence/MORNINGBRIEF.pdf" target="_blank" style="position:relative">
+                        Read full report <i class="fas fa-chevron-right white" style="position: absolute; right: 16px; top: 50%; transform: translateY(-50%);"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
 
-            <div class="col-md-3 col-sm-6">
-                <div class="card info-card text-dark rounded-0" style="height: 100%;">
-                      <div class="card-header border-0 info-card" style="font-size: 1.5rem;">
+            <div class="col-lg-3 col-md-6 my-2">
+                <div class="card bg-red text-light rounded-0">
+                    <div class="bg-red card-header border-0 top-card-title">
                         NW Teams Assigned
-                      </div>
-                      <div class="card-body text-center">
-                            <table class="table table-borderless text-center align-items-center">
-                                    <tr>
-                                        <td>
-                                              <h5 class="card-title" style="text-align: center;font-size: 3.5rem;">{{type_1_teams_assigned}} <small style="font-size:1rem;"> of 5</small></h5><small>Type 1</small>
-                                              
-                                        </td>
-                                        <td>
-                                              <h5 class="card-title" style="text-align: center;font-size: 3.5rem;  border-left:2px solid black;">{{ type_2_teams_assigned }} <small style="font-size:1rem;"> of 8</small></h5><small>Type 2</small>
-                                             
-                                        </td>
-                                    </tr>
-                                </table>
-                      </div>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-borderless text-center">
+                            <tr>
+                                <td>
+                                    <h5 class="card-title dual-num">{{type_1_teams_assigned}}</h5>
+                                    <small>Type 1</small>
+                                </td>
+                                <td>
+                                    <h5 class="card-title dual-num">{{ type_2_teams_assigned }}</h5>
+                                    <small>Type 2</small>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="card-footer bg-red">
+                        <a class="btn btn-danger btn-block rounded-0 text-left" href="https://gacc.nifc.gov/nwcc/content/products/intelligence/teams.pdf" target="_blank" style="color: #ffffff; position: relative">
+                        Read full report <i class="fas fa-chevron-right white" style="position: absolute; right: 16px; top: 50%; transform: translateY(-50%);"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
 
-            <div class="col-md-3 col-sm-6">
-                <div class="card info-card text-dark rounded-0 d-flex" style="height: 100%;">
-                      <div class="card-header border-0 info-card" style="font-size: 1.5rem;">
+            <div class="col-lg-3 col-md-6 my-2">
+                <div class="card dnr-blue-bg text-light rounded-0" style="height: 100%;">
+                    <div class="dnr-blue-bg card-header border-0 top-card-title">
                         WA Large Fires
-                      </div>
-                      <div class="card-body">
-                        <h5 class="card-title" style="text-align: center;font-size: 3.5rem;">{{ wa_large_fires }}</h5>
-                      </div>
+                    </div>
+                    <div class="card-body card-body-top">
+                        <h5 class="single-num">{{ wa_large_fires }}</h5>
+                    </div>
                 </div>
             </div>
 
-            <div class="col-md-3 col-sm-6">
-                <div class="card info-card text-dark rounded-0" style="height: 100%;">
-                      <div class="card-header border-0 info-card" style="font-size: 1.5rem;">
+            <div class="col-lg-3 col-md-6 my-2">
+                <div class="card bg-red text-light rounded-0" style="height: 100%;">
+                    <div class="bg-red card-header border-0 top-card-title">
                         DNR IA Fires
-                      </div>
-                      <div class="card-body">
-                        <h5 class="card-title" style="text-align: center; font-size: 3.5rem;">{{ dnr_ia_fires }}</h5>
-                      </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="single-num">{{ dnr_ia_fires }}</h5>
+                    </div>
                 </div>
             </div>
         </div> <!-- /First Row -->
@@ -75,125 +85,172 @@
         <!-- Second Row-->
         <div class="row">
             <!-- Map Col -->
-            <div class="col-lg-8 col-md-8 col-sm-12" style="padding-top: 15px">
+            <div class="col-lg-8 col-md-8 col-sm-12 mt-2">
                 <!-- Map Row -->
                 <div class="row">
                     <div class="col-md-12">
-                        <div id="mapdiv"></div>
+                        <div id="mapdiv" style="border: solid #ffffff;"></div>
                     </div>
                 </div>
                 <!-- Table and Graph Row -->
                 <div class="row">
-                    <div class="col-lg-6 col-md-12 col-sm-12"  style="padding-top: 15px">
-                        <div class="card">
-                            <div class="card-body remove-padding">
-                                <div class="card-header border-0 info-card" style="font-size: 1.5rem;">
-                                    Ground Assets
-                                </div>
+                    <div class="col-lg-6 col-md-12 col-sm-12 mt-2">
+                        <div class="card rounded-0">
+                            <div class="card-header border-0 card-title-other rounded-0">
+                               <i class="fas fa-users white"></i>&nbsp; Ground Assets
+                            </div>
+                            <div class="card-body">
                                 <div class="table-responsive">
-                                    <table class="table table-sm table-striped table-hover table-bordered">
+                                    <table class="table table-sm table-striped table-hover table-bordered bottom-table">
                                         <thead>
                                             <tr>
                                                 <th scope="col" rowspan="2">Region</th>
-                                                <th scope="col" colspan="2">Committed in Region</th>
-                                                <th scope="col" colspan="2">Available out of Region</th>
+                                                <th scope="col" colspan="2" class="text-center">Available in Region</th>
+                                                <th scope="col" colspan="2" class="text-center">Available out of Region</th>
                                             </tr>
                                             <tr>
-                                                <th>Engines</th>
-                                                <th>Crews</th>
-                                                <th>Engines</th>
-                                                <th>Crews</th>
+                                                <th class="text-center">Engines</th>
+                                                <th class="text-center">Crews</th>
+                                                <th class="text-center">Engines</th>
+                                                <th class="text-center">Crews</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
                                                 <th scope="row">Northeast</th>
-                                                <td>{{ ne_committed_engines }}</td>
-                                                <td>{{ ne_committed_crews }}</td>
-                                                <td>{{ ne_available_engines }}</td>
-                                                <td>{{ ne_available_crews }}</td>
+                                                <td class="text-center">{{ ne_committed_engines }}</td>
+                                                <td class="text-center">{{ ne_committed_crews }}</td>
+                                                <td class="text-center">{{ ne_available_engines }}</td>
+                                                <td class="text-center">{{ ne_available_crews }}</td>
                                             </tr>
                                             <tr>
                                                 <th scope="row">Southeast</th>
-                                                <td>{{ se_committed_engines }}</td>
-                                                <td>{{ se_committed_crews }}</td>
-                                                <td>{{ se_available_engines }}</td>
-                                                <td>{{ se_available_crews }}</td>
+                                                <td class="text-center">{{ se_committed_engines }}</td>
+                                                <td class="text-center">{{ se_committed_crews }}</td>
+                                                <td class="text-center">{{ se_available_engines }}</td>
+                                                <td class="text-center">{{ se_available_crews }}</td>
                                             </tr>
                                             <tr>
                                                 <th scope="row">Northwest</th>
-                                                <td>{{ nw_committed_engines }}</td>
-                                                <td>{{ nw_committed_crews }}</td>
-                                                <td>{{ nw_available_engines }}</td>
-                                                <td>{{ nw_available_crews }}</td>
+                                                <td class="text-center">{{ nw_committed_engines }}</td>
+                                                <td class="text-center">{{ nw_committed_crews }}</td>
+                                                <td class="text-center">{{ nw_available_engines }}</td>
+                                                <td class="text-center">{{ nw_available_crews }}</td>
                                             </tr>
                                             <tr>
                                                 <th scope="row">Olympic</th>
-                                                <td>{{ oly_committed_engines }}</td>
-                                                <td>{{ oly_committed_crews }}</td>
-                                                <td>{{ oly_available_engines }}</td>
-                                                <td>{{ oly_available_crews }}</td>
+                                                <td class="text-center">{{ oly_committed_engines }}</td>
+                                                <td class="text-center">{{ oly_committed_crews }}</td>
+                                                <td class="text-center">{{ oly_available_engines }}</td>
+                                                <td class="text-center">{{ oly_available_crews }}</td>
                                             </tr>
                                             <tr>
                                                 <th scope="row">South Puget</th>
-                                                <td>{{ sps_committed_engines }}</td>
-                                                <td>{{ sps_committed_crews }}</td>
-                                                <td>{{ sps_available_engines }}</td>
-                                                <td>{{ sps_available_crews }}</td>
+                                                <td class="text-center">{{ sps_committed_engines }}</td>
+                                                <td class="text-center">{{ sps_committed_crews }}</td>
+                                                <td class="text-center">{{ sps_available_engines }}</td>
+                                                <td class="text-center">{{ sps_available_crews }}</td>
                                             </tr>
                                             <tr>
                                                 <th scope="row">Pacific Cascade</th>
-                                                <td>{{ pc_committed_engines }}</td>
-                                                <td>{{ pc_committed_crews }}</td>
-                                                <td>{{ pc_available_engines }}</td>
-                                                <td>{{ pc_available_crews }}</td>
+                                                <td class="text-center">{{ pc_committed_engines }}</td>
+                                                <td class="text-center">{{ pc_committed_crews }}</td>
+                                                <td class="text-center">{{ pc_available_engines }}</td>
+                                                <td class="text-center">{{ pc_available_crews }}</td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                         </div>
-                        <div class="card" style="margin-top: 15px">
-                            <div class="card-body remove-padding" style="background:#ffffff;">
-                                <div class="card-header border-0 info-card" style="font-size: 1.5rem;">
-                                    Aviation Assets
-                                </div>
+                    </div>
+
+                    <div class="col-lg-6 col-md-12 col-sm-12 mt-2">
+                        <div class="card rounded-0">
+                            <div class="card-header border-0 card-title-other rounded-0">
+                               <i class="fas fa-plane white fa-rotate-45"></i>&nbsp; Aviation Assets
+                            </div>
+                            <div class="card-body" style="background:#ffffff;">
                                 <div class="table-responsive">
-                                    <table class="table table-sm table-striped table-hover table-bordered">
+                                    <table class="table table-sm table-striped table-hover table-bordered bottom-table">
                                         <thead>
                                             <tr>
                                                 <th>Location</th>
-                                                <th>Rotor</th>
-                                                <th>Fire Boss</th>
-                                                <th>Air Attack</th>
-                                                <th>LAT</th>
-                                                <th>VLAT</th>
+                                                <th class="text-center">Rotor</th>
+                                                <th class="text-center">Fire Boss</th>
+                                                <th class="text-center">Air Attack</th>
+                                                <th class="text-center">LAT</th>
+                                                <th class="text-center">VLAT</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
                                                 <th scope="row">Westside</th>
-                                                <td>{{ westside_rotors }}</td>
-                                                <td>{{ westside_firebosses }}</td>
-                                                <td>{{ westside_atgs }}</td>
-                                                <td>n/a</td>
-                                                <td>n/a</td>
+                                                <td class="text-center">{{ westside_rotors }}</td>
+                                                <td class="text-center">{{ westside_firebosses }}</td>
+                                                <td class="text-center">{{ westside_atgs }}</td>
+                                                <td class="text-center">-</td>
+                                                <td class="text-center">-</td>
                                             </tr>
                                             <tr>
                                                 <th scope="row">Eastside</th>
-                                                <td>{{ eastside_rotors }}</td>
-                                                <td>{{ eastside_firebosses }}</td>
-                                                <td>{{ eastside_atgs }}</td>
-                                                <td>n/a</td>
-                                                <td>n/a</td>
+                                                <td class="text-center">{{ eastside_rotors }}</td>
+                                                <td class="text-center">{{ eastside_firebosses }}</td>
+                                                <td class="text-center">{{ eastside_atgs }}</td>
+                                                <td class="text-center">-</td>
+                                                <td class="text-center">-</td>
                                             </tr>
                                             <tr>
                                                 <th scope="row">In GACC</th>
-                                                <td>n/a</td>
-                                                <td>n/a</td>
-                                                <td>n/a</td>
-                                                <td>{{ in_region_lat }}</td>
-                                                <td>{{ in_region_vlat }}</td>
+                                                <td class="text-center">-</td>
+                                                <td class="text-center">-</td>
+                                                <td class="text-center">-</td>
+                                                <td class="text-center">{{ in_region_lat }}</td>
+                                                <td class="text-center">{{ in_region_vlat }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card rounded-0 mt-2">
+                            <div class="card-header border-0 card-title-other rounded-0">
+                                <i class="fas fa-chart-bar white"></i>&nbsp; Fire Statistics
+                            </div>
+                            <div class="card-body" style="background:#ffffff;">
+                                <div class="table-responsive">
+                                    <table class="table table-sm table-striped table-hover table-bordered bottom-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Location</th>
+                                                <th class="text-center">All DNR Responses</th>
+                                                <th class="text-center">Response Acres</th>
+                                                <th class="text-center">DNR Fires</th>
+                                                <th class="text-center">DNR Acres</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <th scope="row">Westside</th>
+                                                <td class="text-center">--</td>
+                                                <td class="text-center">--</td>
+                                                <td class="text-center">--</td>
+                                                <td class="text-center">--</td>
+
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Eastside</th>
+                                                <td class="text-center">--</td>
+                                                <td class="text-center">--</td>
+                                                <td class="text-center">--</td>
+                                                <td class="text-center">--</td>
+                                            </tr>
+                                            <tr>
+                                                <th scope="row">Totals</th>
+                                                <td class="text-center">--</td>
+                                                <td class="text-center">--</td>
+                                                <td class="text-center">--</td>
+                                                <td class="text-center">--</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -201,23 +258,12 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="col-lg-6 col-md-12 col-sm-12"  style="padding-top: 15px">
-                            <div class="card info-card text-dark rounded-0">
-                                  <div class="card-header border-0 info-card" style="font-size: 1.5rem;">
-                                    DNR Fires To Date
-                                  </div>
-                                  <div class="card-body">
-                                    <canvas id="chart1" width="100%" height="100%"></canvas>
-                                  </div>
-                            </div>
-                    </div>
                 </div>
             </div> <!-- First column -->
 
-            <div class="col-lg-4 col-md-4 col-sm-12" style="padding-top: 15px">
-                <div class="card info-card text-dark rounded-0" style="height: 100%;">
-                    <div class="card-header border-0 info-card" style="font-size: 2rem; font-weight: 600;">
+            <div class="col-lg-4 col-md-4 col-sm-12 mt-2">
+                <div class="card text-dark rounded-0" style="height: 100%;">
+                    <div class="card-header border-0 card-title-other rounded-0">
                         <i class="fab fa-twitter" style="color:#1DA1F2"></i> &nbsp; DNR Fire Twitter
                     </div>
                     <div class="card-body">

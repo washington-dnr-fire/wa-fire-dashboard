@@ -46,6 +46,17 @@ class IntelReport(models.Model):
     wa_large_fires = models.IntegerField(blank=False, help_text="How many WA-based large fires are there currently?")
     dnr_ia_fires = models.IntegerField(blank=False, help_text="How many DNR-based IA fires are there currently?")
 
+    # fire statistics
+    westside_dnr_responses_count = models.IntegerField(blank=False, help_text="How many DNR Responses total on the westside?")
+    westside_dnr_fire_count = models.IntegerField(blank=False, help_text="How many DNR Fires total on the westside?")
+    westside_dnr_fire_acres = models.IntegerField(blank=False, help_text="How many DNR Fire acres burned on the westside?")
+    westside_all_fire_acres = models.IntegerField(blank=False, help_text="How many acres burned on the westside?")
+
+    eastside_dnr_responses_count = models.IntegerField(blank=False, help_text="How many DNR Responses total on the eastside?")
+    eastside_dnr_fire_count = models.IntegerField(blank=False, help_text="How many DNR Fires total on the eastside?")
+    eastside_dnr_fire_acres = models.IntegerField(blank=False, help_text="How many DNR Fire acres burned on the eastside?")
+    eastside_all_fire_acres = models.IntegerField(blank=False, help_text="How many acres burned on the eastside?")
+
     nw_committed_engines = models.SmallIntegerField(blank=False,
                                                     validators=[MinValueValidator(0), MaxValueValidator(250)])
     nw_committed_crews = models.SmallIntegerField(blank=False,

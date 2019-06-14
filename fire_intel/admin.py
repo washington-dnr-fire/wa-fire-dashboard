@@ -9,6 +9,8 @@ admin.site.index_title = "Site and Model Administration"
 class IntelReportAdmin(admin.ModelAdmin):
     fieldsets = [
         ("Summary Information", {'fields': ['preparedness_level_national', 'preparedness_level_nw','type_1_teams_assigned','type_2_teams_assigned', 'wa_large_fires', 'dnr_ia_fires']}),
+        ("Westside Fire Statistics ***until automated***",{'fields': ['westside_dnr_responses_count','westside_dnr_fire_count','westside_dnr_fire_acres','westside_all_fire_acres']}),
+        ("Eastside Fire Statistics ***until automated***", {'fields': ['eastside_dnr_responses_count','eastside_dnr_fire_count','eastside_dnr_fire_acres','eastside_all_fire_acres']}),
         ("NE Region Resources", {'fields': ['ne_committed_engines','ne_committed_crews','ne_available_engines','ne_available_crews']}),
         ("SE Region Resources", {'fields': ['se_committed_engines','se_committed_crews','se_available_engines','se_available_crews']}),
         ("NW Region Resources", {'fields': ['nw_committed_engines','nw_committed_crews','nw_available_engines','nw_available_crews']}),

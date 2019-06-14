@@ -223,34 +223,34 @@
                                         <thead>
                                             <tr>
                                                 <th>Location</th>
-                                                <th class="text-center">All DNR Responses</th>
-                                                <th class="text-center">Response Acres</th>
+                                                <th class="text-center">DNR Responses</th>
                                                 <th class="text-center">DNR Fires</th>
-                                                <th class="text-center">DNR Acres</th>
+                                                <th class="text-center">DNR Acres Burned</th>
+                                                <th class="text-center">All-Lands Acres Burned</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
                                                 <th scope="row">Westside</th>
-                                                <td class="text-center">--</td>
-                                                <td class="text-center">--</td>
-                                                <td class="text-center">--</td>
-                                                <td class="text-center">--</td>
+                                                <td class="text-center">{{ westside_dnr_responses_count }}</td>
+                                                <td class="text-center">{{ westside_dnr_fire_count }}</td>
+                                                <td class="text-center">{{ westside_dnr_fire_acres }}</td>
+                                                <td class="text-center">{{ westside_all_fire_acres }}</td>
 
                                             </tr>
                                             <tr>
                                                 <th scope="row">Eastside</th>
-                                                <td class="text-center">--</td>
-                                                <td class="text-center">--</td>
-                                                <td class="text-center">--</td>
-                                                <td class="text-center">--</td>
+                                                <td class="text-center">{{ eastside_dnr_responses_count }}</td>
+                                                <td class="text-center">{{ eastside_dnr_fire_count }}</td>
+                                                <td class="text-center">{{ eastside_dnr_fire_acres }}</td>
+                                                <td class="text-center">{{ eastside_all_fire_acres }}</td>
                                             </tr>
                                             <tr>
                                                 <th scope="row">Totals</th>
-                                                <td class="text-center">--</td>
-                                                <td class="text-center">--</td>
-                                                <td class="text-center">--</td>
-                                                <td class="text-center">--</td>
+                                                <td class="text-center">{{sum_dnr_response_count}}</td>
+                                                <td class="text-center">{{sum_dnr_fire_count}}</td>
+                                                <td class="text-center">{{sum_dnr_fire_acres}}</td>
+                                                <td class="text-center">{{sum_all_fire_acres}}</td>
                                             </tr>
                                         </tbody>
                                     </table>

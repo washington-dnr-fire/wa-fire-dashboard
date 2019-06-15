@@ -2,33 +2,60 @@
 
 
     var counties = L.esri.featureLayer({
-        url: "https://gis.dnr.wa.gov/site3/rest/services/Public_Boundaries/WADNR_PUBLIC_Cadastre_OpenData/MapServer/11"
+        url: "https://gis.dnr.wa.gov/site3/rest/services/Public_Boundaries/WADNR_PUBLIC_Cadastre_OpenData/MapServer/11",
+        style: function (feature) {
+            return {
+                color: '#000000',
+                weight: 2,
+            };
+        },
     });
 
     var regions = L.esri.featureLayer({
-        url: "https://gis.dnr.wa.gov/site3/rest/services/Public_Boundaries/WADNR_PUBLIC_Cadastre_OpenData/MapServer/3"
+        url: "https://gis.dnr.wa.gov/site3/rest/services/Public_Boundaries/WADNR_PUBLIC_Cadastre_OpenData/MapServer/3",
+        style: function (feature) {
+            return {
+                color: '#000000',
+                weight: 2,
+            };
+        }
     });
 
-    var wa_large_fires = L.esri.featureLayer({
-        url: 'https://gis.dnr.wa.gov/site3/rest/services/Public_Wildfire/WADNR_PUBLIC_WD_WildFire_Data/MapServer/0'
+
+    var NWS_warnings = L.esri.featureLayer({
+        url: 'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/watch_warn_adv/MapServer/1',
+        simplifyFactor: 1,
+        style: function (feature) {
+            return {
+                stroke: false,
+                fillOpacity: '0.5',
+            };
+        }
     });
 
-    wa_large_fires.bindPopup(function(evt) {
-        return L.Util.template('<strong>{FIRENAME}</strong><hr /><p>Fire Year: {YEAR} <br> Acres Burned: {ACRES}</p>', evt.feature.properties);
-    }); 
-
-    var wa_fire_statistics = L.esri.featureLayer({
-        url:'https://gis.dnr.wa.gov/site3/rest/services/Public_Wildfire/WADNR_PUBLIC_WD_WildFire_Data/MapServer/2'
-    });
-
-    wa_fire_statistics.bindPopup(function(evt) {
-        return L.Util.template('<strong>{INCIDENT_NM}</strong><hr /><p>Cause: {FIREGCAUSE_LABEL_NM} <br> Acres Burned: {ACRES_BURNED}</p>', evt.feature.properties);
-    }); 
-
-    var viirs = L.esri.featureLayer({
-        url: 'https://wildfire.cr.usgs.gov/arcgis/rest/services/geomac_fires/MapServer/5/'
-    });
-
+    NWS_warnings.bindPopup(function(evt) {
+        var t = moment.utc(evt.feature.properties['expiration']).local().fromNow();
+        var s = moment.utc(evt.feature.properties['issuance']).local().fromNow();
+        return L.Util.template(
+        "<div class='container rounded-0' style='max-width:375px;margin-top:5px;'>" +
+        "<div class='row'>" +
+        "<div class='col-xs-12' style='padding:0;'>" +
+        "<a href='{url}'style='font-size: 1.5em; font-weight: 700;'><u>{prod_type}</u></a>" +
+        "</div>" + // col
+        "</div>" + // row
+        "<div class='row'>" +
+        "<div class='col-xs-12' style='font-weight: 700;'>" +
+        "Issued: " + s +
+        "</div>" + // col
+        "</div>" + // row
+        "<div class='row'>" +
+        "<div class='col-xs-12'>" +
+        "<span class='text-muted'>Expires " + t +
+        "</span>" +
+        "</div>" + // col
+        "</div>" + // row
+        "</div>", evt.feature.properties
+    )});
 
     var baseLayers = {
         "Topographic": L.esri.basemapLayer("Topographic"),
@@ -46,7 +73,7 @@
         center: [home.lat, home.lng],
         zoom: home.zoom,
         minZoom: 6,
-        layers: [wa_fire_statistics, regions]
+        layers: [NWS_warnings, regions]
     });
 
     L.easyButton('fa-home', function (btn, map) {
@@ -59,60 +86,10 @@
     var overlays = {
         "Counties": counties,
         "DNR Regions": regions,
-        "WA Fire Stats (2019)": wa_fire_statistics,
-        "WA Large Fires": wa_large_fires,
-        "VIIRS Hot Spots": viirs
+        "NWS Warnings": NWS_warnings
     };
 
     L.control.layers(baseLayers, overlays).addTo(map);
     map.setMaxBounds(map.getBounds());
-
-
-
-
-    // var ctx = document.getElementById('chart1').getContext('2d');
-    // var chart1 = new Chart(ctx, {
-    //     type: 'line',
-    //     data: {
-    //         labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-    //         datasets: [{
-    //             pointRadius: 2,
-    //             fill: false,
-    //             lineTension: 0,
-    //             label: 'Current Year',
-    //             data: [0, 4, 10, 20, 70, 150],
-    //             borderColor: '#000000',
-    //             borderWidth: 2
-    //         }, {
-    //             pointRadius: 2,
-    //             fill: false,
-    //             lineTension: 0,
-    //             label: 'Max Year',
-    //             data: [3, 19, 28, 100, 150, 175],
-    //             borderColor: '#ff0000',
-    //             borderWidth: 2
-    //             }, {
-    //             pointRadius: 2,
-    //             fill: false,
-    //             lineTension: 0,
-    //             label: 'Min Year',
-    //             data: [0, 2, 5, 8, 20, 30],
-    //             borderColor: '#0000ff',
-    //             borderWidth: 2
-    //             }
-    //         ]
-    //     },
-    //     options: {
-    //         scales: {
-    //
-    //            yAxes: [{
-	// 					scaleLabel: {
-	// 						display: true,
-	// 						labelString: 'Fires to Date'
-	// 					}
-	// 				}]
-    //         }
-    //     }
-    // });
 
 }(this));

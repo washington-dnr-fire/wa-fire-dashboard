@@ -32,12 +32,20 @@ body{
 .card-body{
     padding: 0;
 }
+
+ .leaflet-popup-content-wrapper,.leaflet-popup-content
+ {
+   -webkit-border-radius: 0 !important;
+   -moz-border-radius: 0 !important;
+    border-radius: 0 !important;
+ }
 /*-------------- LOCAL DIVS --------------*/
 .top-card-title{
     font-size: 1.5em;
     text-align: center;
 
 }
+
 
 .single-num{
     font-size: 7em;

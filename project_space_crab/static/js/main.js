@@ -23,22 +23,79 @@
     });
 
     // NWCC Daily Fires
+    // Icon made by Vectors Market from Flaticon.com
+    var fireIcon = L.icon({
+        iconUrl: "../../../static/images/flame.svg",
+        iconSize: [27, 27], // size of the icon
+        });
+
     var daily_fires = L.esri.featureLayer({
         url: "https://services3.arcgis.com/T4QMspbfLg3qTGWY/ArcGIS/rest/services/NWCC_Operational_Layers/FeatureServer/1",
         pointToLayer: function (feature, latlng) {
-            return L.circleMarker(latlng,
-            {
-                radius: 2,
-                fillColor: "#ff7800",
-                color: "#000",
-                weight: 1,
-                opacity: 1,
-                fillOpacity: 0.8
-            });
+            return L.marker(latlng, {icon: fireIcon});
     },
         ignoreRenderer: true,
     });
 
+    daily_fires.bindPopup(function(evt) {
+        return L.Util.template(
+        "<div class='container rounded-0' style='max-width:375px;margin-top:5px;'>" +
+        "<div class='row'>" +
+        "<div class='col-xs-12' style='padding:0;'>" +
+        "<div class='table-responsive'>" +
+        "<div class='table-danger'>" +
+        "<thead>" +
+        "<tr>" +
+        "<th scope='col' colspan='2'>{FIRE_NM}</th>" +
+        "</tr>" +
+        "</thead>" +
+        "<tbody>" +
+        "<tr>" +
+        "<td scope='row'>Acres</td>" +
+        "<td>{RPTD_ACRES}</td>" +
+        "</tr>" +
+        "</tbody>" +
+        "</div>" + //table
+        "</div>" + //responsive table
+        "</div>" + // col
+        "</div>" + // row
+        "</div>", evt.feature.properties
+    )});
+                                    //
+                                    //         <thead>
+                                    //         <tr>
+                                    //             <th>Location</th>
+                                    //             <th class="text-center">DNR Responses</th>
+                                    //             <th class="text-center">DNR Fires</th>
+                                    //             <th class="text-center">DNR Acres Burned</th>
+                                    //             <th class="text-center">All-Lands Acres Burned</th>
+                                    //         </tr>
+                                    //     </thead>
+                                    //     <tbody>
+                                    //         <tr>
+                                    //             <th scope="row">Westside</th>
+                                    //             <td class="text-center">{{ westside_dnr_responses_count|intcomma }}</td>
+                                    //             <td class="text-center">{{ westside_dnr_fire_count|intcomma }}</td>
+                                    //             <td class="text-center">{{ westside_dnr_fire_acres|intcomma }} ac.</td>
+                                    //             <td class="text-center">{{ westside_all_fire_acres|intcomma }} ac.</td>
+                                    //
+                                    //         </tr>
+                                    //         <tr>
+                                    //             <th scope="row">Eastside</th>
+                                    //             <td class="text-center">{{ eastside_dnr_responses_count|intcomma }}</td>
+                                    //             <td class="text-center">{{ eastside_dnr_fire_count|intcomma }}</td>
+                                    //             <td class="text-center">{{ eastside_dnr_fire_acres|intcomma }} ac.</td>
+                                    //             <td class="text-center">{{ eastside_all_fire_acres|intcomma }} ac.</td>
+                                    //         </tr>
+                                    //         <tr>
+                                    //             <th scope="row">Totals</th>
+                                    //             <td class="text-center">{{sum_dnr_response_count|intcomma}}</td>
+                                    //             <td class="text-center">{{sum_dnr_fire_count|intcomma}}</td>
+                                    //             <td class="text-center">{{sum_dnr_fire_acres|intcomma}} ac.</td>
+                                    //             <td class="text-center">{{sum_all_fire_acres|intcomma}} ac.</td>
+                                    //         </tr>
+                                    //     </tbody>
+                                    // </table>
     // // MODIS
     // var modis = L.esri.featureLayer({
     //     url: "https://wildfire.cr.usgs.gov/arcgis/rest/services/geomac_fires/MapServer/4",
@@ -112,7 +169,7 @@
         "<div class='container rounded-0' style='max-width:375px;margin-top:5px;'>" +
         "<div class='row'>" +
         "<div class='col-xs-12' style='padding:0;'>" +
-        "<span style='text-align: center;'>7-Day Rainfall Forecast</span>" +
+        "<span'>7-Day Rainfall Forecast</span>" +
         "</div>" + // col
         "</div>" + // row
         "<div class='row'>" +
@@ -273,6 +330,6 @@
     };
 
     L.control.layers(baseLayers, overlays).addTo(map);
-    // map.setMaxBounds(map.getBounds());
+    map.setMaxBounds(map.getBounds());
 
 }(this));

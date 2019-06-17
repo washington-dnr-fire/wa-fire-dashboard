@@ -1,2 +1,149 @@
+/*OVERRIDES*/
+
+html{
+    position: relative;
+    min-height: 100%;
+}
+
+body{
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    background-color: #F1F1F1;
+    margin-bottom: 60px;
+}
+
+.navbar{
+    font-size: 100%!important;
+}
+
+.table{
+    font-size: 1.5rem;
+    padding-top: 10px;
+    margin-bottom: 0;
+}
+
+.card-title{
+    font-size: 1.5rem;
+    line-height: 1.5rem;
+    margin-bottom: 0.4em;
+}
+.card-footer{
+    padding: 0;
+}
+.card-body{
+    padding: 0;
+}
+
+ .leaflet-popup-content-wrapper,.leaflet-popup-content
+ {
+   -webkit-border-radius: 0 !important;
+   -moz-border-radius: 0 !important;
+    border-radius: 0 !important;
+ }
+/*-------------- LOCAL DIVS --------------*/
+.top-card-title{
+    font-size: 1.5em;
+    text-align: center;
+
+}
+
+
+.single-num{
+    font-size: 7em;
+    text-align: center;
+    margin-top: -10px;
+}
+
+.dual-num{
+    font-size: 4em;
+    text-align: center;
+    margin-top:10px;
+}
+
+.card-title-other{
+    font-size: 1.4em;
+    font-weight: 700;
+    background: #003d6b;
+    color: white;
+    padding-top: 6px;
+    padding-bottom: 6px;
+}
+.remove-padding{
+    padding: 0;
+}
+
+.fa-rotate-45 {
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -ms-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}
+
+.dnr-blue-bg{
+    background-color: #003d6b!important;
+}
+
+.btn-primary{
+    color: #ffffff; background: #1A5786; border-color: #1A5786;
+}
+
+.nav-item:hover{
+    color:#1DA1F2;
+}
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .btn-primary:active:focus, .open>.dropdown-toggle.btn-primary {
+    color: #fff;
+    background-color: #003d6b;
+    border-color: #003d6b; /*set the color you want here*/
+}
+
+.btn.focus, .btn:focus {
+    outline: 0;
+    box-shadow: none!important;
+}
+
+.bottom-table{
+    font-size: 0.9em;
+}
+.btn:focus:active {
+  outline: none;
+}
+
+.dnr-grey-bg{
+    background-color:#dbdbdb!important;
+}
+
+.bg-red{
+    background-color:#C8102E!important;
+}
+
+.info-card{
+    background: #ffffff;
+}
+
+.card-title-no-margin{
+    margin-bottom: 0;
+}
+
+#mapdiv{
+    height:400px;
+    width: 100%;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    background-color: #f5f5f5;
+}
+
+.red {
+color: coral;
+}
+
+.green {
+color: seagreen;
+}
+
 
 

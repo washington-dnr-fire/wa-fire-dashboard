@@ -6,9 +6,10 @@
         style: function (feature) {
             return {
                 color: '#000000',
-                weight: 2,
+                weight: 1.5,
             };
         },
+        pane: "boundaries"
     });
 
     // DNR REGIONS
@@ -17,9 +18,10 @@
         style: function (feature) {
             return {
                 color: '#000000',
-                weight: 2,
+                weight: 1.5,
             };
-        }
+        },
+        pane: "boundaries"
     });
 
     // NWCC Daily Fires
@@ -35,67 +37,54 @@
             return L.marker(latlng, {icon: fireIcon});
     },
         ignoreRenderer: true,
+        pane: "points",
     });
 
     daily_fires.bindPopup(function(evt) {
         return L.Util.template(
         "<div class='container rounded-0' style='max-width:375px;margin-top:5px;'>" +
-        "<div class='row'>" +
-        "<div class='col-xs-12' style='padding:0;'>" +
-        "<div class='table-responsive'>" +
-        "<div class='table-danger'>" +
-        "<thead>" +
-        "<tr>" +
-        "<th scope='col' colspan='2'>{FIRE_NM}</th>" +
-        "</tr>" +
-        "</thead>" +
-        "<tbody>" +
-        "<tr>" +
-        "<td scope='row'>Acres</td>" +
-        "<td>{RPTD_ACRES}</td>" +
-        "</tr>" +
-        "</tbody>" +
-        "</div>" + //table
-        "</div>" + //responsive table
-        "</div>" + // col
-        "</div>" + // row
+            "<div class='row'>" +
+                "<div class='col-xs-12' style='padding:0;'>" +
+                    "<div class='table-responsive'>" +
+                        "<table class='table table-sm' style='font-size: 1em'>" +
+                            "<thead>" +
+                                "<tr>" +
+                                    "<th colspan='4' class='dnr-blue-bg text-light' style='font-weight: 700;'>{FIRE_NM}</th>" +
+                                "</tr>" +
+                            "</thead>" +
+                            "<tbody>" +
+                                "<tr>" +
+                                    "<td style='font-weight: 700;'>Status</td>" +
+                                    "<td class='text-muted'>{STATUS}</td>" +
+                                    "<td style='font-weight: 700;'>Acres</td>" +
+                                    "<td class='text-muted'>{RPTD_ACRES}</td>" +
+                                "</tr>" +
+                                "<tr>" +
+                                    "<td style='font-weight: 700;'>Start Date</td>" +
+                                    "<td class='text-muted'>{START_DATE}</td>" +
+                                    "<td style='font-weight: 700;'>IMT Type</td>" +
+                                    "<td class='text-muted'>{IMT_TYPE}</td>" +
+                                "</tr>" +
+                                "<tr>" +
+                                    "<td style='font-weight: 700;'>IC/Team Name</td>" +
+                                    "<td class='text-muted'>{IC_NM}</td>" +
+                                    "<td style='font-weight: 700;'>Complex</td>" +
+                                    "<td class='text-muted'>{COMPLEX}</td>" +
+                                "</tr>" +
+                                "<tr>" +
+                                    "<td style='font-weight: 700;'>Cause</td>" +
+                                    "<td class='text-muted'>{CAUSE}</td>" +
+                                    "<td style='font-weight: 700;'>Unit ID</td>" +
+                                    "<td class='text-muted'>{COMPLEX}</td>" +
+                                "</tr>" +
+                            "</tbody>" +
+                        "</table>" + //table
+                    "</div>" + //responsive table
+                "</div>" + // col
+            "</div>" + // row
         "</div>", evt.feature.properties
     )});
-                                    //
-                                    //         <thead>
-                                    //         <tr>
-                                    //             <th>Location</th>
-                                    //             <th class="text-center">DNR Responses</th>
-                                    //             <th class="text-center">DNR Fires</th>
-                                    //             <th class="text-center">DNR Acres Burned</th>
-                                    //             <th class="text-center">All-Lands Acres Burned</th>
-                                    //         </tr>
-                                    //     </thead>
-                                    //     <tbody>
-                                    //         <tr>
-                                    //             <th scope="row">Westside</th>
-                                    //             <td class="text-center">{{ westside_dnr_responses_count|intcomma }}</td>
-                                    //             <td class="text-center">{{ westside_dnr_fire_count|intcomma }}</td>
-                                    //             <td class="text-center">{{ westside_dnr_fire_acres|intcomma }} ac.</td>
-                                    //             <td class="text-center">{{ westside_all_fire_acres|intcomma }} ac.</td>
-                                    //
-                                    //         </tr>
-                                    //         <tr>
-                                    //             <th scope="row">Eastside</th>
-                                    //             <td class="text-center">{{ eastside_dnr_responses_count|intcomma }}</td>
-                                    //             <td class="text-center">{{ eastside_dnr_fire_count|intcomma }}</td>
-                                    //             <td class="text-center">{{ eastside_dnr_fire_acres|intcomma }} ac.</td>
-                                    //             <td class="text-center">{{ eastside_all_fire_acres|intcomma }} ac.</td>
-                                    //         </tr>
-                                    //         <tr>
-                                    //             <th scope="row">Totals</th>
-                                    //             <td class="text-center">{{sum_dnr_response_count|intcomma}}</td>
-                                    //             <td class="text-center">{{sum_dnr_fire_count|intcomma}}</td>
-                                    //             <td class="text-center">{{sum_dnr_fire_acres|intcomma}} ac.</td>
-                                    //             <td class="text-center">{{sum_all_fire_acres|intcomma}} ac.</td>
-                                    //         </tr>
-                                    //     </tbody>
-                                    // </table>
+
     // // MODIS
     // var modis = L.esri.featureLayer({
     //     url: "https://wildfire.cr.usgs.gov/arcgis/rest/services/geomac_fires/MapServer/4",
@@ -123,7 +112,8 @@
                 stroke: false,
                 fillOpacity: '0.5',
             };
-        }
+        },
+        pane: 'overlays'
     });
 
     NWS_warnings.bindPopup(function(evt) {
@@ -159,7 +149,8 @@
                 stroke: false,
                 fillOpacity: '0.4',
             };
-        }
+        },
+        pane: 'overlays'
     });
 
     NWS_QPE.bindPopup(function(evt) {
@@ -201,7 +192,8 @@
               } else {
                 return { fillOpacity: '0.5', stroke: false};
               }
-            }
+            },
+        pane: 'overlays'
     });
 
     CPC_Monthly_Drought.bindPopup(function(evt) {
@@ -255,7 +247,8 @@
               } else {
                 return { fillOpacity: '0.5', stroke: false};
               }
-            }
+            },
+        pane: 'overlays'
     });
 
     CPC_Seasonal_Drought.bindPopup(function(evt) {
@@ -312,6 +305,11 @@
         layers: [NWS_warnings, daily_fires, regions]
     });
 
+    map.createPane('boundaries');
+    map.createPane('overlays');
+    map.createPane('points');
+
+
     L.easyButton('fa-home', function (btn, map) {
         map.setView([home.lat, home.lng], home.zoom);
     }, 'Zoom To Home').addTo(map);
@@ -330,6 +328,6 @@
     };
 
     L.control.layers(baseLayers, overlays).addTo(map);
-    map.setMaxBounds(map.getBounds());
+    // map.setMaxBounds(map.getBounds());
 
 }(this));

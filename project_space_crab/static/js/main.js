@@ -86,22 +86,41 @@
         "</div>", evt.feature.properties
     )});
 
-    // // MODIS
-    // var modis = L.esri.featureLayer({
-    //     url: "https://wildfire.cr.usgs.gov/arcgis/rest/services/geomac_fires/MapServer/4",
-    //
-    // });
-    //
-    // // VIIRS
-    // var viirs = L.esri.featureLayer({
-    //     url: "https://wildfire.cr.usgs.gov/arcgis/rest/services/geomac_fires/MapServer/5",
-    //     style: function (feature) {
-    //         return {
-    //             color: '#000000',
-    //             weight: 2,
-    //         };
-    //     }
-    // });
+    // HMS
+    var hms_detects = L.esri.featureLayer({
+        url: "https://wildfire.cr.usgs.gov/arcgis/rest/services/geomac_dyn/MapServer/6",
+        where:"load_stat IN ('Active Burning', '24 Hrs', '48 Hrs')",
+        pane: "points",
+    });
+
+    hms_detects.bindPopup(function(evt) {
+        if(evt.feature.properties.load_stat === "Active Burning"){
+            var load_stat = 'Last 12 hours';
+        } else if(evt.feature.properties.load_stat === "24 Hrs"){
+            var load_stat = 'Last 12-24 hours ';
+        } else if(evt.feature.properties.load_stat === "48 Hrs"){
+            var load_stat = 'Last 24-48 hours';
+        }
+        return L.Util.template(
+        "<div class='container rounded-0' style='max-width:375px;margin-top:5px;'>" +
+        "<div class='row'>" +
+        "<div class='col-xs-12' style='padding:0;'>" +
+        "<span'>Hot Spot Detection</span>" +
+        "</div>" + // col
+        "</div>" + // row
+        "<div class='row'>" +
+        "<div class='col-xs-12' style='padding:0; text-align: center'>" +
+        "<span style='font-size: 2em; font-weight: 700;color: #003d6b;'>" + load_stat + "</span>" +
+        "</div>" + // col
+        "</div>" + // row
+        "<div class='row'>" +
+        "<div class='col-xs-12'>" +
+        "<span class='text-muted'>Detected via {det_method} and the {satellite} satellite</span>" +
+        "</div>" + // col
+        "</div>" + // row
+        "</div>", evt.feature.properties
+    )});
+
 
 
     // NWS WATCHES AND WARNINGS
@@ -125,7 +144,7 @@
         "<div class='container rounded-0' style='max-width:375px;margin-top:5px;'>" +
         "<div class='row'>" +
         "<div class='col-xs-12' style='padding:0;'>" +
-        "<a href='{url}' target='_blank' style='font-size: 1.5em; font-weight: 700; color: #003d6b;'><u>{prod_type}</u></a>" +
+        "<a class='popup-a-link' href='{url}' target='_blank' style='font-size: 1.5em; font-weight: 700;'>{prod_type}</a>" +
         "</div>" + // col
         "</div>" + // row
         "<div class='row'>" +
@@ -227,7 +246,7 @@
         "</div>" + // row
         "<div class='row'>" +
         "<div class='col-xs-12'>" +
-        "<span class='text-muted'><a href='https://www.cpc.ncep.noaa.gov/products/expert_assessment/mdo_summary.php' target='_blank'> More Info</a></span>" +
+        "<span class='text-muted'><a class='popup-a-link' href='https://www.cpc.ncep.noaa.gov/products/expert_assessment/mdo_summary.php' target='_blank'> More Info</a></span>" +
         "</div>" + // col
         "</div>" + // row
         "</div>", evt.feature.properties
@@ -282,7 +301,7 @@
         "</div>" + // row
         "<div class='row'>" +
         "<div class='col-xs-12'>" +
-        "<span class='text-muted'><a href='https://www.cpc.ncep.noaa.gov/products/expert_assessment/sdo_summary.php' target='_blank'> More Info</a></span>" +
+        "<span class='text-muted'><a class='popup-a-link' href='https://www.cpc.ncep.noaa.gov/products/expert_assessment/sdo_summary.php' target='_blank'> More Info</a></span>" +
         "</div>" + // col
         "</div>" + // row
         "</div>", evt.feature.properties
@@ -324,8 +343,8 @@
       },
       "Fires": {
         "NWCC Large Fires": daily_fires,
-        "DNR Incidents": daily_fires,
-        "Satellite Hotspots": daily_fires
+        // "DNR Incidents": daily_fires,
+        "Satellite Hotspots": hms_detects
 
       },
       "Weather": {

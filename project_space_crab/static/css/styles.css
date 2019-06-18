@@ -133,6 +133,14 @@ body{
     box-shadow: none!important;
 }
 
+.popup-a-link{
+    color: #003d6b!important;
+}
+
+.popup-a-link:hover{
+   color: #1A5786!important;
+}
+
 #mapdiv{
     height:400px;
     width: 100%;

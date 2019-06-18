@@ -107,7 +107,6 @@
     // NWS WATCHES AND WARNINGS
     var NWS_warnings = L.esri.featureLayer({
         url: 'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/watch_warn_adv/MapServer/1',
-        simplifyFactor: 1,
         style: function (feature) {
             return {
                 stroke: false,
@@ -292,8 +291,6 @@
     var baseLayers = {
         "Topographic": L.esri.basemapLayer("Topographic"),
         "Satellite": L.esri.basemapLayer("Imagery"),
-        "Terrain": L.esri.basemapLayer("Terrain"),
-        "Streets": L.esri.basemapLayer("Streets")
     };
 
     var home = {
@@ -320,17 +317,33 @@
 
     L.esri.basemapLayer("Topographic").addTo(map);
 
-    var overlays = {
+    var groupedOverlays = {
+      "Boundaries": {
         "Counties": counties,
-        "DNR Regions": regions,
+        "DNR Regions": regions
+      },
+      "Fires": {
         "NWCC Large Fires": daily_fires,
+        "DNR Incidents": daily_fires,
+        "Satellite Hotspots": daily_fires
+
+      },
+      "Weather": {
         "NWS Current Warnings": NWS_warnings,
-        "NWS 7-Day Rainfall": NWS_QPE,
-        "CPC Monthly Drought": CPC_Monthly_Drought,
-        "CPC Seasonal Drought": CPC_Seasonal_Drought
+        "NWS 7-Day Rain Forecast": NWS_QPE,
+        "1-Month Drought Outlook": CPC_Monthly_Drought,
+        "3-Month Drought Outlook": CPC_Seasonal_Drought
+      }
     };
 
-    L.control.layers(baseLayers, overlays).addTo(map);
+    L.control.groupedLayers(baseLayers, groupedOverlays).addTo(map);
+    $( ".leaflet-control-layers-base" ).prepend( "<label class=\"leaflet-control-layers-group-label\"><span class=\"leaflet-control-layers-group-name\">Basemaps</span></label>" );
+    $( "#leaflet-control-layers-group-1" ).after( "<div class='leaflet-control-layers-separator'></div>" );
+    $( "#leaflet-control-layers-group-2" ).after( "<div class='leaflet-control-layers-separator'></div>" );
+
     map.setMaxBounds(map.getBounds());
 
 }(this));
+
+
+

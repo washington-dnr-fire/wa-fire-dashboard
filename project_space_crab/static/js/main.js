@@ -9,6 +9,7 @@
                 weight: 1.5,
             };
         },
+        precision: 10,
         pane: "boundaries"
     });
 
@@ -113,8 +114,10 @@
                 fillOpacity: '0.5',
             };
         },
+        where:"wfo IN ('KSEW', 'KOTX', 'KPDT', 'KBOI', 'KMFR', 'KPQR', 'KMSO')",
         pane: 'overlays'
     });
+
 
     NWS_warnings.bindPopup(function(evt) {
         var t = moment.utc(evt.feature.properties['expiration']).local().fromNow();
@@ -328,6 +331,6 @@
     };
 
     L.control.layers(baseLayers, overlays).addTo(map);
-    // map.setMaxBounds(map.getBounds());
+    map.setMaxBounds(map.getBounds());
 
 }(this));

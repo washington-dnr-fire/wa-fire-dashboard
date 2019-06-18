@@ -33,7 +33,7 @@ body{
     padding: 0;
 }
 
- .leaflet-popup-content-wrapper,.leaflet-popup-content
+.leaflet-popup-content-wrapper,.leaflet-popup-content
  {
    -webkit-border-radius: 0 !important;
    -moz-border-radius: 0 !important;

@@ -27,12 +27,12 @@ html{
 
 body{
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 62.5%; /* 100% = 20pt */
     background-color: #F1F1F1;
     margin-bottom: 60px;
 }
 
 .table{
-    font-size: 1.5rem;
     padding-top: 10px;
     margin-bottom: 0;
 }
@@ -55,8 +55,12 @@ body{
 }
 
 .nav-title{
-    font-size: 1.5em;
+    font-size: 1.6em;
     font-weight: bold;
+}
+
+.nav-item-1{
+    font-size: 1.6em;
 }
 
 /*--- DATE ROW -------------------------------------------------------------------------------------------------------*/
@@ -65,39 +69,35 @@ body{
     padding: 3px 3px 3px 15px;
 }
 
-.date-size{
-    font-size: 0.9em;
+.date{
+    font-size: 1.6em;
+}
+
+.exper{
+    font-size: 1.4em;
 }
 
 /*--- CARDS ROW ------------------------------------------------------------------------------------------------------*/
 
-.top-card-title{
-    font-size: 1.5em;
-    text-align: center;
+.card-header{
+    font-size: 1.6em;
+    font-weight: bold;
 }
-
-.card-title{
-    font-size: 1.5rem;
-    line-height: 1.5rem;
-    margin-bottom: 0.4em;
-}
-
 .card-body{
-    padding: 0;
+    /*padding: 0px 20px;*/
 }
 
-.dual-num{
-    font-size: 4em;
-    text-align: center;
-    margin-top:10px;
+.card-num-1{
+    font-size: 10em;
 }
 
-.single-num{
-    font-size: 7em;
-    text-align: center;
-    margin-top: -10px;
+.card-num-2{
+    font-size: 8em;
 }
+.small-title{
+    font-size: 1.4em;
 
+}
 .card-footer{
     padding: 0;
 }
@@ -144,10 +144,11 @@ body{
 #mapdiv{
     height:400px;
     width: 100%;
+    border: solid #ffffff;
 }
 
 .card-title-other{
-    font-size: 1.4em;
+    font-size: 1.7em;
     font-weight: 700;
     background: #003d6b;
     color: white;
@@ -156,16 +157,7 @@ body{
 }
 
 .bottom-table{
-    font-size: 0.9em;
-}
-
-
-.info-card{
-    background: #ffffff;
-}
-
-.card-title-no-margin{
-    margin-bottom: 0;
+    font-size: 1.2em;
 }
 
 /*-------------- Helpers ----------------------*/

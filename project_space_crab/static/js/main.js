@@ -321,7 +321,8 @@
         center: [home.lat, home.lng],
         zoom: home.zoom,
         minZoom: 6,
-        layers: [NWS_warnings, daily_fires, regions]
+        layers: [NWS_warnings, daily_fires, regions],
+        attributionControl: false
     });
 
     map.createPane('boundaries');

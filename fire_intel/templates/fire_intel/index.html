@@ -6,25 +6,29 @@
     <div class="container-fluid">
         <!-- CARDS ROW -->
         <div class="row mt-2">
-            <div class="col-lg-3 col-md-6 my-2">
-                <div class="card dnr-blue-bg text-light rounded-0">
-                    <div class="dnr-blue-bg card-header border-0 top-card-title">
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 my-2">
+                <div class="card dnr-blue-bg text-light rounded-0 h-100">
+                    <div class="dnr-blue-bg card-header border-0 text-center pb-0">
                         Preparedness Levels
                     </div>
-                    <div class="card-body">
-                        <table class="table table-borderless text-center">
-                            <tr>
-                                <td>
-                                    <h5 class="card-title dual-num">{{ preparedness_level_national }}</h5>
-                                    <small>National</small>
-                                </td>
-                                <td>
-                                    <h5 class="card-title dual-num">{{ preparedness_level_nw }}</h5>
-                                    <small>Northwest</small>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
+                    <div class="card-body py-1">
+                        <div class="row">
+                            <div class="col-6 text-center">
+                                <h5 class="card-num-2">{{ preparedness_level_national }}</h5>
+                            </div>
+                            <div class="col-6 text-center">
+                                <h5 class="card-num-2">{{ preparedness_level_nw }}</h5>
+                            </div>
+                        </div>
+                            <div class="row">
+                                <div class="col-6 text-center">
+                                    <small class="small-title">National</small>
+                                </div>
+                            <div class="col-6 text-center">
+                                <small class="small-title">Northwest</small>
+                            </div>
+                            </div>
+                        </div>
                     <div class="card-footer dnr-blue-bg">
                         <a class="btn btn-primary btn-block rounded-0 text-left nwcc-link" href="https://gacc.nifc.gov/nwcc/content/products/intelligence/MORNINGBRIEF.pdf" target="_blank">
                         Read full report <i class="fas fa-chevron-right white chevron-fix" ></i>
@@ -33,25 +37,29 @@
                 </div>
             </div>
 
-            <div class="col-lg-3 col-md-6 my-2">
-                <div class="card dnr-red-bg text-light rounded-0">
-                    <div class="dnr-red-bg card-header border-0 top-card-title">
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 my-2">
+                <div class="card dnr-red-bg text-light rounded-0 h-100">
+                    <div class="dnr-red-bg card-header border-0 text-center pb-0">
                         NW Teams Assigned
                     </div>
-                    <div class="card-body">
-                        <table class="table table-borderless text-center">
-                            <tr>
-                                <td>
-                                    <h5 class="card-title dual-num">{{type_1_teams_assigned}}</h5>
-                                    <small>Type 1</small>
-                                </td>
-                                <td>
-                                    <h5 class="card-title dual-num">{{ type_2_teams_assigned }}</h5>
-                                    <small>Type 2</small>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
+                    <div class="card-body py-1">
+                        <div class="row">
+                            <div class="col-6 text-center">
+                                <h1 class="card-num-2">{{type_1_teams_assigned}}</h1>
+                            </div>
+                            <div class="col-6 text-center">
+                                <h1 class="card-num-2">{{type_1_teams_assigned}}</h1>
+                            </div>
+                        </div>
+                            <div class="row">
+                                <div class="col-6 text-center">
+                                    <small class="small-title">Type 1</small>
+                                </div>
+                            <div class="col-6 text-center">
+                                <small class="small-title">Type 2</small>
+                            </div>
+                            </div>
+                        </div>
                     <div class="card-footer dnr-red-bg">
                         <a class="btn btn-danger btn-block rounded-0 text-left nwcc-link" href="https://gacc.nifc.gov/nwcc/content/products/intelligence/teams.pdf" target="_blank">
                         Read full report <i class="fas fa-chevron-right white chevron-fix"></i>
@@ -60,13 +68,17 @@
                 </div>
             </div>
 
-            <div class="col-lg-3 col-md-6 my-2">
-                <div class="card dnr-blue-bg text-light rounded-0" style="height:100%">
-                    <div class="dnr-blue-bg card-header border-0 top-card-title">
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 my-2">
+                <div class="card dnr-blue-bg text-light rounded-0 h-100">
+                    <div class="dnr-blue-bg card-header border-0 text-center pb-0">
                         WA Large Fires
                     </div>
-                    <div class="card-body card-body-top">
-                        <h5 class="single-num">{{ wa_large_fires }}</h5>
+                    <div class="card-body py-1">
+                        <div class="row">
+                            <div class="col-12 text-center">
+                                <h1 class="card-num-1">{{ wa_large_fires }}</h1>
+                            </div>
+                        </div>
                     </div>
                     <div class="card-footer dnr-blue-bg">
                         <a class="btn btn-primary btn-block rounded-0 text-left nwcc-link" href="https://gacc.nifc.gov/nwcc/content/products/intelligence/Rpt_LgFiresYTD.pdf" target="_blank">
@@ -76,13 +88,17 @@
                 </div>
             </div>
 
-            <div class="col-lg-3 col-md-6 my-2">
-                <div class="card dnr-red-bg text-light rounded-0" style="height: 100%;">
-                    <div class="dnr-red-bg card-header border-0 top-card-title">
+            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 my-2">
+                <div class="card dnr-red-bg text-light rounded-0 h-100 ">
+                    <div class="dnr-red-bg card-header border-0 text-center pb-0">
                         DNR IA Fires
                     </div>
-                    <div class="card-body">
-                        <h5 class="single-num">{{ dnr_ia_fires }}</h5>
+                    <div class="card-body py-1">
+                        <div class="row">
+                            <div class="col-12 text-center">
+                                <h1 class="card-num-1">{{ dnr_ia_fires }}</h1>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -91,21 +107,21 @@
         <!-- Second Row-->
         <div class="row">
             <!-- Map Col -->
-            <div class="col-lg-8 col-md-8 col-sm-12 mt-2">
+            <div class="col-lg-8 col-md-8 col-sm-12 my-2">
                 <!-- Map Row -->
                 <div class="row">
                     <div class="col-md-12">
-                        <div id="mapdiv" style="border: solid #ffffff;"></div>
+                        <div id="mapdiv"></div>
                     </div>
                 </div>
                 <!-- Table and Graph Row -->
-                <div class="row">
-                    <div class="col-lg-6 col-md-12 col-sm-12 mt-2">
+                <div class="row my-2">
+                    <div class="col-lg-6 col-md-12 col-sm-12 my-2">
                         <div class="card rounded-0">
-                            <div class="card-header border-0 card-title-other rounded-0">
+                            <div class="card-header border-0 rounded-0 dnr-blue-bg card-title-other">
                                <i class="fas fa-users white"></i>&nbsp; Ground Assets
                             </div>
-                            <div class="card-body">
+                            <div class="card-body remove-padding">
                                 <div class="table-responsive">
                                     <table class="table table-sm table-striped table-hover table-bordered bottom-table">
                                         <thead>
@@ -171,12 +187,12 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-6 col-md-12 col-sm-12 mt-2">
-                        <div class="card rounded-0">
-                            <div class="card-header border-0 card-title-other rounded-0">
+                    <div class="col-lg-6 col-md-12 col-sm-12 my-2">
+                        <div class="card rounded-0 mb-2">
+                            <div class="card-header border-0 rounded-0 dnr-blue-bg card-title-other">
                                <i class="fas fa-plane white fa-rotate-45"></i>&nbsp; Aviation Assets
                             </div>
-                            <div class="card-body" style="background:#ffffff;">
+                            <div class="card-body remove-padding" style="background:#ffffff;">
                                 <div class="table-responsive">
                                     <table class="table table-sm table-striped table-hover table-bordered bottom-table">
                                         <thead>
@@ -219,11 +235,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card rounded-0 mt-2">
-                            <div class="card-header border-0 card-title-other rounded-0">
+                        <div class="card rounded-0">
+                            <div class="card-header border-0 rounded-0 dnr-blue-bg card-title-other">
                                 <i class="fas fa-chart-bar white"></i>&nbsp; Fire Statistics
                             </div>
-                            <div class="card-body" style="background:#ffffff;">
+                            <div class="card-body remove-padding" style="background:#ffffff;">
                                 <div class="table-responsive">
                                     <table class="table table-sm table-striped table-hover table-bordered bottom-table">
                                         <thead>
@@ -267,12 +283,12 @@
                 </div>
             </div> <!-- First column -->
 
-            <div class="col-lg-4 col-md-4 col-sm-12 mt-2" >
+            <div class="col-lg-4 col-md-4 col-sm-12 my-2">
                 <div class="card text-dark rounded-0" style="height: 100%; min-height: 700px">
-                    <div class="card-header border-0 card-title-other rounded-0">
+                    <div class="card-header border-0 card-title-other rounded-0 dnr-blue-bg">
                         <i class="fab fa-twitter" style="color:#1DA1F2"></i> &nbsp; DNR Fire Twitter
                     </div>
-                    <div class="card-body">
+                    <div class="card-body remove-padding">
                         <a class="twitter-timeline" data-height="100%" data-width="100%" data-lang="en" data-theme="light" data-chrome="noheader nofooter" data-link-color="#D0092D" href="https://twitter.com/waDNR_fire?ref_src=twsrc%5Etfw" >Tweets by waDNR_fire</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
                     </div>
                 </div>

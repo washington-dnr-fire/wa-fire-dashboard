@@ -48,17 +48,17 @@
 
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-md navbar-dark bg-dark dnr-blue-bg" id='nav'>
-        <a class="d-none d-md-block navbar-brand font-weight-bold remove-padding" href="{% url 'home' %}">
+        <a class="d-none d-md-block navbar-brand font-weight-bold" href="{% url 'home' %}">
             <img class="navbar-brand img-responsive nav-img" src="{%  static '/images/em_dnr_logo_wildfire.png' %}" alt="DNR Logo">
             <h5 class="d-inline align-middle nav-title">DNR Fire Dashboard</h5>
         </a>
         <!-- Truncates navbar text for small screens -->
-        <a class="d-sm-block d-md-none navbar-brand font-weight-bold remove-padding" href="{% url 'home' %}">
+        <a class="d-sm-block d-md-none navbar-brand font-weight-bold" href="{% url 'home' %}">
             <img class="navbar-brand img-responsive nav-img" src="{%  static '/images/em_dnr_logo_wildfire.png' %}" alt="DNR Logo">
             <h5 class="d-inline align-middle nav-title">DNR Fire DB</h5>
         </a>
 
-        <ul class="navbar-nav ml-auto">
+        <ul class="navbar-nav ml-auto nav-item-1">
             <li class="nav-item">
                 {% if user.is_authenticated %}
                     <a class="d-inline nav-link text-light align-middle" href="{% url 'profile' %}">
@@ -76,10 +76,10 @@
     <div class="container-fluid dnr-red-bg border-bottom">
         <div class="row date-header">
             <div class="col-lg-6 col-md-6 col-sm-12 text-left">
-                <small class="d-inline text-light date-size"><strong>Last Updated: </strong>{{ updated_date_txt }}</small>
+                <small class="d-inline text-light date"><strong>Last Updated: </strong>{{ updated_date_txt }}</small>
             </div>
             <div class="col-lg-6 col-md-6 d-none d-md-block text-right">
-                <small class="d-inline text-light font-weight-bold">EXPERIMENTAL</small>
+                <small class="d-inline text-light font-weight-bold exper"><i>EXPERIMENTAL</i></small>
             </div>
         </div>
     </div>

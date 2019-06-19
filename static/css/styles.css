@@ -1,72 +1,166 @@
-/*OVERRIDES*/
+/*-------------- Color Classes --------------------*/
+.dnr-blue-bg{
+    background-color: #003d6b!important;
+}
 
+.dnr-grey-bg{
+    background-color:#dbdbdb!important;
+}
+
+.dnr-red-bg{
+    background-color:#C8102E!important;
+}
+
+.user-red {
+color: coral;
+}
+
+.user-green {
+color: seagreen;
+}
+
+/*-------------- Generics --------------*/
 html{
     position: relative;
     min-height: 100%;
 }
 
 body{
-    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 62.5%; /* 100% = 20pt */
     background-color: #F1F1F1;
     margin-bottom: 60px;
 }
 
-.navbar{
-    font-size: 100%!important;
-}
-
 .table{
-    font-size: 1.5rem;
     padding-top: 10px;
     margin-bottom: 0;
 }
 
-.card-title{
-    font-size: 1.5rem;
-    line-height: 1.5rem;
-    margin-bottom: 0.4em;
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: #f5f5f5;
+}
+
+/*--- MAIN -----------------------------------------------------------------------------------------------------------*/
+
+/*--- NAVBAR ---------------------------------------------------------------------------------------------------------*/
+
+.nav-img{
+    max-height:60px;
+    margin:0;
+    padding: 0;
+}
+
+.nav-title{
+    font-size: 1.6em;
+    font-weight: bold;
+}
+
+.nav-item-1{
+    font-size: 1.6em;
+}
+
+/*--- DATE ROW -------------------------------------------------------------------------------------------------------*/
+
+.date-header{
+    padding: 3px 3px 3px 15px;
+}
+
+.date{
+    font-size: 1.6em;
+}
+
+.exper{
+    font-size: 1.4em;
+}
+
+/*--- CARDS ROW ------------------------------------------------------------------------------------------------------*/
+
+.card-header{
+    font-size: 1.6em;
+    font-weight: bold;
+}
+.card-body{
+    /*padding: 0px 20px;*/
+}
+
+.card-num-1{
+    font-size: 10em;
+}
+
+.card-num-2{
+    font-size: 8em;
+}
+.small-title{
+    font-size: 1.4em;
+
 }
 .card-footer{
     padding: 0;
 }
-.card-body{
-    padding: 0;
+
+.nwcc-link{
+    position: relative;
 }
 
- .leaflet-popup-content-wrapper,.leaflet-popup-content
- {
-   -webkit-border-radius: 0 !important;
-   -moz-border-radius: 0 !important;
-    border-radius: 0 !important;
- }
-/*-------------- LOCAL DIVS --------------*/
-.top-card-title{
-    font-size: 1.5em;
-    text-align: center;
-
+.chevron-fix{
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);"
 }
 
-
-.single-num{
-    font-size: 7em;
-    text-align: center;
-    margin-top: -10px;
+/* Overrides for top NWCC links */
+.btn-primary{
+    color: #ffffff; background: #1A5786; border-color: #1A5786;
 }
 
-.dual-num{
-    font-size: 4em;
-    text-align: center;
-    margin-top:10px;
+.btn:focus:active {
+  outline: none;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .btn-primary:active:focus, .open>.dropdown-toggle.btn-primary {
+    color: #fff;
+    background-color: #003d6b;
+    border-color: #003d6b;
+}
+
+.btn.focus, .btn:focus {
+    outline: 0;
+    box-shadow: none!important;
+}
+
+.popup-a-link{
+    color: #003d6b!important;
+}
+
+.popup-a-link:hover{
+   color: #1A5786!important;
+}
+
+#mapdiv{
+    height:400px;
+    width: 100%;
+    border: solid #ffffff;
 }
 
 .card-title-other{
-    font-size: 1.4em;
+    font-size: 1.7em;
     font-weight: 700;
     background: #003d6b;
     color: white;
     padding-top: 6px;
     padding-bottom: 6px;
 }
+
+.bottom-table{
+    font-size: 1.2em;
+}
+
+/*-------------- Helpers ----------------------*/
 .remove-padding{
     padding: 0;
 }
@@ -79,71 +173,22 @@ body{
     transform: rotate(-45deg);
 }
 
-.dnr-blue-bg{
-    background-color: #003d6b!important;
+/*-------------- Leaflet Styling --------------*/
+.leaflet-popup-content-wrapper,.leaflet-popup-content{
+   -webkit-border-radius: 0 !important;
+   -moz-border-radius: 0 !important;
+    border-radius: 0 !important;
+ }
+
+.leaflet-control{
+    border-radius: 0;
 }
 
-.btn-primary{
-    color: #ffffff; background: #1A5786; border-color: #1A5786;
+.leaflet-control-layers{
+    line-height: 1em;
 }
 
-.nav-item:hover{
-    color:#1DA1F2;
+.leaflet-control-layers-group-label{
+    margin-bottom: 0.2em;
 }
-.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .btn-primary:active:focus, .open>.dropdown-toggle.btn-primary {
-    color: #fff;
-    background-color: #003d6b;
-    border-color: #003d6b; /*set the color you want here*/
-}
-
-.btn.focus, .btn:focus {
-    outline: 0;
-    box-shadow: none!important;
-}
-
-.bottom-table{
-    font-size: 0.9em;
-}
-.btn:focus:active {
-  outline: none;
-}
-
-.dnr-grey-bg{
-    background-color:#dbdbdb!important;
-}
-
-.bg-red{
-    background-color:#C8102E!important;
-}
-
-.info-card{
-    background: #ffffff;
-}
-
-.card-title-no-margin{
-    margin-bottom: 0;
-}
-
-#mapdiv{
-    height:400px;
-    width: 100%;
-}
-
-.footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    /* Set the fixed height of the footer here */
-    background-color: #f5f5f5;
-}
-
-.red {
-color: coral;
-}
-
-.green {
-color: seagreen;
-}
-
-
 

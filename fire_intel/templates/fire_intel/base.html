@@ -8,8 +8,6 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    {#    <meta http-equiv="refresh" content="15"/>#}
-
 
     <!-- Site Title -->
     <title>DNR Fire Dashboard</title>
@@ -22,6 +20,8 @@
     <link rel="stylesheet" href="{% static 'css/vendor/easy-button.css' %}">
     <!-- EasyButton Leaflet -->
     <link rel="stylesheet" href="{% static 'css/vendor/leaflet.groupedlayercontrol.min.css' %}">
+    <!-- Leaflet Sidebar -->
+    <link rel="stylesheet" href="{% static 'css/vendor/leaflet-sidebar.min.css' %}">
     <!-- Custom style sheets -->
     <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
     <!-- Fav Icons -->
@@ -46,54 +46,9 @@
 </head>
 <body>
 
-    <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark dnr-blue-bg" id='nav'>
-        <a class="d-none d-md-block navbar-brand font-weight-bold" href="{% url 'home' %}">
-            <img class="navbar-brand img-responsive nav-img" src="{%  static '/images/em_dnr_logo_wildfire.png' %}" alt="DNR Logo">
-            <h5 class="d-inline align-middle nav-title">DNR Fire Dashboard</h5>
-        </a>
-        <!-- Truncates navbar text for small screens -->
-        <a class="d-sm-block d-md-none navbar-brand font-weight-bold" href="{% url 'home' %}">
-            <img class="navbar-brand img-responsive nav-img" src="{%  static '/images/em_dnr_logo_wildfire.png' %}" alt="DNR Logo">
-            <h5 class="d-inline align-middle nav-title">DNR Fire DB</h5>
-        </a>
-
-        <ul class="navbar-nav ml-auto nav-item-1">
-            <li class="nav-item">
-                {% if user.is_authenticated %}
-                    <a class="d-inline nav-link text-light align-middle" href="{% url 'profile' %}">
-                        <i class="fas fa-user-circle fa-2x user-green align-middle"></i>&nbsp;&nbsp;{{ user.username }}
-                    </a>
-                {% else %}
-                    <a class="d-inline nav-link text-muted align-middle" href="{% url 'login' %}" >
-                        <i class="fas fa-user-circle fa-2x user-red align-middle"></i>&nbsp;&nbsp; Intel Login</a>
-                {% endif %}
-            </li>
-        </ul>
-    </nav>
-
-    <!-- DATE ROW -->
-    <div class="container-fluid dnr-red-bg border-bottom">
-        <div class="row date-header">
-            <div class="col-lg-6 col-md-6 col-sm-12 text-left">
-                <small class="d-inline text-light date"><strong>Last Updated: </strong>{{ updated_date_txt }}</small>
-            </div>
-            <div class="col-lg-6 col-md-6 d-none d-md-block text-right">
-                <small class="d-inline text-light font-weight-bold exper"><i>EXPERIMENTAL</i></small>
-            </div>
-        </div>
-    </div>
-
     <!-- CONTENT -->
     {% block content %}
     {% endblock %}
-
-    <!-- FOOTER -->
-    <footer class="footer text-center border-top">
-        <div class="container py-1">
-            <small><span class="text-muted">2019. WA DNR Fire, Planning and Information Section. Contact <a href="mailto:josh.clark@dnr.wa.gov">Josh Clark</a> or <a href="mailto:kirk.davis@dnr.wa.gov">Kirk Davis</a> with questions, issues, or suggestions.</span></small>
-        </div>
-    </footer>
 
     <!-- SCRIPTS -->
     <!-- jQuery -->
@@ -111,6 +66,8 @@
     <script src="{% static 'js/vendor/easy-button.js' %}"></script>
     <!-- Leaflet Grouped Layer Control -->
     <script src="{% static 'js/vendor/leaflet.groupedlayercontrol.min.js' %}"></script>
+    <!-- Leaflet Sidebar -->
+    <script src="{% static 'js/vendor/leaflet-sidebar.min.js' %}"></script>
     <!-- Moment -->
     <script src="{% static 'js/vendor/moment.js' %}"></script>
     <!-- main js -->

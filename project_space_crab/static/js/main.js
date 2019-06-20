@@ -1,4 +1,4 @@
-(function() {
+$(function() {
 
     // WA COUNTIES
     var counties = L.esri.featureLayer({
@@ -315,24 +315,33 @@
     var home = {
         lat: 47.3826,
         lng: -120.4472,
-        zoom: 6
+        zoom: 7
     };
+
     var map = L.map('mapdiv', {
         center: [home.lat, home.lng],
         zoom: home.zoom,
-        minZoom: 6,
-        layers: [NWS_warnings, daily_fires, regions],
-        attributionControl: false
+        minZoom: 7,
+        layers: [NWS_warnings, daily_fires, hms_detects, regions],
+        attributionControl: false,
+        cursor: false
     });
+    map.zoomControl.setPosition('bottomright');
+
+    // create the sidebar instance and add it to the map
+    var sidebar = L.control.sidebar({ container: 'sidebar', autopan: true, closeButton: true })
+        .addTo(map)
+        .open('home');
 
     map.createPane('boundaries');
     map.createPane('overlays');
     map.createPane('points');
 
-
     L.easyButton('fa-home', function (btn, map) {
         map.setView([home.lat, home.lng], home.zoom);
-    }, 'Zoom To Home').addTo(map);
+    }, 'Zoom To Home', {
+            position: 'bottomright'
+    }).addTo(map);
 
 
     L.esri.basemapLayer("Topographic").addTo(map);
@@ -361,9 +370,9 @@
     $( "#leaflet-control-layers-group-1" ).after( "<div class='leaflet-control-layers-separator'></div>" );
     $( "#leaflet-control-layers-group-2" ).after( "<div class='leaflet-control-layers-separator'></div>" );
 
-    map.setMaxBounds(map.getBounds());
+    //map bounces back and forth using this for some reason
+    // map.setMaxBounds(map.getBounds());
 
-}(this));
-
+    });
 
 

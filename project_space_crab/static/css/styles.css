@@ -60,16 +60,20 @@ a:hover, a:active, li.active{
 /*--- MAIN -----------------------------------------------------------------------------------------------------------*/
 
 
-/*.nwcc-link{*/
-/*    position: relative;*/
-/*}*/
+.nwcc-link{
+    position: relative;
+    padding:5px 10px;
+}
 
-/*.chevron-fix{*/
-/*    position: absolute;*/
-/*    right: 16px;*/
-/*    top: 50%;*/
-/*    transform: translateY(-50%);"*/
-/*}*/
+.nwcc-link:hover{
+    background: #E22A48!important;
+}
+.chevron-fix{
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);"
+}
 
 /* Overrides for top NWCC links */
 .btn-primary{

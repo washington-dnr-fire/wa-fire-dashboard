@@ -41,17 +41,17 @@ $(function() {
         "<div class='container rounded-0' style='max-width:375px;margin-top:5px;'>" +
         "<div class='row'>" +
         "<div class='col-xs-12' style='padding:0;'>" +
-        "<span style='text-align: center;'>IFPL Zone: {ZONE}</span>" +
+        "<span style='text-align: center;'>Zone {ZONE}</span>" +
         "</div>" + // col
         "</div>" + // row
         "<div class='row'>" +
         "<div class='col-xs-12' style='padding:0;'>" +
-        "<span style='font-size: 2em; font-weight:bolder;color: #003d6b;'>{FIRE_PRECAUTION_LEVEL} </span>" +
+        "<span style='font-size: 1.5em; font-weight:bolder;color: #003d6b;'>Level {FIRE_PRECAUTION_LEVEL} </span>" +
         "</div>" + // col
         "</div>" + // row
         "<div class='row'>" +
         "<div class='col-xs-12'>" +
-        "<p class='text-muted mt-0'>{NOTES_TXT}</p>" +
+        "<p class='text-muted'>{NOTES_TXT}</p>" +
         "</div>" + // col
         "</div>" + // row
         "<div class='row'>" +

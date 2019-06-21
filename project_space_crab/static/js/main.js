@@ -487,16 +487,13 @@ $(function() {
       "Fires": {
         "NWCC Large Fires": daily_fires,
         // "DNR Incidents": daily_fires,
-<<<<<<< HEAD
         "Satellite Hotspots": hms_detects,
         "EGP Active Incidents": egp_data_active_incidents,
-=======
         "Satellite Hotspots": hms_detects
       },
       "Fire Risk":{
           "DNR Fire Danger": firedanger,
           "IFPLs": ifpl
->>>>>>> f01a3857f89e1eb8c204ca64ff2030edb90469f9
       },
       "Weather": {
         "NWS Current Warnings": NWS_warnings,

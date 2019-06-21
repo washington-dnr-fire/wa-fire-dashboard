@@ -25,6 +25,81 @@ $(function() {
         pane: "boundaries"
     });
 
+    var ifpl = L.esri.featureLayer({
+        url: "https://gis.dnr.wa.gov/site3/rest/services/Public_Wildfire/WADNR_PUBLIC_WD_WildFire_EGP_Portal/MapServer/11",
+        pane: "overlays",
+        style: function (feature) {
+            return {
+                color: '#000000',
+                fillOpacity: '0.5',
+            };
+        },
+    });
+
+    ifpl.bindPopup(function(evt) {
+        return L.Util.template(
+        "<div class='container rounded-0' style='max-width:375px;margin-top:5px;'>" +
+        "<div class='row'>" +
+        "<div class='col-xs-12' style='padding:0;'>" +
+        "<span style='text-align: center;'>IFPL Zone: {ZONE}</span>" +
+        "</div>" + // col
+        "</div>" + // row
+        "<div class='row'>" +
+        "<div class='col-xs-12' style='padding:0;'>" +
+        "<span style='font-size: 2em; font-weight:bolder;color: #003d6b;'>{FIRE_PRECAUTION_LEVEL} </span>" +
+        "</div>" + // col
+        "</div>" + // row
+        "<div class='row'>" +
+        "<div class='col-xs-12'>" +
+        "<p class='text-muted mt-0'>{NOTES_TXT}</p>" +
+        "</div>" + // col
+        "</div>" + // row
+        "<div class='row'>" +
+        "<div class='col-xs-12'>" +
+        "<span>ISSUED BY: DNR {RNG_NM} REGION &nbsp;&nbsp;<a class='popup-a-link' href='mailto:{RGN_EMAIL}'><i class='fas fa-envelope' style='color: #003d6b!important;'></i></a></span>" +
+        "</div>" + // col
+        "</div>" + // row
+        "</div>", evt.feature.properties
+
+    )});
+    var firedanger = L.esri.featureLayer({
+        url: "https://gis.dnr.wa.gov/site3/rest/services/Public_Wildfire/WADNR_PUBLIC_WD_WildfireDanger/MapServer/0",
+        pane: "overlays",
+        style: function (feature) {
+            return {
+                color: '#000000',
+                fillOpacity: '0.5',
+            };
+        },
+    });
+
+    firedanger.bindPopup(function(evt) {
+        return L.Util.template(
+        "<div class='container rounded-0' style='max-width:375px;margin-top:5px;'>" +
+        "<div class='row'>" +
+        "<div class='col-xs-12' style='padding:0;'>" +
+        "<span style='text-align: center;'>{FIREDANGER_AREA_NM}</span>" +
+        "</div>" + // col
+        "</div>" + // row
+        "<div class='row'>" +
+        "<div class='col-xs-12' style='padding:0;'>" +
+        "<span style='font-size: 1.5em; font-weight:bolder;color: #003d6b;'>{FIRE_DANGER_LEVEL_NM} Fire Danger</span>" +
+        "</div>" + // col
+        "</div>" + // row
+        "<div class='row'>" +
+        "<div class='col-xs-12'>" +
+        "<p class='text-muted'>{NOTES_TXT}</p>" +
+        "</div>" + // col
+        "</div>" + // row
+        "<div class='row'>" +
+        "<div class='col-xs-12'>" +
+        "<span>ISSUED BY: DNR {DNR_REGION_NAME} REGION &nbsp;&nbsp;<a class='popup-a-link' href='mailto:{REGION_EMAIL_ADDR}'><i class='fas fa-envelope' style='color: #003d6b!important;'></i></a></span>" +
+        "</div>" + // col
+        "</div>" + // row
+        "</div>", evt.feature.properties
+
+    )});
+
     // NWCC Daily Fires
     // Icon made by Vectors Market from Flaticon.com
     var fireIcon = L.icon({
@@ -355,7 +430,10 @@ $(function() {
         "NWCC Large Fires": daily_fires,
         // "DNR Incidents": daily_fires,
         "Satellite Hotspots": hms_detects
-
+      },
+      "Fire Risk":{
+          "DNR Fire Danger": firedanger,
+          "IFPLs": ifpl
       },
       "Weather": {
         "NWS Current Warnings": NWS_warnings,
@@ -369,10 +447,10 @@ $(function() {
     $( ".leaflet-control-layers-base" ).prepend( "<label class=\"leaflet-control-layers-group-label\"><span class=\"leaflet-control-layers-group-name\">Basemaps</span></label>" );
     $( "#leaflet-control-layers-group-1" ).after( "<div class='leaflet-control-layers-separator'></div>" );
     $( "#leaflet-control-layers-group-2" ).after( "<div class='leaflet-control-layers-separator'></div>" );
+    $( "#leaflet-control-layers-group-3" ).after( "<div class='leaflet-control-layers-separator'></div>" );
+
 
     //map bounces back and forth using this for some reason
     // map.setMaxBounds(map.getBounds());
 
     });
-
-

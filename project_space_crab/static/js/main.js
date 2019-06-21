@@ -1,5 +1,6 @@
 $(function() {
 
+    console.log(document.getElementsByTagName('title')[0].innerHTML)
     // WA COUNTIES
     var counties = L.esri.featureLayer({
         url: "https://gis.dnr.wa.gov/site3/rest/services/Public_Boundaries/WADNR_PUBLIC_Cadastre_OpenData/MapServer/11",
@@ -85,6 +86,53 @@ $(function() {
             "</div>" + // row
         "</div>", evt.feature.properties
     )});
+
+    // egp stuff, layer_ids match the EGP Active Incidents Feature Service
+
+    var large_imsr_type1 = new L.GeoJSON.AJAX("./egp_data/0",{
+        pointToLayer: function (feature, latlng) {
+            return L.marker(latlng, {icon: fireIcon});
+        },
+    });  
+
+    var large_imsr_type2 = new L.GeoJSON.AJAX("./egp_data/1",{
+        pointToLayer: function (feature, latlng) {
+            return L.marker(latlng, {icon: fireIcon});
+        },
+    });  
+
+    var large_imsr_other = new L.GeoJSON.AJAX("./egp_data/2",{
+        pointToLayer: function (feature, latlng) {
+            return L.marker(latlng, {icon: fireIcon});
+        },
+    });     
+
+
+    var other_209 = new L.GeoJSON.AJAX("./egp_data/3",{
+        pointToLayer: function (feature, latlng) {
+            return L.marker(latlng, {icon: fireIcon});
+        },
+    });     
+
+    var emerging_incidents_less24 = new L.GeoJSON.AJAX("./egp_data/4",{
+        pointToLayer: function (feature, latlng) {
+            return L.marker(latlng, {icon: fireIcon});
+        },
+    });
+    
+    emerging_incidents_less24.bindPopup(function(evt){
+        return L.Util.template(
+            evt.feature.properties.Name,
+    )});
+    
+    var emerging_incidents_greater24 = new L.GeoJSON.AJAX("./egp_data/5",{
+        pointToLayer: function (feature, latlng) {
+            return L.marker(latlng, {icon: fireIcon});
+        },
+    });      
+
+    var egp_data_active_incidents = L.layerGroup([large_imsr_type1,large_imsr_type2,large_imsr_other,other_209,emerging_incidents_less24,emerging_incidents_greater24]);
+
 
     // HMS
     var hms_detects = L.esri.featureLayer({
@@ -346,6 +394,16 @@ $(function() {
 
     L.esri.basemapLayer("Topographic").addTo(map);
 
+        //active incidents from EGP
+        // var emerging_incidents_less24_request = $.ajax({
+        //     url: "./egp_data",
+        //     dataType: "json",
+        //     success: console.log("egp data loaded"),
+        //     error: function (xhr) {
+        //         console.log(xhr.statusText)
+        //       }
+        // });
+
     var groupedOverlays = {
       "Boundaries": {
         "Counties": counties,
@@ -354,8 +412,8 @@ $(function() {
       "Fires": {
         "NWCC Large Fires": daily_fires,
         // "DNR Incidents": daily_fires,
-        "Satellite Hotspots": hms_detects
-
+        "Satellite Hotspots": hms_detects,
+        "EGP Active Incidents": egp_data_active_incidents,
       },
       "Weather": {
         "NWS Current Warnings": NWS_warnings,

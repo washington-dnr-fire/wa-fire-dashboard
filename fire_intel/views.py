@@ -2,6 +2,8 @@ from django.http import HttpResponse
 from django.template import loader
 from .models import IntelReport
 from datetime import timezone
+from django.http import JsonResponse
+import requests
 
 
 # Create your views here.
@@ -19,13 +21,13 @@ def index(request):
             'wa_large_fires': latest_intel_report.wa_large_fires,
             'dnr_ia_fires': latest_intel_report.dnr_ia_fires,
             'westside_dnr_responses_count': latest_intel_report.westside_dnr_responses_count,
-            'westside_dnr_fire_count':latest_intel_report.westside_dnr_fire_count,
-            'westside_dnr_fire_acres':latest_intel_report.westside_dnr_fire_acres,
-            'westside_all_fire_acres':latest_intel_report.westside_all_fire_acres,
+            'westside_dnr_fire_count': latest_intel_report.westside_dnr_fire_count,
+            'westside_dnr_fire_acres': latest_intel_report.westside_dnr_fire_acres,
+            'westside_all_fire_acres': latest_intel_report.westside_all_fire_acres,
             'eastside_dnr_responses_count': latest_intel_report.eastside_dnr_responses_count,
-            'eastside_dnr_fire_count':latest_intel_report.eastside_dnr_fire_count,
-            'eastside_dnr_fire_acres':latest_intel_report.eastside_dnr_fire_acres,
-            'eastside_all_fire_acres':latest_intel_report.eastside_all_fire_acres,
+            'eastside_dnr_fire_count': latest_intel_report.eastside_dnr_fire_count,
+            'eastside_dnr_fire_acres': latest_intel_report.eastside_dnr_fire_acres,
+            'eastside_all_fire_acres': latest_intel_report.eastside_all_fire_acres,
             'sum_dnr_response_count': latest_intel_report.westside_dnr_responses_count + latest_intel_report.eastside_dnr_responses_count,
             'sum_dnr_fire_count': latest_intel_report.westside_dnr_fire_count + latest_intel_report.eastside_dnr_fire_count,
             'sum_dnr_fire_acres': latest_intel_report.westside_dnr_fire_acres + latest_intel_report.eastside_dnr_fire_acres,
@@ -73,14 +75,14 @@ def index(request):
             'wa_large_fires': 0,
             'dnr_ia_fires': 0,
             'westside_dnr_responses_count': 0,
-            'westside_dnr_fire_count':0,
-            'westside_dnr_fire_acres':0,
-            'westside_all_fire_acres':0,
-            'eastside_dnr_responses_count':0,
-            'eastside_dnr_fire_count':0,
-            'eastside_dnr_fire_acres':0,
-            'eastside_all_fire_acres':0,
-            'sum_dnr_response_count':0,
+            'westside_dnr_fire_count': 0,
+            'westside_dnr_fire_acres': 0,
+            'westside_all_fire_acres': 0,
+            'eastside_dnr_responses_count': 0,
+            'eastside_dnr_fire_count': 0,
+            'eastside_dnr_fire_acres': 0,
+            'eastside_all_fire_acres': 0,
+            'sum_dnr_response_count': 0,
             'sum_dnr_fire_count': 0,
             'sum_dnr_fire_acres': 0,
             'sum_all_fire_acres': 0,
@@ -125,7 +127,8 @@ def profile(request):
     template = loader.get_template('fire_intel/profile.html')
     if IntelReport.objects.count() > 0:
         latest_intel_report = IntelReport.objects.latest("date_of_report")
-        updated_date_txt = latest_intel_report.date_of_report.strftime("%m/%d/%Y, %H:%M:%S")
+        updated_date_txt = latest_intel_report.date_of_report.strftime(
+            "%m/%d/%Y, %H:%M:%S")
     else:
         updated_date_txt = "No reports available"
     if request.user.is_authenticated:
@@ -146,3 +149,33 @@ def profile(request):
             'updated_date_txt': updated_date_txt,
         }
         return HttpResponse(template.render(context, request))
+
+
+def egp_data(request, layer_id):
+
+    egp_active_incident_map_service = "https://egp.nwcg.gov/arcgis/rest/services/FireCOP/ActiveIncidents/MapServer/{}".format(layer_id)
+    referer = 'http://dnr.wa.gov'
+
+    OR_WA_ENVELOPE = {
+        "xmin":-124.86082024299998,
+        "ymin":41.99208161100006,
+        "xmax":-116.46316225199996,
+        "ymax":49.002431632000025,
+        "spatialReference": {"wkid": 4326, "latestWkid": 4326}
+        }
+
+    # making the lightning points request
+    # basic check on the count - to test the token
+    request_params = {
+        'token': IntelReport.get_that_egp_token(),
+        'where': "GACC='NWCC'",
+        'f': 'geojson',
+        'geometry': str(OR_WA_ENVELOPE),
+        'outFields': '*',
+        }
+
+    s = requests.Session()
+    s.headers.update({'referer': referer})
+    r = s.post(egp_active_incident_map_service + "/query?", data=request_params)
+    results = r.json()
+    return JsonResponse(results, safe=False)

@@ -1,6 +1,13 @@
+// TO DO
+// Add MODIS AND VIIRS separately
+// Add lightning
+// Clean up EGP fire occurrence layers
+// Add weather forecasts?
+// Add geolocation
+// Add lat/lon picker
+
 $(function() {
 
-    console.log(document.getElementsByTagName('title')[0].innerHTML)
     // WA COUNTIES
     var counties = L.esri.featureLayer({
         url: "https://gis.dnr.wa.gov/site3/rest/services/Public_Boundaries/WADNR_PUBLIC_Cadastre_OpenData/MapServer/11",
@@ -126,7 +133,7 @@ $(function() {
                         "<table class='table table-sm' style='font-size: 1em'>" +
                             "<thead>" +
                                 "<tr>" +
-                                    "<th colspan='4' class='dnr-blue-bg text-light' style='font-weight: 700;'>{FIRE_NM}</th>" +
+                                    "<th colspan='4' class='' style='font-size: 1.5em; font-weight:bolder;color: #003d6b; border-top: none;'>{FIRE_NM}</th>" +
                                 "</tr>" +
                             "</thead>" +
                             "<tbody>" +
@@ -157,6 +164,7 @@ $(function() {
                             "</tbody>" +
                         "</table>" + //table
                     "</div>" + //responsive table
+                    "<span class='text-muted'><small>Source: Northwest Coordination Center</small></span>" +
                 "</div>" + // col
             "</div>" + // row
         "</div>", evt.feature.properties
@@ -168,18 +176,21 @@ $(function() {
         pointToLayer: function (feature, latlng) {
             return L.marker(latlng, {icon: fireIcon});
         },
+        pane: "points",
     });  
 
     var large_imsr_type2 = new L.GeoJSON.AJAX("./egp_data/1",{
         pointToLayer: function (feature, latlng) {
             return L.marker(latlng, {icon: fireIcon});
         },
+        pane: "points",
     });  
 
     var large_imsr_other = new L.GeoJSON.AJAX("./egp_data/2",{
         pointToLayer: function (feature, latlng) {
             return L.marker(latlng, {icon: fireIcon});
         },
+        pane: "points",
     });     
 
 
@@ -187,17 +198,19 @@ $(function() {
         pointToLayer: function (feature, latlng) {
             return L.marker(latlng, {icon: fireIcon});
         },
+        pane: "points",
     });     
 
     var emerging_incidents_less24 = new L.GeoJSON.AJAX("./egp_data/4",{
         pointToLayer: function (feature, latlng) {
             return L.marker(latlng, {icon: fireIcon});
         },
+        pane: "points",
     });
     
     emerging_incidents_less24.bindPopup(function(evt){
         return L.Util.template(
-            evt.feature.properties.Name,
+            evt.feature.properties.popupinfo,
     )});
     
     var emerging_incidents_greater24 = new L.GeoJSON.AJAX("./egp_data/5",{
@@ -207,7 +220,6 @@ $(function() {
     });      
 
     var egp_data_active_incidents = L.layerGroup([large_imsr_type1,large_imsr_type2,large_imsr_other,other_209,emerging_incidents_less24,emerging_incidents_greater24]);
-
 
     // HMS
     var hms_detects = L.esri.featureLayer({
@@ -299,7 +311,6 @@ $(function() {
 
     NWS_QPE.bindPopup(function(evt) {
         var t = moment.utc(evt.feature.properties['end_time']).local().format('dddd, MMMM Do YYYY');
-
         return L.Util.template(
         "<div class='container rounded-0' style='max-width:375px;margin-top:5px;'>" +
         "<div class='row'>" +
@@ -462,22 +473,21 @@ $(function() {
 
     L.easyButton('fa-home', function (btn, map) {
         map.setView([home.lat, home.lng], home.zoom);
+
     }, 'Zoom To Home', {
-            position: 'bottomright'
+        position: 'bottomright'
     }).addTo(map);
 
+    L.control.locate({
+        position: 'bottomright',
+        returnToPrevBounds: true,
+        icon: 'fas fa-location-arrow',
+        locateOptions: {
+               maxZoom: 13
+        }
+    }).addTo(map);
 
     L.esri.basemapLayer("Topographic").addTo(map);
-
-        //active incidents from EGP
-        // var emerging_incidents_less24_request = $.ajax({
-        //     url: "./egp_data",
-        //     dataType: "json",
-        //     success: console.log("egp data loaded"),
-        //     error: function (xhr) {
-        //         console.log(xhr.statusText)
-        //       }
-        // });
 
     var groupedOverlays = {
       "Boundaries": {
@@ -486,8 +496,6 @@ $(function() {
       },
       "Fires": {
         "NWCC Large Fires": daily_fires,
-        // "DNR Incidents": daily_fires,
-        "Satellite Hotspots": hms_detects,
         "EGP Active Incidents": egp_data_active_incidents,
         "Satellite Hotspots": hms_detects
       },
@@ -508,7 +516,6 @@ $(function() {
     $( "#leaflet-control-layers-group-1" ).after( "<div class='leaflet-control-layers-separator'></div>" );
     $( "#leaflet-control-layers-group-2" ).after( "<div class='leaflet-control-layers-separator'></div>" );
     $( "#leaflet-control-layers-group-3" ).after( "<div class='leaflet-control-layers-separator'></div>" );
-
 
     //map bounces back and forth using this for some reason
     // map.setMaxBounds(map.getBounds());

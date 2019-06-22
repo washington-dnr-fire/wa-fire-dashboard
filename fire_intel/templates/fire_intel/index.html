@@ -21,6 +21,9 @@
         <!-- bottom aligned tabs -->
         <ul role="tablist">
             <li>
+                <a href="#about" role="tab"><i class='fas fa-info-circle text-white'></i></a>
+            </li>
+            <li>
                 {% if user.is_authenticated %}
                 <a href="{% url 'profile' %}">
                     <i class="fas fa-user-circle user-green align-middle"></i>
@@ -43,14 +46,13 @@
             <p class="mt-2 date-update">Last Updated: {{ updated_date_txt }}</p>
             <p class="text-muted mb-2 date-disclaim mb-2">This page is generally updated once a day, usually before 0900 PT</p>
 
-{#                <img class="img-responsive align-middle text-center nav-img" src="{%  static '/images/em_dnr_logo_wildfire.png' %}" alt="DNR Logo" style="max-height: 80px">#}
             <!-- 1st row -->
             <div class="row">
                 <div class="col-6 pr-2 mt-2">
                     <div class="card rounded-0 h-100">
                         <div class="card-body text-center text-white">
                             <h5 class="card-num">{{ preparedness_level_national }}</h5>
-                            <small class="small-title">National Level</small>
+                            <small class="small-title">National Preparedness Level</small>
                         </div>
                     </div>
                 </div>
@@ -59,7 +61,7 @@
                     <div class="card rounded-0 h-100">
                         <div class="card-body text-center text-white">
                             <h5 class="card-num">{{ preparedness_level_nw}}</h5>
-                            <small class="small-title">Northwest Level</small>
+                            <small class="small-title">Northwest Preparedness Level</small>
                         </div>
                     </div>
                 </div>
@@ -71,7 +73,7 @@
                     <div class="card rounded-0 h-100">
                         <div class="card-body text-center text-white">
                             <h5 class="card-num">{{ type_1_teams_assigned }}</h5>
-                            <small class="small-title">Type 1 Teams</small>
+                            <small class="small-title">Northwest Type 1 Teams Deployed</small>
                         </div>
                     </div>
                 </div>
@@ -80,7 +82,7 @@
                     <div class="card rounded-0 h-100">
                         <div class="card-body text-center text-white">
                             <h5 class="card-num">{{ type_2_teams_assigned }}</h5>
-                            <small class="small-title">Type 2 Teams</small>
+                            <small class="small-title">Northwest Type 2 Teams Deployed</small>
                         </div>
                     </div>
                 </div>
@@ -92,7 +94,7 @@
                     <div class="card rounded-0 h-100 text-white">
                         <div class="card-body text-center">
                             <h5 class="card-num">{{ wa_large_fires }}</h5>
-                            <small class="small-title">WA Large Fires</small>
+                            <small class="small-title">Current WA Large Fires</small>
                         </div>
                     </div>
                 </div>
@@ -101,7 +103,7 @@
                     <div class="card rounded-0 h-100 text-white">
                         <div class="card-body text-center">
                             <h5 class="card-num">{{ dnr_ia_fires }}</h5>
-                            <small class="small-title">DNR IA Fires</small>
+                            <small class="small-title">New DNR IA Fires</small>
                         </div>
                     </div>
                 </div>
@@ -302,11 +304,31 @@
                 </div>
             </div> <!-- /end 1st row -->
         </div> <!-- /end panel -->
+
+        <!-- about panel -->
+        <div class="leaflet-sidebar-pane" id="about">
+            <h1 class="leaflet-sidebar-header">About
+                <span class="leaflet-sidebar-close"><i class="fa fa-caret-left"></i></span>
+            </h1>
+            <div class="row">
+                <div class="col-12">
+                    <h5 class="my-2">DNR Fire Operations Dashboard</h5>
+                    <p class="my-2">The <a href="https://www.dnr.wa.gov/" target="_blank">Washington DNR</a> fire operations dashboard is a situational awareness and decision support tool for state fire managers. It conveys numerous geospatial, statistical, and tabular information in a mobile-friendly, lightweight design where data updates are driven by our intelligence officers and partner agencies. We made this application open access to encourage public and other agency benefit and hope you find it useful! </p>
+                    <p class="my-2">For help, feedback, or suggestions, please contact <a href="mailto:josh.clark@dnr.wa.gov">Josh Clark</a> or <a href="mailto:kirk.davis@dnr.wa.gov">Kirk Davis</a>, DNR Fire Planning and Information. </p>
+                    <p class="text-muted">Version 0.1 (BETA)</p>
+                </div>
+            </div> <!-- /end 1st row -->
+        </div> <!-- /end panel -->
     </div> <!-- /end sidebar content -->
 </div> <!-- /end sidebar -->
 
 <!-- Map -->
-<div id="mapdiv"></div>
+
+<div id="mapdiv">
+    <div class="overlay">
+        <img class="img-responsive text-right" src="{%  static '/images/em_dnr_logo_wildfire.png' %}" alt="DNR Logo" style="max-height: 100%; padding: 0; margin:0;">
+    </div>
+</div>
 
 
 {% endblock %}

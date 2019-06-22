@@ -15,7 +15,7 @@
 }
 
 .user-green {
-color: seagreen;
+    color: seagreen;
 }
 
 /*--- Globals --------------------------------------------------------------------------------------------------------*/
@@ -24,8 +24,22 @@ html, body, #mapdiv{
     font-family: 'Roboto', sans-serif;
 }
 
+#mapdiv{
+    position: relative;
+}
 caption{
     color: #000000;
+}
+
+.overlay {
+    max-height: 64px;
+    height: 64px;
+    position: absolute;
+    right: 42px;
+    bottom: 10px;
+    z-index: 1000;
+    background-color: rgba(255, 200, 0, 0.0);
+    pointer-events: auto;
 }
 
 .date-update{
@@ -37,12 +51,13 @@ caption{
 .date-disclaim{
     font-size: 1em;
 }
+
 /*--- Sidebar --------------------------------------------------------------------------------------------------------*/
 .leaflet-sidebar-tabs>ul>li.active{
-    background: #33709E!important;
+    background: #33709E;
 }
 .leaflet-sidebar-tabs>ul>li:hover{
-    background: #33709E!important;
+    background: #33709E;
 }
 .leaflet-sidebar.leaflet-touch {
     border: none;
@@ -52,7 +67,7 @@ caption{
 }
 
 .leaflet-sidebar-header{
-    background: #003d6b;
+    background: #33709E;
     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 }
 
@@ -79,16 +94,22 @@ caption{
     color: #003d6b!important;
 }
 
-.popup-a-link:hover{
+.popup-a-link.hover{
    color: #1A5786!important;
 }
 
-.region-name
-{
+.region-name {
     text-transform:capitalize;
 }
 
+.leaflet-control-locate a{
+    font-size: inherit;
+}
 
+.leaflet-control-locate.active.following a{
+    color: #33709E;
+
+}
 /*--- Home Panel -----------------------------------------------------------------------------------------------------*/
 .card-num{
     font-size:5em;

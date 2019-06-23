@@ -27,8 +27,13 @@ html, body, #mapdiv{
 #mapdiv{
     position: relative;
 }
+
 caption{
     color: #000000;
+}
+
+button, .leaflet-bar-part{
+    border-radius: 0!important;
 }
 
 .overlay {

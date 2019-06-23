@@ -28,6 +28,7 @@ caption{
     color: #000000;
 }
 
+
 .date-update{
     font-size: 1.2em;
     font-weight: bold;
@@ -142,4 +143,8 @@ caption{
     -ms-transform: rotate(-45deg);
     -o-transform: rotate(-45deg);
     transform: rotate(-45deg);
+}
+
+.btn-padded{
+    padding:5px 10px
 }

@@ -1,25 +1,47 @@
 {% extends 'fire_intel/base.html' %}
 {% block content %}
+{% load static %}
 
-      <div class="container py-5 text-center">
-        <h1>User Profile and Administration</h1>
-      {% if user.is_authenticated %}
-      <br>
-            <h4><strong> Hi {{ first_name }}! </strong></h4>
+
+<style>
+html, body{
+    height: 100%;
+}
+</style>
+<div class="container-fluid" style="min-height: 100%">
+<div class="row">
+    <div class="col-1 dnr-blue-bg" style="min-height:100vh">
+    </div>
+    <div class="col-9 h-100 text-left text-dark align-middle mt-4">
+        <img class="img-responsive d-inline-block" src="{%  static '/images/em_dnr_logo_wildfire.png' %}" alt="DNR Logo" style="max-height: 60px; padding: 0; margin:0;"><h5 class="d-inline-block">User Profile</h5>
+        <hr class="login-line">
+        {% if user.is_authenticated %}
             <br>
-            <p><strong>username: </strong>{{ username }}</p>
-            <p><strong>name: </strong> {{ first_name }} {{ last_name }}</p>
-            <p><strong>email: </strong> {{ email }}</p>
-            <p><strong>last login: </strong> {{ user.last_login }}</p>
+            <h4 class="ml-4"><strong> Hi {{ first_name }}! </strong></h4>
+            <br>
+            <p class="ml-4"><strong>Username: </strong>{{ username }}</p>
+            <p class="ml-4"><strong>Name: </strong> {{ first_name }} {{ last_name }}</p>
+            <p class="ml-4"><strong>E-mail: </strong> {{ email }}</p>
+            <p class="ml-4"><strong>Last Login: </strong> {{ user.last_login }}</p>
             <br>
             <hr>
-            <p>
-                <button type="button" class="btn btn-secondary m-2" onclick="location.href='{% url 'admin:index' %}'">Go to Admin Page</button>
-                <button type="button" class="btn btn-secondary m-2" onclick="location.href='{% url 'logout' %}'">Log Out</button>
+            <p class="ml-4">
+                <button type="button" class="btn btn-sm rounded-0 border-0 text-white btn-secondary" style="padding:5px 10px;" onclick="location.href='{% url 'index' %}'"><i class="fas fa-chevron-left"></i>&nbsp;&nbsp;Back</button>
+                <button type="button" class="btn btn-sm rounded-0 border-0 text-white dnr-red-bg nwcc-link ml-2" onclick="location.href='{% url 'admin:index' %}'">Go to Admin Page</button>
+                <button type="button" class="btn btn-sm btn-secondary rounded-0 border-0 text-white m-2" style="padding:5px 10px;" onclick="location.href='{% url 'logout' %}'"><i class="fas fa-sign-out-alt"></i>&nbsp;&nbsp;Log Out</button>
+
             </p>
         {% else %}
             <h4> Hi there anonymous!</h4><br>
-          <p>Please <a href="{% url 'login' %}">log-in</a> to view profile details!</p>
+          <p>Please <a href="{% url 'login' %}">log in</a> to view profile details!</p>
         {% endif %}
-      </div><!-- /.container -->
+
+
+    </div>
+
+    <div class="col-2 h-100">
+    </div>
+    </div>
+</div>
+
 {% endblock %}

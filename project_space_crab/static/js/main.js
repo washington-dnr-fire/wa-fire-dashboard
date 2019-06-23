@@ -3,8 +3,9 @@
 // Add lightning
 // Clean up EGP fire occurrence layers
 // Add weather forecasts?
-// Add geolocation
 // Add lat/lon picker
+//implement leaflet-measure?
+// add npm support/use
 
 $(function() {
 
@@ -474,7 +475,7 @@ $(function() {
     L.easyButton('fa-home', function (btn, map) {
         map.setView([home.lat, home.lng], home.zoom);
 
-    }, 'Zoom To Home', {
+    }, 'Zoom to home', {
         position: 'bottomright'
     }).addTo(map);
 
@@ -482,6 +483,7 @@ $(function() {
         position: 'bottomright',
         returnToPrevBounds: true,
         icon: 'fas fa-location-arrow',
+        showPopup: false,
         locateOptions: {
                maxZoom: 13
         }

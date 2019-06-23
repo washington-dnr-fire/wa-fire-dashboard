@@ -18,6 +18,9 @@
     color: seagreen;
 }
 
+.clicked-color{
+    color: #33709E!important;
+}
 /*--- Globals --------------------------------------------------------------------------------------------------------*/
 html, body, #mapdiv{
     height:100%;
@@ -168,4 +171,12 @@ button, .leaflet-bar-part{
     -ms-transform: rotate(-45deg);
     -o-transform: rotate(-45deg);
     transform: rotate(-45deg);
+}
+
+.fa-rotate-15 {
+    -webkit-transform: rotate(15deg);
+    -moz-transform: rotate(15deg);
+    -ms-transform: rotate(15deg);
+    -o-transform: rotate(15deg);
+    transform: rotate(15deg);
 }

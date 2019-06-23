@@ -232,6 +232,18 @@ $(function() {
         pane: "points",
     });      
 
+    //modis centroids
+    var modis_hotspot_centroids = new L.GeoJSON.AJAX("./egp_data/hotspots/0",{
+        // style me bro
+        pane: "points",
+    });      
+
+    //virs centroids
+    var viirs_hotspot_centroids = new L.GeoJSON.AJAX("./egp_data/hotspots/2",{
+        // style me bro
+        pane: "points",
+    });      
+
 
     // HMS SATELLITE DETECTIONS
     var hms_detects = L.esri.featureLayer({
@@ -515,14 +527,15 @@ $(function() {
     // Create empty layergroup for weather forecast points
     var weatherGroup = L.layerGroup();
 
+    // States are in bad shape
     var weatherbutton = L.easyButton({
         states: [{
             stateName: 'get-forecast',
             icon: 'fa-bolt fa-rotate-15',
-            title: 'Get weather forecast',
+            title: 'Get forecast',
             onClick: function(control) {
                 // Change to clicked state in case they dont want to do anything
-                control.state('remove-forecast');
+                control.state('purgatory-state');
                 map.on('click', function (e) {
                     control.state('loading');
                     var popLocation = e.latlng;
@@ -571,7 +584,7 @@ $(function() {
                 });
             }
             }, {
-            icon: 'fa-bolt fa-rotate-15 clicked-color',
+            icon: 'fa-bolt fa-rotate-15',
             stateName: 'remove-forecast',
             title: 'Remove forecast',
             onClick: function(control) {
@@ -581,7 +594,11 @@ $(function() {
             }, {
             icon: 'fa-spinner fa-spin',
             stateName: 'loading',
-        }],
+        },{
+            icon: 'fa-bolt fa-rotate-15 clicked-color',
+            stateName: 'purgatory-state',
+            title: 'Get forecast',
+    }],
         position: 'bottomright'
     }).addTo(map);
 
@@ -594,7 +611,9 @@ $(function() {
       "Fires": {
         "NWCC Large Fires": daily_fires,
         "EGP Active Incidents": egp_data_active_incidents,
-        "Satellite Hotspots": hms_detects
+        "Satellite Hotspots": hms_detects,
+        "MODIS Hotspots": modis_hotspot_centroids,
+        "VIIRS Hotspots": viirs_hotspot_centroids,
       },
       "Fire Risk":{
           "DNR Fire Danger": firedanger,

@@ -232,6 +232,18 @@ $(function() {
         pane: "points",
     });      
 
+    //modis centroids
+    var modis_hotspot_centroids = new L.GeoJSON.AJAX("./egp_data/hotspots/0",{
+        // style me bro
+        pane: "points",
+    });      
+
+    //virs centroids
+    var viirs_hotspot_centroids = new L.GeoJSON.AJAX("./egp_data/hotspots/2",{
+        // style me bro
+        pane: "points",
+    });      
+
 
     // HMS SATELLITE DETECTIONS
     var hms_detects = L.esri.featureLayer({
@@ -599,7 +611,9 @@ $(function() {
       "Fires": {
         "NWCC Large Fires": daily_fires,
         "EGP Active Incidents": egp_data_active_incidents,
-        "Satellite Hotspots": hms_detects
+        "Satellite Hotspots": hms_detects,
+        "MODIS Hotspots": modis_hotspot_centroids,
+        "VIIRS Hotspots": viirs_hotspot_centroids,
       },
       "Fire Risk":{
           "DNR Fire Danger": firedanger,

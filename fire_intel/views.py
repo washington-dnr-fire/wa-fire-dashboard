@@ -169,6 +169,10 @@ def egp_data(request, layer_type, layer_id):
         # layer id follows source map service id
         map_service = "https://egp.nwcg.gov/arcgis/rest/services/FireCOP/LightningStrikes/MapServer/{}".format(layer_id)
         where = ''
+    if layer_type == "hotspots":
+        # layer id follows source map service id
+        map_service = "https://egp.nwcg.gov/arcgis/rest/services/FireCOP/FireDetections/MapServer/{}".format(layer_id)
+        where = ''
 
     # making the EGP data request
     request_params = {

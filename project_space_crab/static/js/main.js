@@ -515,14 +515,15 @@ $(function() {
     // Create empty layergroup for weather forecast points
     var weatherGroup = L.layerGroup();
 
+    // States are in bad shape
     var weatherbutton = L.easyButton({
         states: [{
             stateName: 'get-forecast',
             icon: 'fa-bolt fa-rotate-15',
-            title: 'Get weather forecast',
+            title: 'Get forecast',
             onClick: function(control) {
                 // Change to clicked state in case they dont want to do anything
-                control.state('remove-forecast');
+                control.state('purgatory-state');
                 map.on('click', function (e) {
                     control.state('loading');
                     var popLocation = e.latlng;
@@ -571,7 +572,7 @@ $(function() {
                 });
             }
             }, {
-            icon: 'fa-bolt fa-rotate-15 clicked-color',
+            icon: 'fa-bolt fa-rotate-15',
             stateName: 'remove-forecast',
             title: 'Remove forecast',
             onClick: function(control) {
@@ -581,7 +582,11 @@ $(function() {
             }, {
             icon: 'fa-spinner fa-spin',
             stateName: 'loading',
-        }],
+        },{
+            icon: 'fa-bolt fa-rotate-15 clicked-color',
+            stateName: 'purgatory-state',
+            title: 'Get forecast',
+    }],
         position: 'bottomright'
     }).addTo(map);
 

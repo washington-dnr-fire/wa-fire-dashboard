@@ -112,6 +112,11 @@ $(function() {
         iconSize: [27, 27], // size of the icon
         });
 
+    var lightningIcon = L.icon({
+        iconUrl: "../../../static/images/red_lightning.svg",
+        iconSize: [27, 27], // size of the icon
+        });
+
     // NWCC DAILY FIRES
     var daily_fires = L.esri.featureLayer({
         url: "https://services3.arcgis.com/T4QMspbfLg3qTGWY/ArcGIS/rest/services/NWCC_Operational_Layers/FeatureServer/1",
@@ -170,21 +175,21 @@ $(function() {
     )});
 
     // egp stuff, layer_ids match the EGP Active Incidents Feature Service
-    var large_imsr_type1 = new L.GeoJSON.AJAX("./egp_data/0",{
+    var large_imsr_type1 = new L.GeoJSON.AJAX("./egp_data/active_incidents/0",{
         pointToLayer: function (feature, latlng) {
             return L.marker(latlng, {icon: fireIcon});
         },
         pane: "points",
     });  
 
-    var large_imsr_type2 = new L.GeoJSON.AJAX("./egp_data/1",{
+    var large_imsr_type2 = new L.GeoJSON.AJAX("./egp_data/active_incidents/1",{
         pointToLayer: function (feature, latlng) {
             return L.marker(latlng, {icon: fireIcon});
         },
         pane: "points",
     });  
 
-    var large_imsr_other = new L.GeoJSON.AJAX("./egp_data/2",{
+    var large_imsr_other = new L.GeoJSON.AJAX("./egp_data/active_incidents/2",{
         pointToLayer: function (feature, latlng) {
             return L.marker(latlng, {icon: fireIcon});
         },
@@ -192,14 +197,14 @@ $(function() {
     });     
 
 
-    var other_209 = new L.GeoJSON.AJAX("./egp_data/3",{
+    var other_209 = new L.GeoJSON.AJAX("./egp_data/active_incidents/3",{
         pointToLayer: function (feature, latlng) {
             return L.marker(latlng, {icon: fireIcon});
         },
         pane: "points",
     });     
 
-    var emerging_incidents_less24 = new L.GeoJSON.AJAX("./egp_data/4",{
+    var emerging_incidents_less24 = new L.GeoJSON.AJAX("./egp_data/active_incidents/4",{
         pointToLayer: function (feature, latlng) {
             return L.marker(latlng, {icon: fireIcon});
         },
@@ -211,13 +216,22 @@ $(function() {
             evt.feature.properties.popupinfo,
     )});
     
-    var emerging_incidents_greater24 = new L.GeoJSON.AJAX("./egp_data/5",{
+    var emerging_incidents_greater24 = new L.GeoJSON.AJAX("./egp_data/active_incidents/5",{
         pointToLayer: function (feature, latlng) {
             return L.marker(latlng, {icon: fireIcon});
         },
     });      
 
     var egp_data_active_incidents = L.layerGroup([large_imsr_type1,large_imsr_type2,large_imsr_other,other_209,emerging_incidents_less24,emerging_incidents_greater24]);
+
+    //BLM 24hr Lightning
+    var blm_lightning_24hr = new L.GeoJSON.AJAX("./egp_data/blm_lightning/1",{
+        pointToLayer: function (feature, latlng) {
+            return L.marker(latlng, {icon: lightningIcon});
+        },
+        pane: "points",
+    });      
+
 
     // HMS SATELLITE DETECTIONS
     var hms_detects = L.esri.featureLayer({
@@ -590,7 +604,8 @@ $(function() {
         "NWS Current Warnings": NWS_warnings,
         "NWS 7-Day Rain Forecast": NWS_QPE,
         "1-Month Drought Outlook": CPC_Monthly_Drought,
-        "3-Month Drought Outlook": CPC_Seasonal_Drought
+        "3-Month Drought Outlook": CPC_Seasonal_Drought,
+        "WA Lightning Strikes (last 24hrs)": blm_lightning_24hr,
       }
     };
 

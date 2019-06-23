@@ -25,6 +25,7 @@ $(function() {
         pane: "boundaries"
     });
 
+    // DNR IFPLs
     var ifpl = L.esri.featureLayer({
         url: "https://gis.dnr.wa.gov/site3/rest/services/Public_Wildfire/WADNR_PUBLIC_WD_WildFire_EGP_Portal/MapServer/11",
         pane: "overlays",
@@ -36,22 +37,23 @@ $(function() {
         },
     });
 
+    // DNR IFPLs popup template
     ifpl.bindPopup(function(evt) {
         return L.Util.template(
         "<div class='container rounded-0' style='max-width:375px;margin-top:5px;'>" +
         "<div class='row'>" +
         "<div class='col-xs-12' style='padding:0;'>" +
-        "<span style='text-align: center;'>IFPL Zone: {ZONE}</span>" +
+        "<span style='text-align: center;'>Zone {ZONE}</span>" +
         "</div>" + // col
         "</div>" + // row
         "<div class='row'>" +
         "<div class='col-xs-12' style='padding:0;'>" +
-        "<span style='font-size: 2em; font-weight:bolder;color: #003d6b;'>{FIRE_PRECAUTION_LEVEL} </span>" +
+        "<span style='font-size: 1.5em; font-weight:bolder;color: #003d6b;'>Level {FIRE_PRECAUTION_LEVEL} </span>" +
         "</div>" + // col
         "</div>" + // row
         "<div class='row'>" +
         "<div class='col-xs-12'>" +
-        "<p class='text-muted mt-0'>{NOTES_TXT}</p>" +
+        "<p class='text-muted'>{NOTES_TXT}</p>" +
         "</div>" + // col
         "</div>" + // row
         "<div class='row'>" +
@@ -62,6 +64,8 @@ $(function() {
         "</div>", evt.feature.properties
 
     )});
+
+    // DNR FIRE DANGER
     var firedanger = L.esri.featureLayer({
         url: "https://gis.dnr.wa.gov/site3/rest/services/Public_Wildfire/WADNR_PUBLIC_WD_WildfireDanger/MapServer/0",
         pane: "overlays",
@@ -73,6 +77,7 @@ $(function() {
         },
     });
 
+    // DNR FIRE DANGER POPUP TEMPLATE
     firedanger.bindPopup(function(evt) {
         return L.Util.template(
         "<div class='container rounded-0' style='max-width:375px;margin-top:5px;'>" +
@@ -100,22 +105,29 @@ $(function() {
 
     )});
 
-    // NWCC Daily Fires
+    // NWCC daily fires icon
     // Icon made by Vectors Market from Flaticon.com
     var fireIcon = L.icon({
         iconUrl: "../../../static/images/flame.svg",
         iconSize: [27, 27], // size of the icon
         });
 
+    var lightningIcon = L.icon({
+        iconUrl: "../../../static/images/red_lightning.svg",
+        iconSize: [27, 27], // size of the icon
+        });
+
+    // NWCC DAILY FIRES
     var daily_fires = L.esri.featureLayer({
         url: "https://services3.arcgis.com/T4QMspbfLg3qTGWY/ArcGIS/rest/services/NWCC_Operational_Layers/FeatureServer/1",
         pointToLayer: function (feature, latlng) {
             return L.marker(latlng, {icon: fireIcon});
-    },
+            },
         ignoreRenderer: true,
         pane: "points",
     });
 
+    // NWCC daily fires popup
     daily_fires.bindPopup(function(evt) {
         return L.Util.template(
         "<div class='container rounded-0' style='max-width:375px;margin-top:5px;'>" +
@@ -125,7 +137,7 @@ $(function() {
                         "<table class='table table-sm' style='font-size: 1em'>" +
                             "<thead>" +
                                 "<tr>" +
-                                    "<th colspan='4' class='dnr-blue-bg text-light' style='font-weight: 700;'>{FIRE_NM}</th>" +
+                                    "<th colspan='4' class='' style='font-size: 1.5em; font-weight:bolder;color: #003d6b; border-top: none;'>{FIRE_NM}</th>" +
                                 "</tr>" +
                             "</thead>" +
                             "<tbody>" +
@@ -156,18 +168,79 @@ $(function() {
                             "</tbody>" +
                         "</table>" + //table
                     "</div>" + //responsive table
+                    "<span class='text-muted'><small>Source: Northwest Coordination Center</small></span>" +
                 "</div>" + // col
             "</div>" + // row
         "</div>", evt.feature.properties
     )});
 
-    // HMS
+    // egp stuff, layer_ids match the EGP Active Incidents Feature Service
+    var large_imsr_type1 = new L.GeoJSON.AJAX("./egp_data/active_incidents/0",{
+        pointToLayer: function (feature, latlng) {
+            return L.marker(latlng, {icon: fireIcon});
+        },
+        pane: "points",
+    });  
+
+    var large_imsr_type2 = new L.GeoJSON.AJAX("./egp_data/active_incidents/1",{
+        pointToLayer: function (feature, latlng) {
+            return L.marker(latlng, {icon: fireIcon});
+        },
+        pane: "points",
+    });  
+
+    var large_imsr_other = new L.GeoJSON.AJAX("./egp_data/active_incidents/2",{
+        pointToLayer: function (feature, latlng) {
+            return L.marker(latlng, {icon: fireIcon});
+        },
+        pane: "points",
+    });     
+
+
+    var other_209 = new L.GeoJSON.AJAX("./egp_data/active_incidents/3",{
+        pointToLayer: function (feature, latlng) {
+            return L.marker(latlng, {icon: fireIcon});
+        },
+        pane: "points",
+    });     
+
+    var emerging_incidents_less24 = new L.GeoJSON.AJAX("./egp_data/active_incidents/4",{
+        pointToLayer: function (feature, latlng) {
+            return L.marker(latlng, {icon: fireIcon});
+        },
+        pane: "points",
+    });
+    
+    emerging_incidents_less24.bindPopup(function(evt){
+        return L.Util.template(
+            evt.feature.properties.popupinfo,
+    )});
+    
+    var emerging_incidents_greater24 = new L.GeoJSON.AJAX("./egp_data/active_incidents/5",{
+        pointToLayer: function (feature, latlng) {
+            return L.marker(latlng, {icon: fireIcon});
+        },
+    });      
+
+    var egp_data_active_incidents = L.layerGroup([large_imsr_type1,large_imsr_type2,large_imsr_other,other_209,emerging_incidents_less24,emerging_incidents_greater24]);
+
+    //BLM 24hr Lightning
+    var blm_lightning_24hr = new L.GeoJSON.AJAX("./egp_data/blm_lightning/1",{
+        pointToLayer: function (feature, latlng) {
+            return L.marker(latlng, {icon: lightningIcon});
+        },
+        pane: "points",
+    });      
+
+
+    // HMS SATELLITE DETECTIONS
     var hms_detects = L.esri.featureLayer({
         url: "https://wildfire.cr.usgs.gov/arcgis/rest/services/geomac_dyn/MapServer/6",
         where:"load_stat IN ('Active Burning', '24 Hrs', '48 Hrs')",
         pane: "points",
     });
 
+    // HMS satellite detections popup template
     hms_detects.bindPopup(function(evt) {
         if(evt.feature.properties.load_stat === "Active Burning"){
             var load_stat = 'Last 12 hours';
@@ -196,8 +269,6 @@ $(function() {
         "</div>", evt.feature.properties
     )});
 
-
-
     // NWS WATCHES AND WARNINGS
     var NWS_warnings = L.esri.featureLayer({
         url: 'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/watch_warn_adv/MapServer/1',
@@ -211,7 +282,7 @@ $(function() {
         pane: 'overlays'
     });
 
-
+    // NWS watches and warnings popup template
     NWS_warnings.bindPopup(function(evt) {
         var t = moment.utc(evt.feature.properties['expiration']).local().fromNow();
         var s = moment.utc(evt.feature.properties['issuance']).local().fromNow();
@@ -249,9 +320,9 @@ $(function() {
         pane: 'overlays'
     });
 
+    // NWS 7-day rainfall popup template
     NWS_QPE.bindPopup(function(evt) {
         var t = moment.utc(evt.feature.properties['end_time']).local().format('dddd, MMMM Do YYYY');
-
         return L.Util.template(
         "<div class='container rounded-0' style='max-width:375px;margin-top:5px;'>" +
         "<div class='row'>" +
@@ -292,6 +363,7 @@ $(function() {
         pane: 'overlays'
     });
 
+    // CPC monthly drought popup template
     CPC_Monthly_Drought.bindPopup(function(evt) {
         if(evt.feature.properties.fid_improv === 1){
             var drought_status = 'improve';
@@ -347,6 +419,7 @@ $(function() {
         pane: 'overlays'
     });
 
+    // CPC seasonal drought popup template
     CPC_Seasonal_Drought.bindPopup(function(evt) {
         if(evt.feature.properties.fid_improv === 1){
             var drought_status = 'improve';
@@ -382,17 +455,20 @@ $(function() {
         "</div>", evt.feature.properties
     )});
 
+    // Map base layers
     var baseLayers = {
         "Topographic": L.esri.basemapLayer("Topographic"),
         "Satellite": L.esri.basemapLayer("Imagery"),
     };
 
+    // Home point
     var home = {
         lat: 47.3826,
         lng: -120.4472,
         zoom: 7
     };
 
+    // Actual map instance
     var map = L.map('mapdiv', {
         center: [home.lat, home.lng],
         zoom: home.zoom,
@@ -401,26 +477,115 @@ $(function() {
         attributionControl: false,
         cursor: false
     });
+
+    // Add a basemap to map
+    L.esri.basemapLayer("Topographic").addTo(map);
+
+    // Set zoom control to bottom right
     map.zoomControl.setPosition('bottomright');
 
-    // create the sidebar instance and add it to the map
+    // Create sidebar instance and add it to the map
     var sidebar = L.control.sidebar({ container: 'sidebar', autopan: true, closeButton: true })
         .addTo(map)
         .open('home');
 
+    // Create panes to handle z-index stuff and be tidy
     map.createPane('boundaries');
     map.createPane('overlays');
     map.createPane('points');
 
+    // Add a button for zooming to home view on click
     L.easyButton('fa-home', function (btn, map) {
         map.setView([home.lat, home.lng], home.zoom);
-    }, 'Zoom To Home', {
-            position: 'bottomright'
+    }, 'Zoom to home', {
+        position: 'bottomright'
     }).addTo(map);
 
+    // Add a button for geolocation, has built in error handling
+    L.control.locate({
+        position: 'bottomright',
+        returnToPrevBounds: true,
+        icon: 'fas fa-location-arrow',
+        showPopup: false,
+        locateOptions: {
+               maxZoom: 13
+        }
+    }).addTo(map);
 
-    L.esri.basemapLayer("Topographic").addTo(map);
+    // Create empty layergroup for weather forecast points
+    var weatherGroup = L.layerGroup();
 
+    var weatherbutton = L.easyButton({
+        states: [{
+            stateName: 'get-forecast',
+            icon: 'fa-bolt fa-rotate-15',
+            title: 'Get weather forecast',
+            onClick: function(control) {
+                // Change to clicked state in case they dont want to do anything
+                control.state('remove-forecast');
+                map.on('click', function (e) {
+                    control.state('loading');
+                    var popLocation = e.latlng;
+                    var popup = L.popup()
+                        .setLatLng(popLocation)
+                        .setContent(
+                            "<div class='container rounded-0' style='max-width:375px;margin-top:5px;'>" +
+                            "<div class='row'>" +
+                            "<div class='col-xs-12' style='padding:0;'>" +
+                            "<p>Loading...</p>" +
+                            "</div>" + // col
+                            "</div>" + // row
+                            "</div>"
+                        ).openOn(map);
+                    var lat = e.latlng.lat.toString();
+                    var lon = e.latlng.lng.toString();
+                    $.getJSON('https://api.weather.gov/points/' + lat + ',' + lon, function (data) {
+                        $.getJSON(data.properties.forecastGridData, function (data) {
+                            console.log(data);
+                            var t = moment.utc(data.properties.updateTime).local().fromNow();
+                            var popLocation = e.latlng;
+                            var popup = L.popup()
+                                .setLatLng(popLocation)
+                                .setContent(
+                                    "<div class='container rounded-0' style='max-width:375px;margin-top:5px;'>" +
+                                    "<div class='row'>" +
+                                    "<div class='col-xs-12' style='padding:0;'>" +
+                                    "<span style='text-align: center;'>NWS forecast for " + e.latlng.lat.toFixed(3).toString() + ", " + e.latlng.lng.toFixed(3).toString() + "</span>" +
+                                    "</div>" + // col
+                                    "</div>" + // row
+                                    "<div class='row'>" +
+                                    "<div class='col-xs-12' style='padding:0;'>" +
+                                    "<span class='text-left text-muted'>Last updated " + t  + "</span>" +
+                                    "</div>" + // col
+                                    "</div>" + // row
+                                    "<div class='row'>" +
+                                    "<div class='col-xs-12' style='padding:0;'>" +
+                                    "<span class='text-left text-muted'>Grid elevation: " + (data.properties.elevation.value * 3.28084).toFixed(0) + " ft</span>" +
+                                    "</div>" + // col
+                                    "</div>" + // row
+                                    "</div>" // container
+                                    ).openOn(map);
+                            control.state('remove-forecast');
+                        });
+                    });
+                });
+            }
+            }, {
+            icon: 'fa-bolt fa-rotate-15 clicked-color',
+            stateName: 'remove-forecast',
+            title: 'Remove forecast',
+            onClick: function(control) {
+                map.removeLayer(markerGroup);
+                control.state('get-forecast');
+            }
+            }, {
+            icon: 'fa-spinner fa-spin',
+            stateName: 'loading',
+        }],
+        position: 'bottomright'
+    }).addTo(map);
+
+    // Create groupings of overlays for layer pick list
     var groupedOverlays = {
       "Boundaries": {
         "Counties": counties,
@@ -428,7 +593,7 @@ $(function() {
       },
       "Fires": {
         "NWCC Large Fires": daily_fires,
-        // "DNR Incidents": daily_fires,
+        "EGP Active Incidents": egp_data_active_incidents,
         "Satellite Hotspots": hms_detects
       },
       "Fire Risk":{
@@ -439,16 +604,19 @@ $(function() {
         "NWS Current Warnings": NWS_warnings,
         "NWS 7-Day Rain Forecast": NWS_QPE,
         "1-Month Drought Outlook": CPC_Monthly_Drought,
-        "3-Month Drought Outlook": CPC_Seasonal_Drought
+        "3-Month Drought Outlook": CPC_Seasonal_Drought,
+        "WA Lightning Strikes (last 24hrs)": blm_lightning_24hr,
       }
     };
 
+    // Add layer group control to map
     L.control.groupedLayers(baseLayers, groupedOverlays).addTo(map);
+
+    // Add some pretty to layer control
     $( ".leaflet-control-layers-base" ).prepend( "<label class=\"leaflet-control-layers-group-label\"><span class=\"leaflet-control-layers-group-name\">Basemaps</span></label>" );
     $( "#leaflet-control-layers-group-1" ).after( "<div class='leaflet-control-layers-separator'></div>" );
     $( "#leaflet-control-layers-group-2" ).after( "<div class='leaflet-control-layers-separator'></div>" );
     $( "#leaflet-control-layers-group-3" ).after( "<div class='leaflet-control-layers-separator'></div>" );
-
 
     //map bounces back and forth using this for some reason
     // map.setMaxBounds(map.getBounds());

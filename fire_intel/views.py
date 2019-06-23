@@ -151,31 +151,39 @@ def profile(request):
         return HttpResponse(template.render(context, request))
 
 
-def egp_data(request, layer_id):
+def egp_data(request, layer_type, layer_id):
 
-    egp_active_incident_map_service = "https://egp.nwcg.gov/arcgis/rest/services/FireCOP/ActiveIncidents/MapServer/{}".format(layer_id)
     referer = 'http://dnr.wa.gov'
-
-    OR_WA_ENVELOPE = {
-        "xmin":-124.86082024299998,
-        "ymin":41.99208161100006,
-        "xmax":-116.46316225199996,
-        "ymax":49.002431632000025,
-        "spatialReference": {"wkid": 4326, "latestWkid": 4326}
+    WA_ENVELOPE = {
+        "xmin":-124.85,
+        "ymin":45.49,
+        "xmax":-116.69,
+        "ymax":49.1,
         }
 
-    # making the lightning points request
-    # basic check on the count - to test the token
+    if layer_type == "active_incidents":
+        # layer id follows source map service id
+        map_service = "https://egp.nwcg.gov/arcgis/rest/services/FireCOP/ActiveIncidents/MapServer/{}".format(layer_id)
+        where = "GACC='NWCC'"
+    if layer_type == "blm_lightning":
+        # layer id follows source map service id
+        map_service = "https://egp.nwcg.gov/arcgis/rest/services/FireCOP/LightningStrikes/MapServer/{}".format(layer_id)
+        where = ''
+
+    # making the EGP data request
     request_params = {
         'token': IntelReport.get_that_egp_token(),
-        'where': "GACC='NWCC'",
-        'f': 'geojson',
-        'geometry': str(OR_WA_ENVELOPE),
+        'where': str(where),
+        'geometry': str(WA_ENVELOPE),
+        'geometryType': 'esriGeometryEnvelope',
+        'inSR': '4326',
+        'spatialRel':'esriSpatialRelIntersects',
         'outFields': '*',
+        'f': 'geojson',
         }
 
     s = requests.Session()
     s.headers.update({'referer': referer})
-    r = s.post(egp_active_incident_map_service + "/query?", data=request_params)
+    r = s.post(map_service + "/query?", data=request_params)
     results = r.json()
     return JsonResponse(results, safe=False)

@@ -112,11 +112,6 @@ $(function() {
         iconSize: [27, 27], // size of the icon
         });
 
-    var lightningIcon = L.icon({
-        iconUrl: "../../../static/images/red_lightning.svg",
-        iconSize: [27, 27], // size of the icon
-        });
-
     // NWCC DAILY FIRES
     var daily_fires = L.esri.featureLayer({
         url: "https://services3.arcgis.com/T4QMspbfLg3qTGWY/ArcGIS/rest/services/NWCC_Operational_Layers/FeatureServer/1",
@@ -224,13 +219,54 @@ $(function() {
 
     var egp_data_active_incidents = L.layerGroup([large_imsr_type1,large_imsr_type2,large_imsr_other,other_209,emerging_incidents_less24,emerging_incidents_greater24]);
 
+    var redLightningIcon = L.icon({
+    iconUrl: "../../../static/images/red_lightning.svg",
+    iconSize: [20, 20], // size of the icon
+    });
+
+    var blackLightningIcon = L.icon({
+    iconUrl: "../../../static/images/black_lightning.svg",
+    iconSize: [20, 20], // size of the icon
+    });
+
     //BLM 24hr Lightning
     var blm_lightning_24hr = new L.GeoJSON.AJAX("./egp_data/blm_lightning/1",{
         pointToLayer: function (feature, latlng) {
-            return L.marker(latlng, {icon: lightningIcon});
+            if(feature.properties.AgeInHours <= 6){
+                return L.marker(latlng, {icon: redLightningIcon});
+            } else if(feature.properties.AgeInHours > 6){
+                return L.marker(latlng, {icon: blackLightningIcon});
+            }
         },
         pane: "points",
-    });      
+    });
+
+    blm_lightning_24hr.bindPopup(function(evt) {
+        var lat = evt.feature.properties.Latitude.toFixed(3).toString();
+        var lng = evt.feature.properties.Longitude.toFixed(3).toString();
+        var t = moment(evt.feature.properties.TimeStamp).local().fromNow();
+        return L.Util.template(
+        "<div class='container rounded-0' style='max-width:375px;margin-top:5px;'>" +
+        "<div class='row'>" +
+        "<div class='col-xs-12' style='padding:0;'>" +
+        "<span>Lightning detected at " + lat + ', ' + lng + "</span>" +
+        "</div>" + // col
+        "</div>" + // row
+        "<div class='row'>" +
+        "<div class='col-xs-12' style='padding:0;'>" +
+        "<span style='font-size: 2em; font-weight: 700;color: #003d6b;'>" + t  + "</span>" +
+        "</div>" + // col
+        "</div>" + // row
+        "<div class='row'>" +
+        "<div class='col-xs-6' style='padding:0;'>" +
+        "<span>Polarity: { Polarity }</span>" +
+        "</div>" + // col
+        "<div class='col-xs-6 ml-2' style='padding:0;'>" +
+        "<span>Current: { CurrentMeasurement } kA</span>" +
+        "</div>" + // col
+        "</div>" + // row
+        "</div>", evt.feature.properties
+    )});
 
     //modis centroids
     var modis_hotspot_centroids = new L.GeoJSON.AJAX("./egp_data/hotspots/0",{
@@ -573,7 +609,7 @@ $(function() {
                                     "</div>" + // row
                                     "<div class='row'>" +
                                     "<div class='col-xs-12' style='padding:0;'>" +
-                                    "<span class='text-left text-muted'>Grid elevation: " + (data.properties.elevation.value * 3.28084).toFixed(0) + " ft</span>" +
+                                    "<span class='text-left text-muted'>Forecast elevation: " + (data.properties.elevation.value * 3.28084).toFixed(0) + " ft</span>" +
                                     "</div>" + // col
                                     "</div>" + // row
                                     "</div>" // container
@@ -611,7 +647,7 @@ $(function() {
       "Fires": {
         "NWCC Large Fires": daily_fires,
         "EGP Active Incidents": egp_data_active_incidents,
-        "Satellite Hotspots": hms_detects,
+        "HMS Hotspots": hms_detects,
         "MODIS Hotspots": modis_hotspot_centroids,
         "VIIRS Hotspots": viirs_hotspot_centroids,
       },
@@ -621,10 +657,10 @@ $(function() {
       },
       "Weather": {
         "NWS Current Warnings": NWS_warnings,
+        "24-Hour Lightning Strikes": blm_lightning_24hr,
         "NWS 7-Day Rain Forecast": NWS_QPE,
         "1-Month Drought Outlook": CPC_Monthly_Drought,
         "3-Month Drought Outlook": CPC_Seasonal_Drought,
-        "WA Lightning Strikes (last 24hrs)": blm_lightning_24hr,
       }
     };
 
@@ -637,7 +673,4 @@ $(function() {
     $( "#leaflet-control-layers-group-2" ).after( "<div class='leaflet-control-layers-separator'></div>" );
     $( "#leaflet-control-layers-group-3" ).after( "<div class='leaflet-control-layers-separator'></div>" );
 
-    //map bounces back and forth using this for some reason
-    // map.setMaxBounds(map.getBounds());
-
-    });
+});

@@ -681,7 +681,7 @@ $(function() {
     var map = L.map('mapdiv', {
         center: [home.lat, home.lng],
         zoom: home.zoom,
-        minZoom: 7,
+        minZoom: 6,
         layers: [NWS_warnings, daily_fires, satellite_detects, regions],
         attributionControl: false,
         cursor: false

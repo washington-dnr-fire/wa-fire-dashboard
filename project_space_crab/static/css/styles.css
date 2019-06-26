@@ -3,7 +3,7 @@
 
 /*--- Color Classes --------------------------------------------------------------------------------------------------*/
 .dnr-blue-bg{
-    background-color: #003d6b!important;
+    background-color: #003d6b;
 }
 
 .dnr-gray-bg{
@@ -14,8 +14,25 @@
     background-color:#C8102E!important;
 }
 
+.dnr-blue-text{
+    color: #003d6b!important;
+}
+
+.context-red{
+    background: #CA304B;
+}
+
+.context-yellow{
+    /*background: #D79933;*/
+    background: #F1B34D;
+}
+
+.context-green{
+    background: #218c71;
+}
+
 .user-green {
-    color: seagreen;
+    color: #218c71;
 }
 
 .clicked-color{

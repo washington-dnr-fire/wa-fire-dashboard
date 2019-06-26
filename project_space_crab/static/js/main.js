@@ -1,4 +1,50 @@
 $(function() {
+
+// 
+    // Contextual colors for Situation Snapshot cards, gross
+    if($('#nw_id').text() == 1){
+        $('#northwestprep').css('backgroundColor', '#218c71');
+    } else if(2 <= $('#nw_id').text() && $('#nw_id').text() <= 3){
+        $('#northwestprep').css('backgroundColor', '#F1B34D');
+    } else if(4 <= $('#nw_id').text() && $('#nw_id').text() <= 5){
+        $('#northwestprep').css('backgroundColor', '#CA304B');
+    }
+    if($('#nat_id').text() == 1){
+        $('#nationalprep').css('backgroundColor', '#218c71');
+    } else if(2 <= $('#nat_id').text() && $('#nat_id').text() <= 3){
+        $('#nationalprep').css('backgroundColor', '#218c71');
+    } else if($('#nat_id').text() > 3){
+        $('#nationalprep').css('backgroundColor', '#218c71');
+    }
+    if($('#type1_id').text() == 0){
+        $('#type1teams').css('backgroundColor', '#218c71');
+    } else if($('#type1_id').text() == 1){
+        $('#type1teams').css('backgroundColor', '#F1B34D');
+    } else if($('#type1_id').text() > 1 ){
+        $('#type1teams').css('backgroundColor', '#CA304B');
+    }
+    if(0 <= $('#type2_id').text() && $('#type2_id').text() <= 2){
+        $('#type2teams').css('backgroundColor', '#218c71');
+    } else if(2 <= $('#type2_id').text() && $('#type2_id').text() <= 4){
+        $('#type2teams').css('backgroundColor', '#F1B34D');
+    } else if($('#type2_id').text() >= 4){
+        $('#type2teams').css('backgroundColor', '#CA304B');
+    }
+    if(0 <= $('#wafires_id').text() && $('#wafires_id').text() <= 2){
+        $('#walargefires').css('backgroundColor', '#218c71');
+    } else if(3 <= $('#wafires_id').text() && $('#wafires_id').text() <= 4){
+        $('#walargefires').css('backgroundColor', '#F1B34D');
+    } else if($('#wafires_id').text() > 4 ){
+        $('#walargefires').css('backgroundColor', '#CA304B');
+    }
+    if(0 <= $('#dnrfires_id').text() && $('#dnrfires_id').text() <= 4){
+        $('#dnrfires').css('backgroundColor', '#218c71');
+    } else if(5 <= $('#dnrfires_id').text() && $('#dnrfires_id').text() <= 10){
+        $('#dnrfires').css('backgroundColor', '#F1B34D');
+    } else if($('#dnrfires_id').text() > 10 ){
+        $('#dnrfires').css('backgroundColor', '#CA304B');
+    }
+
     // NWS WATCHES AND WARNINGS
     var NWS_warnings = L.esri.featureLayer({
         url: 'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Forecasts_Guidance_Warnings/watch_warn_adv/MapServer/1',
@@ -50,10 +96,9 @@ $(function() {
     });
 
     // NWCC daily fires icon
-    // Icon made by Vectors Market from Flaticon.com
     var fireIcon = L.icon({
-        iconUrl: "../../../static/images/flame.svg",
-        iconSize: [27, 27], // size of the icon
+        iconUrl: "../../../static/images/Flames-Color.svg",
+        iconSize: [25, 25],
         });
 
     // NWCC DAILY FIRES
@@ -112,7 +157,7 @@ $(function() {
             "</div>" + // row
         "</div>", evt.feature.properties
     )});
-    
+
     // WA COUNTIES
     var counties = L.esri.featureLayer({
         url: "https://gis.dnr.wa.gov/site3/rest/services/Public_Boundaries/WADNR_PUBLIC_Cadastre_OpenData/MapServer/11",

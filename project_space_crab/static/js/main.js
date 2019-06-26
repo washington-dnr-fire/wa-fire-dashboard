@@ -83,18 +83,6 @@ $(function() {
         "</div>", evt.feature.properties
     )});
 
-    // DNR REGIONS
-    var regions = L.esri.featureLayer({
-        url: "https://gis.dnr.wa.gov/site3/rest/services/Public_Boundaries/WADNR_PUBLIC_Cadastre_OpenData/MapServer/3",
-        style: function (feature) {
-            return {
-                color: '#000000',
-                weight: 1.5,
-            };
-        },
-        pane: "boundaries"
-    });
-
     // NWCC daily fires icon
     var fireIcon = L.icon({
         iconUrl: "../../../static/images/Flames-Color.svg",
@@ -159,19 +147,28 @@ $(function() {
     )});
 
     // WA COUNTIES
-    var counties = L.esri.featureLayer({
-        url: "https://gis.dnr.wa.gov/site3/rest/services/Public_Boundaries/WADNR_PUBLIC_Cadastre_OpenData/MapServer/11",
-        style: function (feature) {
+    var counties = new L.GeoJSON.AJAX("../../../static/spatial_data/wa_county_boundaries.geojson",{
+        style: function (feature){
             return {
                 color: '#000000',
                 weight: 1.5,
+                fillOpacity: 0,
             };
         },
-        precision: 10,
-        pane: "boundaries"
+        pane: "boundaries",
+    });  
+
+    // DNR REGIONS
+    var regions = new L.GeoJSON.AJAX("../../../static/spatial_data/wa_dnr_regions.geojson",{
+        style: function (feature){
+            return {
+                color: '#CA304B',
+                weight: 1.5,
+                fillOpacity: 0,
+            };
+        },
+        pane: "boundaries",
     });
-
-
 
     // DNR IFPLs
     var ifpl = L.esri.featureLayer({

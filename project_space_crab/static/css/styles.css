@@ -96,6 +96,10 @@ button, .leaflet-bar-part{
     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 }
 
+.leaflet-container a:hover{
+    color: #003d6b;
+}
+
 /*--- Map ------------------------------------------------------------------------------------------------------------*/
 .leaflet-popup-content-wrapper,.leaflet-popup-content{
    -webkit-border-radius: 0 !important;

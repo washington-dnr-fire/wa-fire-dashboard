@@ -53,7 +53,7 @@ $(function() {
                 fillOpacity: '0.5',
             };
         },
-        where:"wfo IN ('KSEW', 'KOTX', 'KPDT', 'KBOI', 'KMFR', 'KPQR', 'KMSO')",
+        where:"wfo IN ('KSEW', 'KOTX', 'KPDT', 'KPQR')",
         pane: 'overlays'
     });
 

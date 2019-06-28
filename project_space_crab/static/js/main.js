@@ -1,6 +1,5 @@
 $(function() {
 
-// 
     // Contextual colors for Situation Snapshot cards, gross
     if($('#nw_id').text() == 1){
         $('#northwestprep').css('backgroundColor', '#218c71');
@@ -71,7 +70,7 @@ $(function() {
         "</div>" + // row
         "<div class='row'>" +
         "<div class='col-xs-12' style='font-weight: 700;'>" +
-        "Issued: " + s +
+        "Start: " + s +
         "</div>" + // col
         "</div>" + // row
         "<div class='row'>" +
@@ -162,7 +161,7 @@ $(function() {
     var regions = new L.GeoJSON.AJAX("../../../static/spatial_data/wa_dnr_regions.geojson",{
         style: function (feature){
             return {
-                color: '#CA304B',
+                color: '#000000',
                 weight: 1.5,
                 fillOpacity: 0,
             };
@@ -313,11 +312,11 @@ $(function() {
     //BLM 24hr Lightning
     var blm_lightning_24hr = new L.GeoJSON.AJAX("./egp_data/blm_lightning/1",{
         pointToLayer: function (feature, latlng) {
-            if(feature.properties.AgeInHours <= 6){
-                return L.marker(latlng, {icon: redLightningIcon});
-            } else if(feature.properties.AgeInHours > 6){
-                return L.marker(latlng, {icon: blackLightningIcon});
-            }
+            // if(feature.properties.AgeInHours <= 6){
+            return L.marker(latlng, {icon: redLightningIcon});
+            // } else if(feature.properties.AgeInHours > 6){
+            //     return L.marker(latlng, {icon: blackLightningIcon});
+            // }
         },
         pane: "points",
     });
@@ -687,6 +686,8 @@ $(function() {
         cursor: false
     });
 
+    map_bounds = map.getBounds();
+
     // Create sidebar instance and add it to the map
     var sidebar = L.control.sidebar({ container: 'sidebar', autopan: true, closeButton: true })
         .addTo(map)
@@ -738,7 +739,12 @@ $(function() {
 
     // Add a button for zooming to home view on click
     L.easyButton('fa-home', function (btn, map) {
-        map.setView([home.lat, home.lng], home.zoom);
+        if(sidebar.close() === true) {
+            offset = document.querySelector('.leaflet-sidebar-content').getBoundingClientRect().width;
+            map.fitBounds(map_bounds, {paddingTopLeft: [0, offset]});
+        }else{
+            map.fitBounds(map_bounds);
+        }
     }, 'Zoom to home', {
         position: 'bottomright'
     }).addTo(map);

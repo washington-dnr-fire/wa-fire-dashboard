@@ -2,8 +2,8 @@ from django.contrib import admin
 from .models import IntelReport
 
 # Register your models here.
-admin.site.site_header = "Fire Intel App Admin"
-admin.site.index_title = "Site and Model Administration"
+admin.site.site_header = "Fire Intel Dashboard"
+admin.site.index_title = "Intel Reports"
 
 
 class IntelReportAdmin(admin.ModelAdmin):

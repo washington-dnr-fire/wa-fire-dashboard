@@ -48,9 +48,9 @@ class IntelReport(models.Model):
     wa_large_fires = models.IntegerField("Washington Large Fires", blank=False, help_text="How many WA-based large fires are there currently?")
     dnr_ia_fires = models.IntegerField("DNR IA Fires", blank=False, help_text="How many DNR-based IA fires are there currently?")
 
-    oly_committed_engines = models.SmallIntegerField(blank=False,
+    oly_committed_engines = models.SmallIntegerField("OLS In Region Engines", blank=False,
                                                      validators=[MinValueValidator(0), MaxValueValidator(250)])
-    oly_committed_crews = models.SmallIntegerField(blank=False,
+    oly_committed_crews = models.SmallIntegerField("OLS In Region Crews", blank=False,
                                                    validators=[MinValueValidator(0), MaxValueValidator(250)])
     oly_available_engines = models.SmallIntegerField(blank=False,
                                                      validators=[MinValueValidator(0), MaxValueValidator(250)])
@@ -115,15 +115,15 @@ class IntelReport(models.Model):
     in_region_lat = models.SmallIntegerField(blank=False, validators=[MinValueValidator(0), MaxValueValidator(100)])
 
     # fire statistics
-    westside_dnr_responses_count = models.IntegerField(blank=False, help_text="How many DNR Responses total on the westside?")
-    westside_dnr_fire_count = models.IntegerField(blank=False, help_text="How many DNR Fires total on the westside?")
-    westside_dnr_fire_acres = models.IntegerField(blank=False, help_text="How many DNR Fire acres burned on the westside?")
-    westside_all_fire_acres = models.IntegerField(blank=False, help_text="How many acres burned on the westside?")
+    westside_dnr_responses_count = models.IntegerField("YTD Westside DNR Responses", blank=False, help_text="How many DNR Responses total on the westside?")
+    westside_dnr_fire_count = models.IntegerField("YTD Westside DNR Fires", blank=False, help_text="How many DNR Fires total on the westside?")
+    westside_dnr_fire_acres = models.IntegerField("YTD Westside DNR Fire Acres", blank=False, help_text="How many DNR Fire acres burned on the westside?")
+    westside_all_fire_acres = models.IntegerField("YTD Westside All Acres", blank=False, help_text="How many acres burned on the westside?")
 
-    eastside_dnr_responses_count = models.IntegerField(blank=False, help_text="How many DNR Responses total on the eastside?")
-    eastside_dnr_fire_count = models.IntegerField(blank=False, help_text="How many DNR Fires total on the eastside?")
-    eastside_dnr_fire_acres = models.IntegerField(blank=False, help_text="How many DNR Fire acres burned on the eastside?")
-    eastside_all_fire_acres = models.IntegerField(blank=False, help_text="How many acres burned on the eastside?")
+    eastside_dnr_responses_count = models.IntegerField("YTD Eastside DNR Responses", blank=False, help_text="How many DNR Responses total on the eastside?")
+    eastside_dnr_fire_count = models.IntegerField("YTD Eastside DNR Fires", blank=False, help_text="How many DNR Fires total on the eastside?")
+    eastside_dnr_fire_acres = models.IntegerField("YTD Eastside DNR Fire Acres", blank=False, help_text="How many DNR Fire acres burned on the eastside?")
+    eastside_all_fire_acres = models.IntegerField("YTD Eastside All Acres", blank=False, help_text="How many acres burned on the eastside?")
 
     def __str__(self):
         return "Intel Report: {}".format(self.date_of_report.strftime("%m/%d/%Y, %H:%M:%S"))

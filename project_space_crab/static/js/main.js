@@ -1,5 +1,4 @@
 $(function() {
-
     // Contextual colors for Situation Snapshot cards, gross
     if($('#nw_id').text() == 1){
         $('#northwestprep').css('backgroundColor', '#218c71');
@@ -667,12 +666,13 @@ $(function() {
     var baseLayers = {
         "Topographic": L.esri.basemapLayer("Topographic"),
         "Satellite": L.esri.basemapLayer("Imagery"),
+        "Topo Maps": L.esri.basemapLayer("USATopo"),
     };
 
     // Home point
     var home = {
-        lat: 47.3826,
-        lng: -120.4472,
+        lat: 47.3902606,
+        lng: -120.528331,
         zoom: 7
     };
 
@@ -690,8 +690,8 @@ $(function() {
 
     // Create sidebar instance and add it to the map
     var sidebar = L.control.sidebar({ container: 'sidebar', autopan: true, closeButton: true })
-        .addTo(map)
-        .open('home');
+        .addTo(map);
+        // .open('home');
 
     // Add a basemap to map
     L.esri.basemapLayer("Topographic").addTo(map);

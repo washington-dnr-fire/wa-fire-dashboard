@@ -163,8 +163,8 @@ def egp_data(request, layer_type, layer_id):
 
     if layer_type == "active_incidents":
         # layer id follows source map service id
-        map_service = "https://egp.nwcg.gov/arcgis/rest/services/FireCOP/ActiveIncidents/MapServer/{}".format(layer_id)
-        where = "GACC='NWCC'"
+        map_service = "https://egp.nwcg.gov/arcgis/rest/services/FireCOP/PublicActiveIncidents/MapServer/{}".format(layer_id)
+        where = ''
     if layer_type == "blm_lightning":
         # layer id follows source map service id
         map_service = "https://egp.nwcg.gov/arcgis/rest/services/FireCOP/LightningStrikes/MapServer/{}".format(layer_id)

@@ -38,13 +38,13 @@ class IntelReport(models.Model):
     date_of_report = models.DateTimeField(auto_now=True, blank=False)
 
     preparedness_level_national = models.SmallIntegerField("National Preparedness Level", choices=sorted(PREPAREDNESS_LEVELS), blank=False,
-                                                           help_text="What's the national preparedness level? (out of 5)")
+                                                           help_text="What is the national preparedness level? (out of 5)")
     preparedness_level_nw = models.SmallIntegerField("Northwest Preparedness Level", choices=sorted(PREPAREDNESS_LEVELS), blank=False,
-                                                     help_text="What's the curernt NW GACC preparedness level? (out of 5)")
+                                                     help_text="What is the current NW GACC preparedness level? (out of 5)")
     type_1_teams_assigned = models.SmallIntegerField("Type 1 Teams Assigned", choices=sorted(NW_TYPE_1_TEAMS), blank=False,
-                                                     help_text="How many out of the five Type 1 teams are currently assigned?")
+                                                     help_text="How many NW Type 1 teams are currently assigned?")
     type_2_teams_assigned = models.SmallIntegerField("Type 2 Teams Assigned", choices=sorted(NW_TYPE_2_TEAMS), blank=False,
-                                                     help_text="How many out of the eight Type 2 teams are currently assigned?")
+                                                     help_text="How many NW Type 2 teams are currently assigned?")
     wa_large_fires = models.IntegerField("Washington Large Fires", blank=False, help_text="How many WA-based large fires are there currently?")
     dnr_ia_fires = models.IntegerField("DNR IA Fires", blank=False, help_text="How many DNR-based IA fires are there currently?")
 
@@ -52,78 +52,79 @@ class IntelReport(models.Model):
                                                      validators=[MinValueValidator(0), MaxValueValidator(250)])
     oly_committed_crews = models.SmallIntegerField("OLS In Region Crews", blank=False,
                                                    validators=[MinValueValidator(0), MaxValueValidator(250)])
-    oly_available_engines = models.SmallIntegerField(blank=False,
+    oly_available_engines = models.SmallIntegerField("OLS Out of Region Engines", blank=False,
                                                      validators=[MinValueValidator(0), MaxValueValidator(250)])
-    oly_available_crews = models.SmallIntegerField(blank=False,
+    oly_available_crews = models.SmallIntegerField("OLS Out of Region Crews", blank=False,
                                                    validators=[MinValueValidator(0), MaxValueValidator(250)])
 
-    nw_committed_engines = models.SmallIntegerField(blank=False,
+    nw_committed_engines = models.SmallIntegerField("NWS In Region Engines", blank=False,
                                                     validators=[MinValueValidator(0), MaxValueValidator(250)])
-    nw_committed_crews = models.SmallIntegerField(blank=False,
+    nw_committed_crews = models.SmallIntegerField("NWS In Region Crews", blank=False, default=0,
                                                   validators=[MinValueValidator(0), MaxValueValidator(250)])
-    nw_available_engines = models.SmallIntegerField(blank=False,
+    nw_available_engines = models.SmallIntegerField("NWS Out of Region Engines", blank=False,
                                                     validators=[MinValueValidator(0), MaxValueValidator(250)])
-    nw_available_crews = models.SmallIntegerField(blank=False,
+    nw_available_crews = models.SmallIntegerField("NWS Out of Region Crews", blank=False, default=0,
                                                   validators=[MinValueValidator(0), MaxValueValidator(250)])
 
-    sps_committed_engines = models.SmallIntegerField(blank=False,
+    sps_committed_engines = models.SmallIntegerField("SPS In Region Engines", blank=False,
                                                      validators=[MinValueValidator(0), MaxValueValidator(250)])
-    sps_committed_crews = models.SmallIntegerField(blank=False,
+    sps_committed_crews = models.SmallIntegerField("SPS In Region Crews", blank=False,
                                                    validators=[MinValueValidator(0), MaxValueValidator(250)])
-    sps_available_engines = models.SmallIntegerField(blank=False,
+    sps_available_engines = models.SmallIntegerField("SPS Out of Region Engines", blank=False,
                                                      validators=[MinValueValidator(0), MaxValueValidator(250)])
-    sps_available_crews = models.SmallIntegerField(blank=False,
+    sps_available_crews = models.SmallIntegerField("SPS Out of Region Crews", blank=False,
                                                    validators=[MinValueValidator(0), MaxValueValidator(250)])
 
-    pc_committed_engines = models.SmallIntegerField(blank=False,
+    pc_committed_engines = models.SmallIntegerField("PCS In Region Engines", blank=False,
                                                     validators=[MinValueValidator(0), MaxValueValidator(250)])
-    pc_committed_crews = models.SmallIntegerField(blank=False,
+    pc_committed_crews = models.SmallIntegerField("PCS In Region Crews", blank=False,
                                                   validators=[MinValueValidator(0), MaxValueValidator(250)])
-    pc_available_engines = models.SmallIntegerField(blank=False,
+    pc_available_engines = models.SmallIntegerField("PCS Out of Region Engines", blank=False,
                                                     validators=[MinValueValidator(0), MaxValueValidator(250)])
-    pc_available_crews = models.SmallIntegerField(blank=False,
-                                                  validators=[MinValueValidator(0), MaxValueValidator(250)])
-    se_committed_engines = models.SmallIntegerField(blank=False,
-                                                    validators=[MinValueValidator(0), MaxValueValidator(250)])
-    se_committed_crews = models.SmallIntegerField(blank=False,
-                                                  validators=[MinValueValidator(0), MaxValueValidator(250)])
-    se_available_engines = models.SmallIntegerField(blank=False,
-                                                    validators=[MinValueValidator(0), MaxValueValidator(250)])
-    se_available_crews = models.SmallIntegerField(blank=False,
+    pc_available_crews = models.SmallIntegerField("PCS Out of Region Crews", blank=False,
                                                   validators=[MinValueValidator(0), MaxValueValidator(250)])
 
-    ne_committed_engines = models.SmallIntegerField(blank=False,
+    se_committed_engines = models.SmallIntegerField("SES In Region Engines", blank=False,
                                                     validators=[MinValueValidator(0), MaxValueValidator(250)])
-    ne_committed_crews = models.SmallIntegerField(blank=False,
+    se_committed_crews = models.SmallIntegerField("SES In Region Crews", blank=False,
                                                   validators=[MinValueValidator(0), MaxValueValidator(250)])
-    ne_available_engines = models.SmallIntegerField(blank=False,
+    se_available_engines = models.SmallIntegerField("SES Out of Region Engines", blank=False,
                                                     validators=[MinValueValidator(0), MaxValueValidator(250)])
-    ne_available_crews = models.SmallIntegerField(blank=False,
+    se_available_crews = models.SmallIntegerField("SES Out of Region Crews", blank=False,
                                                   validators=[MinValueValidator(0), MaxValueValidator(250)])
 
-    westside_rotors = models.SmallIntegerField(blank=False, validators=[MinValueValidator(0), MaxValueValidator(100)])
-    westside_firebosses = models.SmallIntegerField(blank=False,
+    ne_committed_engines = models.SmallIntegerField("NES In Region Engines", blank=False,
+                                                    validators=[MinValueValidator(0), MaxValueValidator(250)])
+    ne_committed_crews = models.SmallIntegerField("NES In Region Crews", blank=False,
+                                                  validators=[MinValueValidator(0), MaxValueValidator(250)])
+    ne_available_engines = models.SmallIntegerField("NES Out of Region Engines", blank=False,
+                                                    validators=[MinValueValidator(0), MaxValueValidator(250)])
+    ne_available_crews = models.SmallIntegerField("NES Out of Region Crews", blank=False,
+                                                  validators=[MinValueValidator(0), MaxValueValidator(250)])
+
+    westside_rotors = models.SmallIntegerField("Westside Helicopters", blank=False, validators=[MinValueValidator(0), MaxValueValidator(100)])
+    westside_firebosses = models.SmallIntegerField("Westside SEATs", blank=False,
                                                    validators=[MinValueValidator(0), MaxValueValidator(100)])
-    westside_atgs = models.SmallIntegerField(blank=False, validators=[MinValueValidator(0), MaxValueValidator(100)])
+    westside_atgs = models.SmallIntegerField("Westside ATGS", blank=False, validators=[MinValueValidator(0), MaxValueValidator(100)])
 
-    eastside_rotors = models.SmallIntegerField(blank=False, validators=[MinValueValidator(0), MaxValueValidator(100)])
-    eastside_firebosses = models.SmallIntegerField(blank=False,
+    eastside_rotors = models.SmallIntegerField("Eastside Helicopters", blank=False, validators=[MinValueValidator(0), MaxValueValidator(100)])
+    eastside_firebosses = models.SmallIntegerField("Eastside SEATs", blank=False,
                                                    validators=[MinValueValidator(0), MaxValueValidator(100)])
-    eastside_atgs = models.SmallIntegerField(blank=False, validators=[MinValueValidator(0), MaxValueValidator(100)])
+    eastside_atgs = models.SmallIntegerField("Eastside ATGS", blank=False, validators=[MinValueValidator(0), MaxValueValidator(100)])
 
-    in_region_vlat = models.SmallIntegerField(blank=False, validators=[MinValueValidator(0), MaxValueValidator(100)])
-    in_region_lat = models.SmallIntegerField(blank=False, validators=[MinValueValidator(0), MaxValueValidator(100)])
+    in_region_vlat = models.SmallIntegerField("In Region VLATs", blank=False, validators=[MinValueValidator(0), MaxValueValidator(100)])
+    in_region_lat = models.SmallIntegerField("In Region LATs", blank=False, validators=[MinValueValidator(0), MaxValueValidator(100)])
 
     # fire statistics
-    westside_dnr_responses_count = models.IntegerField("YTD Westside DNR Responses", blank=False, help_text="How many DNR Responses total on the westside?")
-    westside_dnr_fire_count = models.IntegerField("YTD Westside DNR Fires", blank=False, help_text="How many DNR Fires total on the westside?")
-    westside_dnr_fire_acres = models.IntegerField("YTD Westside DNR Fire Acres", blank=False, help_text="How many DNR Fire acres burned on the westside?")
-    westside_all_fire_acres = models.IntegerField("YTD Westside All Acres", blank=False, help_text="How many acres burned on the westside?")
+    westside_dnr_responses_count = models.IntegerField("YTD Westside DNR Responses", blank=False)
+    westside_dnr_fire_count = models.IntegerField("YTD Westside DNR Fires", blank=False)
+    westside_dnr_fire_acres = models.IntegerField("YTD Westside DNR Fire Acres", blank=False)
+    westside_all_fire_acres = models.IntegerField("YTD Westside All Acres", blank=False)
 
-    eastside_dnr_responses_count = models.IntegerField("YTD Eastside DNR Responses", blank=False, help_text="How many DNR Responses total on the eastside?")
-    eastside_dnr_fire_count = models.IntegerField("YTD Eastside DNR Fires", blank=False, help_text="How many DNR Fires total on the eastside?")
-    eastside_dnr_fire_acres = models.IntegerField("YTD Eastside DNR Fire Acres", blank=False, help_text="How many DNR Fire acres burned on the eastside?")
-    eastside_all_fire_acres = models.IntegerField("YTD Eastside All Acres", blank=False, help_text="How many acres burned on the eastside?")
+    eastside_dnr_responses_count = models.IntegerField("YTD Eastside DNR Responses", blank=False)
+    eastside_dnr_fire_count = models.IntegerField("YTD Eastside DNR Fires", blank=False)
+    eastside_dnr_fire_acres = models.IntegerField("YTD Eastside DNR Fire Acres", blank=False)
+    eastside_all_fire_acres = models.IntegerField("YTD Eastside All Acres", blank=False)
 
     def __str__(self):
         return "Intel Report: {}".format(self.date_of_report.strftime("%m/%d/%Y, %H:%M:%S"))

@@ -41,9 +41,9 @@ def index(request):
             'se_available_engines': latest_intel_report.se_available_engines,
             'se_available_crews': latest_intel_report.se_available_crews,
             'nw_committed_engines': latest_intel_report.nw_committed_engines,
-            'nw_committed_crews': latest_intel_report.nw_committed_crews,
+            'nw_committed_crews': "-",  # Northwest doesn't have any crews currently
             'nw_available_engines': latest_intel_report.nw_available_engines,
-            'nw_available_crews': latest_intel_report.nw_available_crews,
+            'nw_available_crews': "-",  # Northwest doesn't have any crews currently
             'pc_committed_engines': latest_intel_report.pc_committed_engines,
             'pc_committed_crews': latest_intel_report.pc_committed_crews,
             'pc_available_engines': latest_intel_report.pc_available_engines,

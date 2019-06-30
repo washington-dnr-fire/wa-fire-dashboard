@@ -266,6 +266,52 @@ $(function() {
         },
         pane: "points",
     });  
+    large_fires.bindPopup(function(evt) {
+        var lat = evt.feature.geometry.coordinates[1].toFixed(3);
+        var lng = evt.feature.geometry.coordinates[0].toFixed(3);
+        var t = moment(evt.feature.properties.FireDiscoveryDateTime).local().fromNow();
+        return L.Util.template(
+            "<div class='container rounded-0' style='max-width:375px;margin-top:5px;'>" +
+            "<div class='row'>" +
+            "<div class='col-xs-12' style='padding:0;'>" +
+            "<span>Large fire at " + lat + ', ' + lng + "</span>" +
+            "</div>" + // col
+            "</div>" + // row
+            "<div class='row'>" +
+                "<div class='col-xs-12' style='padding:0;'>" +
+                    "<div class='table-responsive'>" +
+                        "<table class='table table-sm' style='font-size: 1em; margin-bottom: 0;'>" +
+                            "<thead>" +
+                                "<tr>" +
+                                    "<th colspan='4' class='mx-0 px-0' style='font-size: 2em; font-weight: 700;color: #003d6b; border-top: none;'>" + titleCase(evt.feature.properties.Name) + "</th>" +
+                                "</tr>" +
+                            "</thead>" +
+                            "<tbody>" +
+                                "<tr>" +
+                                    "<td class='mx-0 px-0' style='font-weight: 700;'>Incident #</td>" +
+                                    "<td class='text-muted' colspan='3'>{UniqueFireIdentifier}</td>" +
+                                "</tr>" +
+                                "<tr>" +
+                                    "<td class='mx-0 px-0' style='font-weight: 700;'>Start</td>" +
+                                    "<td class='text-muted'>" + t + "</td>" +
+                                    "<td class='mx-0 px-0' style='font-weight: 700;'>Dispatch</td>" +
+                                    "<td class='text-muted'>{DispatchCenterID}</td>" +
+                                "</tr>" +
+                                "<tr>" +
+                                    "<td class='mx-0 px-0' style='font-weight: 700;'>Acres</td>" +
+                                    "<td class='text-muted'>{DailyAcres}</td>" +
+                                    "<td class='mx-0 px-0' style='font-weight: 700;'>Cause</td>" +
+                                    "<td class='text-muted'>{FireCause}</td>" +
+
+                                "</tr>" +
+                            "</tbody>" +
+                        "</table>" + //table
+                    "</div>" + //responsive table
+                    "<span class='text-muted'><small>Source: SIT-209 Reports via NIFC EGP</small></span>" +
+                "</div>" + // col
+            "</div>" + // row
+        "</div>", evt.feature.properties
+    )});
 
     // Unknown SIT209 fires, gotta catch 'em all
     var large_fires_other = new L.GeoJSON.AJAX("./egp_data/active_incidents/1",{
@@ -274,7 +320,52 @@ $(function() {
         },
         pane: "points",
     });  
+    large_fires_other.bindPopup(function(evt) {
+        var lat = evt.feature.geometry.coordinates[1].toFixed(3);
+        var lng = evt.feature.geometry.coordinates[0].toFixed(3);
+        var t = moment(evt.feature.properties.FireDiscoveryDateTime).local().fromNow();
+        return L.Util.template(
+            "<div class='container rounded-0' style='max-width:375px;margin-top:5px;'>" +
+            "<div class='row'>" +
+            "<div class='col-xs-12' style='padding:0;'>" +
+            "<span>Large fire at " + lat + ', ' + lng + "</span>" +
+            "</div>" + // col
+            "</div>" + // row
+            "<div class='row'>" +
+                "<div class='col-xs-12' style='padding:0;'>" +
+                    "<div class='table-responsive'>" +
+                        "<table class='table table-sm' style='font-size: 1em; margin-bottom: 0;'>" +
+                            "<thead>" +
+                                "<tr>" +
+                                    "<th colspan='4' class='mx-0 px-0' style='font-size: 2em; font-weight: 700;color: #003d6b; border-top: none;'>" + titleCase(evt.feature.properties.Name) + "</th>" +
+                                "</tr>" +
+                            "</thead>" +
+                            "<tbody>" +
+                                "<tr>" +
+                                    "<td class='mx-0 px-0' style='font-weight: 700;'>Incident #</td>" +
+                                    "<td class='text-muted' colspan='3'>{UniqueFireIdentifier}</td>" +
+                                "</tr>" +
+                                "<tr>" +
+                                    "<td class='mx-0 px-0' style='font-weight: 700;'>Start</td>" +
+                                    "<td class='text-muted'>" + t + "</td>" +
+                                    "<td class='mx-0 px-0' style='font-weight: 700;'>Dispatch</td>" +
+                                    "<td class='text-muted'>{DispatchCenterID}</td>" +
+                                "</tr>" +
+                                "<tr>" +
+                                    "<td class='mx-0 px-0' style='font-weight: 700;'>Acres</td>" +
+                                    "<td class='text-muted'>{DailyAcres}</td>" +
+                                    "<td class='mx-0 px-0' style='font-weight: 700;'>Cause</td>" +
+                                    "<td class='text-muted'>{FireCause}</td>" +
 
+                                "</tr>" +
+                            "</tbody>" +
+                        "</table>" + //table
+                    "</div>" + //responsive table
+                    "<span class='text-muted'><small>Source: SIT-209 Reports via NIFC EGP</small></span>" +
+                "</div>" + // col
+            "</div>" + // row
+        "</div>", evt.feature.properties
+    )});
     // Emerging incidents < 24 hrs icon
     var squareRedIcon = L.icon({
         iconUrl: "../../../static/images/square_red.svg",

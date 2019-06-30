@@ -181,7 +181,7 @@ def egp_data(request, layer_type, layer_id):
         'geometry': str(WA_ENVELOPE),
         'geometryType': 'esriGeometryEnvelope',
         'inSR': '4326',
-        'spatialRel':'esriSpatialRelIntersects',
+        'spatialRel': 'esriSpatialRelIntersects',
         'outFields': '*',
         'f': 'geojson',
         }

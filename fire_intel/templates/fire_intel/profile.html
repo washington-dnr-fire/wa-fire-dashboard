@@ -26,9 +26,9 @@ html, body{
             <br>
             <hr>
             <p class="ml-4">
-                <button type="button" class="btn btn-sm rounded-0 border-0 text-white btn-secondary" style="padding:5px 10px;" onclick="location.href='{% url 'index' %}'"><i class="fas fa-chevron-left"></i>&nbsp;&nbsp;Back</button>
-                <button type="button" class="btn btn-sm rounded-0 border-0 text-white dnr-red-bg nwcc-link ml-2" onclick="location.href='{% url 'admin:index' %}'">Go to Admin Page</button>
-                <button type="button" class="btn btn-sm btn-secondary rounded-0 border-0 text-white m-2" style="padding:5px 10px;" onclick="location.href='{% url 'logout' %}'"><i class="fas fa-sign-out-alt"></i>&nbsp;&nbsp;Log Out</button>
+                <button type="button" class="btn btn-sm border-0 text-white btn-secondary" style="padding:5px 10px;" onclick="location.href='{% url 'index' %}'"><i class="fas fa-chevron-left"></i>&nbsp;&nbsp;Back</button>
+                <button type="button" class="btn btn-sm border-0 text-white dnr-red-bg nwcc-link ml-2" onclick="location.href='{% url 'admin:index' %}'">Go to Admin Page</button>
+                <button type="button" class="btn btn-sm btn-secondary border-0 text-white m-2" style="padding:5px 10px;" onclick="location.href='{% url 'logout' %}'"><i class="fas fa-sign-out-alt"></i>&nbsp;&nbsp;Log Out</button>
 
             </p>
         {% else %}

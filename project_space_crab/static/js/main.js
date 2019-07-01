@@ -1,4 +1,62 @@
 $(function() {
+  // Positive polarity lightning icon
+    var redLightningIcon = L.icon({
+    iconUrl: "../../../static/images/red_lightning.svg",
+    iconSize: [20, 20], // size of the icon
+    });
+
+    // Negative polarity lightning icon
+    var blueLightningIcon = L.icon({
+    iconUrl: "../../../static/images/blue_lightning.svg",
+    iconSize: [20, 20], // size of the icon
+    });
+
+    var lightning = L.markerClusterGroup({
+        polygonOptions: {color: '#000000'}
+        }
+    );
+
+    // BLM 24hr Lightning
+    var blm_lightning_24hr = new L.GeoJSON.AJAX("./egp_data/blm_lightning/1", {
+        pointToLayer: function (feature, latlng) {
+            if(feature.properties.Polarity === 'N'){
+                return L.marker(latlng, {icon: blueLightningIcon});
+            } else if(feature.properties.Polarity === 'P"'){
+                return L.marker(latlng, {icon: redLightningIcon});
+            }
+        },
+        onEachFeature: function (feature, layer) {
+            var lat = feature.properties.Latitude.toFixed(3).toString();
+            var lng = feature.properties.Longitude.toFixed(3).toString();
+            var t = moment(feature.properties.TimeStamp).local().fromNow();
+            layer.bindPopup(
+                "<div class='container rounded-0' style='max-width:375px;margin-top:5px;'>" +
+                "<div class='row'>" +
+                "<div class='col-xs-12' style='padding:0;'>" +
+                "<span>Lightning detected at " + lat + ', ' + lng + "</span>" +
+                "</div>" + // col
+                "</div>" + // row
+                "<div class='row'>" +
+                "<div class='col-xs-12' style='padding:0;'>" +
+                "<span style='font-size: 2em; font-weight: 700;color: #003d6b;'>" + t  + "</span>" +
+                "</div>" + // col
+                "</div>" + // row
+                "<div class='row'>" +
+                "<div class='col-xs-6' style='padding:0;'>" +
+                "<span>Polarity: " + feature.properties.Polarity + "</span>" +
+                "</div>" + // col
+                "<div class='col-xs-6 ml-2' style='padding:0;'>" +
+                "<span>Current: " + feature.properties.CurrentMeasurement +  " kA</span>" +
+                "</div>" + // col
+                "</div>" + // row
+                "</div>"
+            );
+        }
+    });
+
+    blm_lightning_24hr.on('data:loaded', function () {
+        lightning.addLayer(blm_lightning_24hr);
+    });
 
     function titleCase(str) {
         return str.toLowerCase().replace(/\b(\w)/g, s => s.toUpperCase());
@@ -493,56 +551,6 @@ $(function() {
     var sit209_fires = L.layerGroup([large_fires, large_fires_other]);
     var wildcad_fires = L.layerGroup([emerging_incidents_less24,emerging_incidents_greater24]);
 
-    // Positive polarity lightning icon
-    var redLightningIcon = L.icon({
-    iconUrl: "../../../static/images/red_lightning.svg",
-    iconSize: [16, 16], // size of the icon
-    });
-
-    // Negative polarity lightning icon
-    var blueLightningIcon = L.icon({
-    iconUrl: "../../../static/images/blue_lightning.svg",
-    iconSize: [16, 16], // size of the icon
-    });
-
-    // BLM 24hr Lightning
-    var blm_lightning_24hr = new L.GeoJSON.AJAX("./egp_data/blm_lightning/1", {
-        pointToLayer: function (feature, latlng) {
-            if(feature.properties.Polarity === 'N'){
-                return L.marker(latlng, {icon: blueLightningIcon});
-            } else if(feature.properties.Polarity === 'P"'){
-                return L.marker(latlng, {icon: redLightningIcon});
-            }
-        },
-    });
-
-    // BLM 24hr Lightning Popup Template
-    blm_lightning_24hr.bindPopup(function(evt) {
-        var lat = evt.feature.properties.Latitude.toFixed(3).toString();
-        var lng = evt.feature.properties.Longitude.toFixed(3).toString();
-        var t = moment(evt.feature.properties.TimeStamp).local().fromNow();
-        return L.Util.template(
-        "<div class='container rounded-0' style='max-width:375px;margin-top:5px;'>" +
-        "<div class='row'>" +
-        "<div class='col-xs-12' style='padding:0;'>" +
-        "<span>Lightning detected at " + lat + ', ' + lng + "</span>" +
-        "</div>" + // col
-        "</div>" + // row
-        "<div class='row'>" +
-        "<div class='col-xs-12' style='padding:0;'>" +
-        "<span style='font-size: 2em; font-weight: 700;color: #003d6b;'>" + t  + "</span>" +
-        "</div>" + // col
-        "</div>" + // row
-        "<div class='row'>" +
-        "<div class='col-xs-6' style='padding:0;'>" +
-        "<span>Polarity: { Polarity }</span>" +
-        "</div>" + // col
-        "<div class='col-xs-6 ml-2' style='padding:0;'>" +
-        "<span>Current: { CurrentMeasurement } kA</span>" +
-        "</div>" + // col
-        "</div>" + // row
-        "</div>", evt.feature.properties
-    )});
 
     // MODIS Satellite Detections
     var modis_hotspot_centroids = new L.GeoJSON.AJAX("./egp_data/hotspots/0",{
@@ -953,7 +961,7 @@ $(function() {
       },
       "Weather": {
         "NWS Current Warnings": NWS_warnings,
-        "24-Hour Lightning Strikes": blm_lightning_24hr,
+        "24-Hour Lightning Strikes": lightning,
         "NWS 7-Day Rain Forecast": NWS_QPE,
         "1-Month Drought Outlook": CPC_Monthly_Drought,
         "3-Month Drought Outlook": CPC_Seasonal_Drought,

@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+.marker-cluster-small {
+	background-color: rgba(84, 191, 164, 0.7);
+	}
+.marker-cluster-small div {
+	background-color: rgba(33, 140, 113, 0.9)
+	}
+
+.marker-cluster-medium {
+	background-color: rgba(255, 230, 128, 0.7);
+	}
+.marker-cluster-medium div {
+	background-color: rgba(241, 179, 77, 0.9);
+	}
+
+.marker-cluster-large {
+	background-color: rgba(253, 99, 126, 0.7);
+	}
+.marker-cluster-large div {
+	background-color: rgba(202, 48, 75, 0.9);
+	}
+
+	/* IE 6-8 fallback colors */
+.leaflet-oldie .marker-cluster-small {
+	background-color: rgb(84, 191, 164);
+	}
+.leaflet-oldie .marker-cluster-small div {
+	background-color: rgb(33, 140, 113);
+	}
+
+.leaflet-oldie .marker-cluster-medium {
+	background-color: rgb(255, 230, 128);
+	}
+.leaflet-oldie .marker-cluster-medium div {
+	background-color: rgb(241, 179, 77);
+	}
+
+.leaflet-oldie .marker-cluster-large {
+	background-color: rgb(253, 99, 126);
+	}
+.leaflet-oldie .marker-cluster-large div {
+	background-color: rgb(202, 48, 75);
+}
+
+.marker-cluster {
+	background-clip: padding-box;
+	border-radius: 20px;
+	}
+.marker-cluster div {
+	width: 30px;
+	height: 30px;
+	margin-left: 5px;
+	margin-top: 5px;
+
+	text-align: center;
+	border-radius: 15px;
+	font: 12px "Roboto", sans-serif;
+	font-weight: bold;
+	}
+.marker-cluster span {
+	line-height: 30px;
+	}

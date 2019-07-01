@@ -152,18 +152,18 @@ def profile(request):
 
 
 def egp_data(request, layer_type, layer_id):
-
     referer = 'http://dnr.wa.gov'
     WA_ENVELOPE = {
-        "xmin":-124.85,
-        "ymin":45.49,
-        "xmax":-116.69,
-        "ymax":49.1,
-        }
+        "xmin": -124.85,
+        "ymin": 45.49,
+        "xmax": -116.69,
+        "ymax": 49.1,
+    }
 
     if layer_type == "active_incidents":
         # layer id follows source map service id
-        map_service = "https://egp.nwcg.gov/arcgis/rest/services/FireCOP/PublicActiveIncidents/MapServer/{}".format(layer_id)
+        map_service = "https://egp.nwcg.gov/arcgis/rest/services/FireCOP/PublicActiveIncidents/MapServer/{}".format(
+            layer_id)
         where = ''
     if layer_type == "blm_lightning":
         # layer id follows source map service id

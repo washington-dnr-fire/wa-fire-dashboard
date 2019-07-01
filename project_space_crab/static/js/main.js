@@ -12,7 +12,8 @@ $(function() {
     });
 
     var lightning = L.markerClusterGroup({
-        polygonOptions: {color: '#000000'}
+        polygonOptions: {color: '#000000'},
+        clusterPane: 'lightningclusters'
         }
     );
 
@@ -942,6 +943,8 @@ $(function() {
     map.createPane('boundaries');
     map.createPane('overlays');
     map.createPane('points');
+    map.createPane('lightningclusters');
+
 
     // Create groupings of overlays for layer pick list
     var groupedOverlays = {

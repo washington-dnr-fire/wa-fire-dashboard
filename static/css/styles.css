@@ -161,6 +161,14 @@ button, .leaflet-bar-part{
     height: 30px!important;
     width: 30px!important;
 }
+
+.mycluster {
+    width: 40px;
+    height: 40px;
+    background-color: greenyellow;
+    text-align: center;
+    font-size: 24px;
+}
 /*--- Home Panel -----------------------------------------------------------------------------------------------------*/
 .card-num{
     font-size:5em;

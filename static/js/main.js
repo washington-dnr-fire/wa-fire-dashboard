@@ -1,4 +1,63 @@
 $(function() {
+  // Positive polarity lightning icon
+    var redLightningIcon = L.icon({
+    iconUrl: "../../../static/images/red_lightning.svg",
+    iconSize: [20, 20], // size of the icon
+    });
+
+    // Negative polarity lightning icon
+    var blueLightningIcon = L.icon({
+    iconUrl: "../../../static/images/blue_lightning.svg",
+    iconSize: [20, 20], // size of the icon
+    });
+
+    var lightning = L.markerClusterGroup({
+        polygonOptions: {color: '#000000'},
+        clusterPane: 'lightningclusters'
+        }
+    );
+
+    // BLM 24hr Lightning
+    var blm_lightning_24hr = new L.GeoJSON.AJAX("./egp_data/blm_lightning/1", {
+        pointToLayer: function (feature, latlng) {
+            if(feature.properties.Polarity === 'N'){
+                return L.marker(latlng, {icon: blueLightningIcon});
+            } else if(feature.properties.Polarity === 'P'){
+                return L.marker(latlng, {icon: redLightningIcon});
+            }
+        },
+        onEachFeature: function (feature, layer) {
+            var lat = feature.properties.Latitude.toFixed(3).toString();
+            var lng = feature.properties.Longitude.toFixed(3).toString();
+            var t = moment(feature.properties.TimeStamp).local().fromNow();
+            layer.bindPopup(
+                "<div class='container rounded-0' style='max-width:375px;margin-top:5px;'>" +
+                "<div class='row'>" +
+                "<div class='col-xs-12' style='padding:0;'>" +
+                "<span>Lightning detected at " + lat + ', ' + lng + "</span>" +
+                "</div>" + // col
+                "</div>" + // row
+                "<div class='row'>" +
+                "<div class='col-xs-12' style='padding:0;'>" +
+                "<span style='font-size: 2em; font-weight: 700;color: #003d6b;'>" + t  + "</span>" +
+                "</div>" + // col
+                "</div>" + // row
+                "<div class='row'>" +
+                "<div class='col-xs-6' style='padding:0;'>" +
+                "<span>Polarity: " + feature.properties.Polarity + "</span>" +
+                "</div>" + // col
+                "<div class='col-xs-6 ml-2' style='padding:0;'>" +
+                "<span>Current: " + feature.properties.CurrentMeasurement +  " kA</span>" +
+                "</div>" + // col
+                "</div>" + // row
+                "</div>"
+            );
+        }
+    });
+
+    blm_lightning_24hr.on('data:loaded', function () {
+        lightning.addLayer(blm_lightning_24hr);
+    });
 
     function titleCase(str) {
         return str.toLowerCase().replace(/\b(\w)/g, s => s.toUpperCase());
@@ -266,6 +325,52 @@ $(function() {
         },
         pane: "points",
     });  
+    large_fires.bindPopup(function(evt) {
+        var lat = evt.feature.geometry.coordinates[1].toFixed(3);
+        var lng = evt.feature.geometry.coordinates[0].toFixed(3);
+        var t = moment(evt.feature.properties.FireDiscoveryDateTime).local().fromNow();
+        return L.Util.template(
+            "<div class='container rounded-0' style='max-width:375px;margin-top:5px;'>" +
+            "<div class='row'>" +
+            "<div class='col-xs-12' style='padding:0;'>" +
+            "<span>Large fire at " + lat + ', ' + lng + "</span>" +
+            "</div>" + // col
+            "</div>" + // row
+            "<div class='row'>" +
+                "<div class='col-xs-12' style='padding:0;'>" +
+                    "<div class='table-responsive'>" +
+                        "<table class='table table-sm' style='font-size: 1em; margin-bottom: 0;'>" +
+                            "<thead>" +
+                                "<tr>" +
+                                    "<th colspan='4' class='mx-0 px-0' style='font-size: 2em; font-weight: 700;color: #003d6b; border-top: none;'>" + titleCase(evt.feature.properties.Name) + "</th>" +
+                                "</tr>" +
+                            "</thead>" +
+                            "<tbody>" +
+                                "<tr>" +
+                                    "<td class='mx-0 px-0' style='font-weight: 700;'>Incident #</td>" +
+                                    "<td class='text-muted' colspan='3'>{UniqueFireIdentifier}</td>" +
+                                "</tr>" +
+                                "<tr>" +
+                                    "<td class='mx-0 px-0' style='font-weight: 700;'>Start</td>" +
+                                    "<td class='text-muted'>" + t + "</td>" +
+                                    "<td class='mx-0 px-0' style='font-weight: 700;'>Dispatch</td>" +
+                                    "<td class='text-muted'>{DispatchCenterID}</td>" +
+                                "</tr>" +
+                                "<tr>" +
+                                    "<td class='mx-0 px-0' style='font-weight: 700;'>Acres</td>" +
+                                    "<td class='text-muted'>{DailyAcres}</td>" +
+                                    "<td class='mx-0 px-0' style='font-weight: 700;'>Cause</td>" +
+                                    "<td class='text-muted'>{FireCause}</td>" +
+
+                                "</tr>" +
+                            "</tbody>" +
+                        "</table>" + //table
+                    "</div>" + //responsive table
+                    "<span class='text-muted'><small>Source: SIT-209 Reports via NIFC EGP</small></span>" +
+                "</div>" + // col
+            "</div>" + // row
+        "</div>", evt.feature.properties
+    )});
 
     // Unknown SIT209 fires, gotta catch 'em all
     var large_fires_other = new L.GeoJSON.AJAX("./egp_data/active_incidents/1",{
@@ -274,7 +379,52 @@ $(function() {
         },
         pane: "points",
     });  
+    large_fires_other.bindPopup(function(evt) {
+        var lat = evt.feature.geometry.coordinates[1].toFixed(3);
+        var lng = evt.feature.geometry.coordinates[0].toFixed(3);
+        var t = moment(evt.feature.properties.FireDiscoveryDateTime).local().fromNow();
+        return L.Util.template(
+            "<div class='container rounded-0' style='max-width:375px;margin-top:5px;'>" +
+            "<div class='row'>" +
+            "<div class='col-xs-12' style='padding:0;'>" +
+            "<span>Large fire at " + lat + ', ' + lng + "</span>" +
+            "</div>" + // col
+            "</div>" + // row
+            "<div class='row'>" +
+                "<div class='col-xs-12' style='padding:0;'>" +
+                    "<div class='table-responsive'>" +
+                        "<table class='table table-sm' style='font-size: 1em; margin-bottom: 0;'>" +
+                            "<thead>" +
+                                "<tr>" +
+                                    "<th colspan='4' class='mx-0 px-0' style='font-size: 2em; font-weight: 700;color: #003d6b; border-top: none;'>" + titleCase(evt.feature.properties.Name) + "</th>" +
+                                "</tr>" +
+                            "</thead>" +
+                            "<tbody>" +
+                                "<tr>" +
+                                    "<td class='mx-0 px-0' style='font-weight: 700;'>Incident #</td>" +
+                                    "<td class='text-muted' colspan='3'>{UniqueFireIdentifier}</td>" +
+                                "</tr>" +
+                                "<tr>" +
+                                    "<td class='mx-0 px-0' style='font-weight: 700;'>Start</td>" +
+                                    "<td class='text-muted'>" + t + "</td>" +
+                                    "<td class='mx-0 px-0' style='font-weight: 700;'>Dispatch</td>" +
+                                    "<td class='text-muted'>{DispatchCenterID}</td>" +
+                                "</tr>" +
+                                "<tr>" +
+                                    "<td class='mx-0 px-0' style='font-weight: 700;'>Acres</td>" +
+                                    "<td class='text-muted'>{DailyAcres}</td>" +
+                                    "<td class='mx-0 px-0' style='font-weight: 700;'>Cause</td>" +
+                                    "<td class='text-muted'>{FireCause}</td>" +
 
+                                "</tr>" +
+                            "</tbody>" +
+                        "</table>" + //table
+                    "</div>" + //responsive table
+                    "<span class='text-muted'><small>Source: SIT-209 Reports via NIFC EGP</small></span>" +
+                "</div>" + // col
+            "</div>" + // row
+        "</div>", evt.feature.properties
+    )});
     // Emerging incidents < 24 hrs icon
     var squareRedIcon = L.icon({
         iconUrl: "../../../static/images/square_red.svg",
@@ -402,56 +552,6 @@ $(function() {
     var sit209_fires = L.layerGroup([large_fires, large_fires_other]);
     var wildcad_fires = L.layerGroup([emerging_incidents_less24,emerging_incidents_greater24]);
 
-    // Positive polarity lightning icon
-    var redLightningIcon = L.icon({
-    iconUrl: "../../../static/images/red_lightning.svg",
-    iconSize: [16, 16], // size of the icon
-    });
-
-    // Negative polarity lightning icon
-    var blueLightningIcon = L.icon({
-    iconUrl: "../../../static/images/blue_lightning.svg",
-    iconSize: [16, 16], // size of the icon
-    });
-
-    // BLM 24hr Lightning
-    var blm_lightning_24hr = new L.GeoJSON.AJAX("./egp_data/blm_lightning/1", {
-        pointToLayer: function (feature, latlng) {
-            if(feature.properties.Polarity === 'N'){
-                return L.marker(latlng, {icon: blueLightningIcon});
-            } else if(feature.properties.Polarity === 'P"'){
-                return L.marker(latlng, {icon: redLightningIcon});
-            }
-        },
-    });
-
-    // BLM 24hr Lightning Popup Template
-    blm_lightning_24hr.bindPopup(function(evt) {
-        var lat = evt.feature.properties.Latitude.toFixed(3).toString();
-        var lng = evt.feature.properties.Longitude.toFixed(3).toString();
-        var t = moment(evt.feature.properties.TimeStamp).local().fromNow();
-        return L.Util.template(
-        "<div class='container rounded-0' style='max-width:375px;margin-top:5px;'>" +
-        "<div class='row'>" +
-        "<div class='col-xs-12' style='padding:0;'>" +
-        "<span>Lightning detected at " + lat + ', ' + lng + "</span>" +
-        "</div>" + // col
-        "</div>" + // row
-        "<div class='row'>" +
-        "<div class='col-xs-12' style='padding:0;'>" +
-        "<span style='font-size: 2em; font-weight: 700;color: #003d6b;'>" + t  + "</span>" +
-        "</div>" + // col
-        "</div>" + // row
-        "<div class='row'>" +
-        "<div class='col-xs-6' style='padding:0;'>" +
-        "<span>Polarity: { Polarity }</span>" +
-        "</div>" + // col
-        "<div class='col-xs-6 ml-2' style='padding:0;'>" +
-        "<span>Current: { CurrentMeasurement } kA</span>" +
-        "</div>" + // col
-        "</div>" + // row
-        "</div>", evt.feature.properties
-    )});
 
     // MODIS Satellite Detections
     var modis_hotspot_centroids = new L.GeoJSON.AJAX("./egp_data/hotspots/0",{
@@ -589,44 +689,72 @@ $(function() {
         "</div>", evt.feature.properties
     )});
 
-    // // HMS SATELLITE DETECTIONS
-    // var hms_detects = L.esri.featureLayer({
-    //     url: "https://wildfire.cr.usgs.gov/arcgis/rest/services/geomac_dyn/MapServer/6",
-    //     where:"load_stat IN ('Active Burning', '24 Hrs', '48 Hrs')",
-    //     pane: "points",
-    // });
-    //
-    // // HMS satellite detections popup template
-    // hms_detects.bindPopup(function(evt) {
-    //     if(evt.feature.properties.load_stat === "Active Burning"){
-    //         var load_stat = 'Last 12 hours';
-    //     } else if(evt.feature.properties.load_stat === "24 Hrs"){
-    //         var load_stat = 'Last 12-24 hours ';
-    //     } else if(evt.feature.properties.load_stat === "48 Hrs"){
-    //         var load_stat = 'Last 24-48 hours';
-    //     }
-    //     return L.Util.template(
-    //     "<div class='container rounded-0' style='max-width:375px;margin-top:5px;'>" +
-    //     "<div class='row'>" +
-    //     "<div class='col-xs-12' style='padding:0;'>" +
-    //     "<span'>Hot Spot Detection</span>" +
-    //     "</div>" + // col
-    //     "</div>" + // row
-    //     "<div class='row'>" +
-    //     "<div class='col-xs-12' style='padding:0; text-align: center'>" +
-    //     "<span style='font-size: 2em; font-weight: 700;color: #003d6b;'>" + load_stat + "</span>" +
-    //     "</div>" + // col
-    //     "</div>" + // row
-    //     "<div class='row'>" +
-    //     "<div class='col-xs-12'>" +
-    //     "<span class='text-muted'>Detected via {det_method} and the {satellite} satellite</span>" +
-    //     "</div>" + // col
-    //     "</div>" + // row
-    //     "</div>", evt.feature.properties
-    // )});
+    // HMS SATELLITE DETECTIONS
+    var hms_detects = new L.GeoJSON.AJAX("./egp_data/HMS_detects/6", {
+        pointToLayer: function (feature, latlng) {
+            if(feature.properties.load_stat === 'Active Burning'){
+                return L.circleMarker(latlng, {
+                    stroke: false,
+                    fillColor: 'red',
+                    radius: 4,
+                    fillOpacity: 1.0
+                })
+            } else if(feature.properties.load_stat === '24 Hrs'){
+                return L.circleMarker(latlng, {
+                    stroke: false,
+                    fillColor: 'yellow',
+                    radius: 4,
+                    fillOpacity: 1.0
+                })
+            } else if(feature.properties.load_stat === '48 Hrs'){
+                return L.circleMarker(latlng, {
+                    stroke: false,
+                    fillColor: 'black',
+                    radius: 4,
+                    fillOpacity: 1.0
+                })
+            }
+        },
+        onEachFeature: function (feature, layer) {
+            layer.setStyle({pane: 'points'});
+        }
+    });
+
+    hms_detects.bindPopup(function(evt) {
+        var lat = evt.feature.geometry.coordinates[1].toFixed(3);
+        var lng = evt.feature.geometry.coordinates[0].toFixed(3);
+        // var s = moment(evt.feature.properties.DetectionDate);
+        // var duration = moment.duration(moment().diff(s));
+        // var aa = duration.asHours();
+        if(evt.feature.properties.load_stat === 'Active Burning'){
+            var load_stat = 'Last 12 hours';
+        } else if(evt.feature.properties.load_stat === '24 Hrs'){
+            var load_stat = 'Last 12-24 hours ';
+        } else if(evt.feature.properties.load_stat === '48 Hrs') {
+            var load_stat = 'Last 24-48 hours';
+        }
+        return L.Util.template(
+        "<div class='container rounded-0' style='max-width:375px;margin-top:5px;'>" +
+        "<div class='row'>" +
+        "<div class='col-xs-12' style='padding:0;'>" +
+        "<span>Hotspot detected at " + lat + ', ' + lng + "</span>" +
+        "</div>" + // col
+        "</div>" + // row
+        "<div class='row'>" +
+        "<div class='col-xs-12' style='padding:0; text-align: center'>" +
+        "<span style='font-size: 2em; font-weight: 700;color: #003d6b;'>" + load_stat + "</span>" +
+        "</div>" + // col
+        "</div>" + // row
+        "<div class='row'>" +
+        "<div class='col-xs-12'>" +
+        "<span class='text-muted'>Detected via {det_method}</span>" +
+        "</div>" + // col
+        "</div>" + // row
+        "</div>", evt.feature.properties
+    )});
 
     // All da satellites group
-    var satellite_detects = L.layerGroup([viirs_hotspot_centroids, modis_hotspot_centroids]);
+    var satellite_detects = L.layerGroup([viirs_hotspot_centroids, modis_hotspot_centroids, hms_detects]);
 
     // NWS 7-DAY RAINFALL
     var NWS_QPE = L.esri.featureLayer({
@@ -815,6 +943,8 @@ $(function() {
     map.createPane('boundaries');
     map.createPane('overlays');
     map.createPane('points');
+    map.createPane('lightningclusters');
+
 
     // Create groupings of overlays for layer pick list
     var groupedOverlays = {
@@ -834,7 +964,7 @@ $(function() {
       },
       "Weather": {
         "NWS Current Warnings": NWS_warnings,
-        "24-Hour Lightning Strikes": blm_lightning_24hr,
+        "24-Hour Lightning Strikes": lightning,
         "NWS 7-Day Rain Forecast": NWS_QPE,
         "1-Month Drought Outlook": CPC_Monthly_Drought,
         "3-Month Drought Outlook": CPC_Seasonal_Drought,

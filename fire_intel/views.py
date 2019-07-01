@@ -174,6 +174,10 @@ def egp_data(request, layer_type, layer_id):
         map_service = "https://egp.nwcg.gov/arcgis/rest/services/FireCOP/FireDetections/MapServer/{}".format(layer_id)
         where = ''
 
+    if layer_type == 'HMS_detects':
+        map_service = "https://wildfire.cr.usgs.gov/arcgis/rest/services/geomac_dyn/MapServer/{}".format(layer_id)
+        where = "load_stat IN ('Active Burning', '24 Hrs', '48 Hrs')"
+
     # making the EGP data request
     request_params = {
         'token': IntelReport.get_that_egp_token(),
@@ -184,7 +188,10 @@ def egp_data(request, layer_type, layer_id):
         'spatialRel': 'esriSpatialRelIntersects',
         'outFields': '*',
         'f': 'geojson',
-        }
+    }
+
+    if layer_type == "HMS_detects":
+        del request_params['token']
 
     s = requests.Session()
     s.headers.update({'referer': referer})

@@ -27,7 +27,6 @@ $(function() {
             }
         },
         onEachFeature: function (feature, layer) {
-            console.log(feature.properties.Polarity)
             var lat = feature.properties.Latitude.toFixed(3).toString();
             var lng = feature.properties.Longitude.toFixed(3).toString();
             var t = moment(feature.properties.TimeStamp).local().fromNow();

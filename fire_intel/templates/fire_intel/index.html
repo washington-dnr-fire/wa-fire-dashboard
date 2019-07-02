@@ -21,6 +21,9 @@
         <!-- bottom aligned tabs -->
         <ul role="tablist">
             <li>
+                <a href="#legend" role="tab"><i class='fas fa-list-ul text-white'></i></a>
+            </li>
+            <li>
                 <a href="#about" role="tab"><i class='fas fa-info-circle text-white'></i></a>
             </li>
             <li>
@@ -307,6 +310,132 @@
             <div class="row">
                 <div class="col-12 twit-column">
                     <a class="twitter-timeline" data-height="90vh" data-width="100%" data-lang="en" data-theme="light" data-chrome="noheader nofooter" data-link-color="#C8102E" href="https://twitter.com/waDNR_fire?ref_src=twsrc%5Etfw" >Tweets by waDNR_fire</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+            </div> <!-- /end 1st row -->
+        </div> <!-- /end panel -->
+
+        <!-- legend panel -->
+        <div class="leaflet-sidebar-pane" id="legend">
+            <h1 class="leaflet-sidebar-header">Map Legend
+                <span class="leaflet-sidebar-close"><i class="fa fa-caret-left"></i></span>
+            </h1>
+            <div class="row">
+                <div class="col-12">
+                    <div class="table-responsive my-2">
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th colspan="2">Layer</th>
+                                    <th class="text-center">Symbol</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="align-middle" colspan="2">Boundaries (Counties, Regions, etc.)</td>
+                                    <td class="text-center align-middle"><hr style="border-top: 2.5px solid black; margin-top: 0; margin-bottom: 0;" width="50%"></td>
+
+
+                                </tr>
+                                <tr>
+                                    <td class="align-middle" colspan="2">NWCC Large Fires</td>
+                                    <td class="text-center align-middle"><img src="../../../static/images/Flames_Large.svg" style="max-height: 20px"></td>
+
+                                </tr>
+                                <tr>
+                                    <td class="align-middle" colspan="2">SIT-209 Fires</td>
+                                    <td class="text-center align-middle"><img src="../../../static/images/Flames_Emerging.svg" style="max-height: 20px"></td>
+                                </tr>
+                                <tr>
+                                    <td class="align-middle" rowspan="2">WildCAD Fires</td>
+                                    <td class="align-middle">< 24 Hrs Old</td>
+                                    <td class="text-center align-middle"><img src="../../../static/images/square_black.svg" style="max-height: 15px"></td>
+                                </tr>
+                                <tr>
+                                    <td class="align-middle">> 24 Hrs Old</td>
+                                    <td class="text-center align-middle"><img src="../../../static/images/square_red.svg" style="max-height: 15px"></td>
+                                </tr>
+                                <tr>
+                                    <td class="align-middle" rowspan="3"> Satellite Hotspots</td>
+                                    <td class="align-middle"> < 12 Hrs Old</td>
+                                    <td class="text-center align-middle"><img src="../../../static/images/circle_red.svg" style="max-height: 15px"></td>
+                                </tr>
+                                <tr>
+                                    <td class="align-middle">12-24 Hrs Old</td>
+                                    <td class="text-center align-middle"><img src="../../../static/images/circle_yellow.svg" style="max-height: 15px"></td>
+                                </tr>
+                                <tr>
+                                    <td class="align-middle">24-48 Hrs Old</td>
+                                    <td class="text-center align-middle"><img src="../../../static/images/circle_black.svg" style="max-height: 15px"></td>
+                                </tr>
+                                <tr>
+                                    <td class="align-middle" rowspan="4"> DNR Fire Danger</td>
+                                    <td class="align-middle">Low</td>
+                                    <td class="align-middle"><div style="background: #CCE2CF; border: 1px solid black; height: 1.5em;"></div></td>
+                                </tr>
+                                <tr>
+                                    <td class="align-middle">Moderate</td>
+                                    <td class="align-middle"><div style="background: #CFD6F8; border: 1px solid black; height: 1.5em;"></div></td>
+                                </tr>
+                                <tr>
+                                    <td class="align-middle">High</td>
+                                    <td class="align-middle"><div style="background: #F8F9AB; border: 1px solid black; height: 1.5em;"></div></td>
+                                </tr>
+                                <tr>
+                                    <td class="align-middle">Extreme</td>
+                                    <td class="align-middle"><div style="background: #FF8E8E; border: 1px solid black; height: 1.5em;"></div></td>
+                                </tr>
+                                <tr>
+                                    <td class="align-middle" rowspan="4"> DNR IFPLs</td>
+                                    <td class="align-middle">Closed Season</td>
+                                    <td class="align-middle"><div style="background: #74B374; border: 1px solid black; height: 1.5em;"></div></td>
+                                </tr>
+                                <tr>
+                                    <td class="align-middle">Partial Hootowl</td>
+                                    <td class="align-middle"><div style="background: #7B8DF5; border: 1px solid black; height: 1.5em;"></div></td>
+                                </tr>
+                                <tr>
+                                    <td class="align-middle">Partial Shutdown</td>
+                                    <td class="align-middle"><div style="background: #FFFF00; border: 1px solid black; height: 1.5em;"></div></td>
+                                </tr>
+                                <tr>
+                                    <td class="align-middle">General Shutdown</td>
+                                    <td class="align-middle"><div style="background: #E69900; border: 1px solid black; height: 1.5em;"></div></td>
+                                </tr>
+                                <tr>
+                                    <td class="align-middle" colspan="2">NWS Current Warnings</td>
+                                    <td class="align-middle text-center">Varies</td>
+                                </tr>
+                                <tr>
+                                    <td class="align-middle" rowspan="2">24-Hr Lightning Strikes</td>
+                                    <td class="align-middle">Positive Strike</td>
+                                    <td class="text-center align-middle"><img src="../../../static/images/red_lightning.svg" style="max-height: 20px"></td>
+
+                                </tr>
+                                <tr>
+                                    <td class="align-middle">Negative Strike</td>
+                                    <td class="text-center align-middle"><img src="../../../static/images/blue_lightning.svg" style="max-height: 20px"></td>
+                                </tr>
+                                <tr>
+                                    <td class="align-middle" rowspan="4"> Drought Outlooks</td>
+                                    <td class="align-middle">Improvement</td>
+                                    <td class="align-middle"><div style="background: #DED3BC; border: 1px solid black; height: 1.5em;"></div></td>
+                                </tr>
+                                <tr>
+                                    <td class="align-middle">Persistent</td>
+                                    <td class="align-middle"><div style="background: #9B634A; border: 1px solid black; height: 1.5em;"></div></td>
+                                </tr>
+                                <tr>
+                                    <td class="align-middle">Development</td>
+                                    <td class="align-middle"><div style="background: #FFDE62; border: 1px solid black; height: 1.5em;"></div></td>
+                                </tr>
+                                <tr>
+                                    <td class="align-middle">Abatement</td>
+                                    <td class="align-middle"><div style="background: #B2AD69; border: 1px solid black; height: 1.5em;"></div></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div> <!-- /end 1st row -->
         </div> <!-- /end panel -->

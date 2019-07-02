@@ -12,8 +12,9 @@ $(function() {
     });
 
     var lightning = L.markerClusterGroup({
-        polygonOptions: {color: '#000000'},
-        clusterPane: 'lightningclusters'
+        polygonOptions: {color: '#7F7F7F'},
+        clusterPane: 'lightningclusters',
+        maxClusterRadius: 100
         }
     );
 
@@ -30,7 +31,7 @@ $(function() {
             var lat = feature.properties.Latitude.toFixed(3).toString();
             var lng = feature.properties.Longitude.toFixed(3).toString();
             var t = moment(feature.properties.TimeStamp).local().fromNow();
-            layer.bindPopup(
+            layer.bindPopup(L.Util.template(
                 "<div class='container rounded-0' style='max-width:375px;margin-top:5px;'>" +
                 "<div class='row'>" +
                 "<div class='col-xs-12' style='padding:0;'>" +
@@ -44,14 +45,15 @@ $(function() {
                 "</div>" + // row
                 "<div class='row'>" +
                 "<div class='col-xs-6' style='padding:0;'>" +
-                "<span>Polarity: " + feature.properties.Polarity + "</span>" +
+                "<span>Polarity: { Polarity } </span>" +
                 "</div>" + // col
                 "<div class='col-xs-6 ml-2' style='padding:0;'>" +
-                "<span>Current: " + feature.properties.CurrentMeasurement +  " kA</span>" +
+                "<span>Current: { CurrentMeasurement } kA</span>" +
                 "</div>" + // col
                 "</div>" + // row
                 "</div>"
-            );
+            , feature.properties
+            ))
         }
     });
 
@@ -128,7 +130,12 @@ $(function() {
         "<div class='container rounded-0' style='max-width:375px;margin-top:5px;'>" +
         "<div class='row'>" +
         "<div class='col-xs-12' style='padding:0;'>" +
-        "<a class='popup-a-link' href='{url}' target='_blank' style='font-size: 1.5em; font-weight: 700;'>{prod_type}</a>" +
+        "<span>National Weather Service Product</span>" +
+        "</div>" + // col
+        "</div>" + // row
+        "<div class='row'>" +
+        "<div class='col-xs-12' style='padding:0;'>" +
+        "<span style='font-size: 2em; font-weight: 700;color: #003d6b;'>{prod_type}</span>" +
         "</div>" + // col
         "</div>" + // row
         "<div class='row'>" +
@@ -140,6 +147,12 @@ $(function() {
         "<div class='col-xs-12'>" +
         "<span class='text-muted'>Expires " + t +
         "</span>" +
+        "</div>" + // col
+        "</div>" + // row
+        "<div class='row'>" +
+        "<div class='col-xs-12'>" +
+        "<a target='_blank' href='{url}'>More info</a> " +
+        "</a>" +
         "</div>" + // col
         "</div>" + // row
         "</div>", evt.feature.properties
@@ -378,7 +391,8 @@ $(function() {
             return L.marker(latlng, {icon: LargeFireIcon});
         },
         pane: "points",
-    });  
+    });
+
     large_fires_other.bindPopup(function(evt) {
         var lat = evt.feature.geometry.coordinates[1].toFixed(3);
         var lng = evt.feature.geometry.coordinates[0].toFixed(3);
@@ -428,7 +442,7 @@ $(function() {
     // Emerging incidents < 24 hrs icon
     var squareRedIcon = L.icon({
         iconUrl: "../../../static/images/square_red.svg",
-        iconSize: [8, 8],
+        iconSize: [9, 9],
         });
 
     // Emerging incidents < 24 hrs
@@ -490,7 +504,7 @@ $(function() {
     // Emerging Incidents > 24 hrs Icon
     var squareBlackIcon = L.icon({
         iconUrl: "../../../static/images/square_black.svg",
-        iconSize: [8, 8],
+        iconSize: [9, 9],
         });
 
     // Emerging Incidents > 24 hrs
@@ -723,9 +737,6 @@ $(function() {
     hms_detects.bindPopup(function(evt) {
         var lat = evt.feature.geometry.coordinates[1].toFixed(3);
         var lng = evt.feature.geometry.coordinates[0].toFixed(3);
-        // var s = moment(evt.feature.properties.DetectionDate);
-        // var duration = moment.duration(moment().diff(s));
-        // var aa = duration.asHours();
         if(evt.feature.properties.load_stat === 'Active Burning'){
             var load_stat = 'Last 12 hours';
         } else if(evt.feature.properties.load_stat === '24 Hrs'){
@@ -842,7 +853,7 @@ $(function() {
         "</div>" + // row
         "<div class='row'>" +
         "<div class='col-xs-12'>" +
-        "<span class='text-muted'><a class='popup-a-link' href='https://www.cpc.ncep.noaa.gov/products/expert_assessment/mdo_summary.php' target='_blank'> More Info</a></span>" +
+        "<span class='text-muted'><a href='https://www.cpc.ncep.noaa.gov/products/expert_assessment/mdo_summary.php' target='_blank'> More Info</a></span>" +
         "</div>" + // col
         "</div>" + // row
         "</div>", evt.feature.properties
@@ -937,7 +948,7 @@ $(function() {
         // .open('home');
 
     // Add a basemap to map
-    L.esri.basemapLayer("Topographic").addTo(map);
+    baseLayers.Topographic.addTo(map);
 
     // Create panes to handle z-index stuff and be tidy
     map.createPane('boundaries');
@@ -972,7 +983,9 @@ $(function() {
     };
 
     // Add layer group control to map
-    L.control.groupedLayers(baseLayers, groupedOverlays).addTo(map);
+    var layerControl = L.control.groupedLayers(baseLayers, groupedOverlays).addTo(map);
+    L.DomEvent.disableClickPropagation(layerControl._container);
+    L.DomEvent.disableScrollPropagation(layerControl._container);
 
     // Add some pretty to layer control
     $( ".leaflet-control-layers-base" ).prepend( "<label class=\"leaflet-control-layers-group-label\"><span class=\"leaflet-control-layers-group-name\">Basemaps</span></label>" );

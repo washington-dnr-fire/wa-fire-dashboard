@@ -157,10 +157,18 @@ button, .leaflet-bar-part{
 
 .leaflet-control-layers-toggle{
     background-image: url(../images/layer-group-solid.svg)!important;
-    background-size: 20px 22px!important;
-
+    background-size: 13px 16px!important;
+    height: 30px!important;
+    width: 30px!important;
 }
 
+.mycluster {
+    width: 40px;
+    height: 40px;
+    background-color: greenyellow;
+    text-align: center;
+    font-size: 24px;
+}
 /*--- Home Panel -----------------------------------------------------------------------------------------------------*/
 .card-num{
     font-size:5em;

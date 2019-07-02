@@ -948,7 +948,7 @@ $(function() {
         // .open('home');
 
     // Add a basemap to map
-    L.esri.basemapLayer("Topographic").addTo(map);
+    baseLayers.Topographic.addTo(map);
 
     // Create panes to handle z-index stuff and be tidy
     map.createPane('boundaries');
@@ -983,7 +983,9 @@ $(function() {
     };
 
     // Add layer group control to map
-    L.control.groupedLayers(baseLayers, groupedOverlays).addTo(map);
+    var layerControl = L.control.groupedLayers(baseLayers, groupedOverlays).addTo(map);
+    L.DomEvent.disableClickPropagation(layerControl._container);
+    L.DomEvent.disableScrollPropagation(layerControl._container);
 
     // Add some pretty to layer control
     $( ".leaflet-control-layers-base" ).prepend( "<label class=\"leaflet-control-layers-group-label\"><span class=\"leaflet-control-layers-group-name\">Basemaps</span></label>" );

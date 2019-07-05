@@ -25,12 +25,12 @@
     <!-- Leaflet Sidebar -->
     <link rel="stylesheet" href="{% static 'css/vendor/leaflet-sidebar.min.css' %}">
     <!-- Leaflet Geolocation -->
-    <link rel="stylesheet" href="{% static 'css/vendor/L.Control.Locate.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/vendor/L.Control.Locate.min.css' %}">
     <!-- Leaflet MarkerCluster -->
     <link rel="stylesheet" href="{% static 'css/vendor/MarkerCluster.css' %}">
     <link rel="stylesheet" href="{% static 'css/vendor/MarkerCluster.Default.css' %}">
     <!-- Custom style sheets -->
-    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 
     <!-- Fav Icons -->
     <link rel="apple-touch-icon" sizes="57x57" href="{%  static '/images/favicon_package.ico/apple-icon-57x57.png' %}">
@@ -71,26 +71,26 @@
     <!-- Font Awesome -->
     <script type="text/javascript"> (function() { var css = document.createElement('link'); css.href = 'https://use.fontawesome.com/releases/v5.9.0/css/all.css'; css.rel = 'stylesheet'; css.type = 'text/css'; document.getElementsByTagName('head')[0].appendChild(css); })(); </script>
     <!-- Bootstrap -->
-    <script src="{% static 'js/vendor/bootstrap.bundle.js' %}"></script>
+    <script src="{% static 'js/vendor/bootstrap.min.js' %}"></script>
     <!-- Leaflet Maps -->
     <script src="{% static 'js/vendor/leaflet.js' %}"></script>
     <!-- ESRI Leaflet Maps -->
     <script src="{% static 'js/vendor/esri-leaflet.js' %}"></script>
-    <script src="https://unpkg.com/esri-leaflet-renderers@2.0.6"></script>
+    <script src="{% static 'js/vendor/esri-leaflet-renderers.js' %}"></script>
     <!-- Leaflet Easy Button -->
-    <script src="{% static 'js/vendor/easy-button.js' %}"></script>
+    <script src="{% static 'js/vendor/easy-button.min.js' %}"></script>
     <!-- Leaflet Grouped Layer Control -->
-    <script src="{% static 'js/vendor/leaflet.groupedlayercontrol.min.js' %}"></script>
+    <script src="{% static 'js/vendor/leaflet.groupedlayercontrol.min.js' %}" async></script>
     <!-- Leaflet Sidebar -->
     <script src="{% static 'js/vendor/leaflet-sidebar.min.js' %}"></script>
     <!-- Leaflet Geolocation -->
-    <script src="{% static 'js/vendor/L.Control.Locate.min.js' %}"></script>
+    <script src="{% static 'js/vendor/L.Control.Locate.min.js' %}" async></script>
     <!-- Moment -->
-    <script src="{% static 'js/vendor/moment.js' %}"></script>
+    <script src="{% static 'js/vendor/moment.js' %}" async></script>
     <!-- Leaflet AJAX -->
     <script src="{% static 'js/vendor/leaflet.ajax.min.js' %}"></script>
     <!-- Leaflet MarkerCluster -->
-    <script src="{% static 'js/vendor/leaflet.markercluster.js' %}"></script>
+    <script src="{% static 'js/vendor/leaflet.markercluster.js' %}" async></script>
     <!-- main js -->
     <script src="{% static 'js/main.js' %}"></script>
 

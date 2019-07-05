@@ -328,7 +328,7 @@ $(function() {
     // SIT209 Fires icon
     var LargeFireIcon = L.icon({
         iconUrl: "../../../static/images/Flames_Emerging.svg",
-        iconSize: [16, 16],
+        iconSize: [20, 20],
         });
 
     // SIT209 yuggggeeee fires
@@ -442,7 +442,7 @@ $(function() {
     // Emerging incidents < 24 hrs icon
     var squareRedIcon = L.icon({
         iconUrl: "../../../static/images/square_red.svg",
-        iconSize: [9, 9],
+        iconSize: [12, 12],
         });
 
     // Emerging incidents < 24 hrs
@@ -504,7 +504,7 @@ $(function() {
     // Emerging Incidents > 24 hrs Icon
     var squareBlackIcon = L.icon({
         iconUrl: "../../../static/images/square_black.svg",
-        iconSize: [9, 9],
+        iconSize: [12, 12],
         });
 
     // Emerging Incidents > 24 hrs
@@ -577,21 +577,21 @@ $(function() {
                 return L.circleMarker(latlng, {
                     stroke: false,
                     fillColor: 'red',
-                    radius: 4,
+                    radius: 5,
                     fillOpacity: 1.0
                 })
             } else if(12 < aa && aa <= 24){
                 return L.circleMarker(latlng, {
                     stroke: false,
                     fillColor: 'yellow',
-                    radius: 4,
+                    radius: 5,
                     fillOpacity: 1.0
                 })
             } else if(24 < aa && aa <= 48){
                 return L.circleMarker(latlng, {
                     stroke: false,
                     fillColor: 'black',
-                    radius: 4,
+                    radius: 5,
                     fillOpacity: 1.0
                 })
             }
@@ -645,21 +645,21 @@ $(function() {
                 return L.circleMarker(latlng, {
                     stroke: false,
                     fillColor: 'red',
-                    radius: 4,
+                    radius: 5,
                     fillOpacity: 1.0
                 })
             } else if(12 < aa && aa <= 24){
                 return L.circleMarker(latlng, {
                     stroke: false,
                     fillColor: 'yellow',
-                    radius: 4,
+                    radius: 5,
                     fillOpacity: 1.0
                 })
             } else if(24 < aa && aa <= 48){
                 return L.circleMarker(latlng, {
                     stroke: false,
                     fillColor: 'black',
-                    radius: 4,
+                    radius: 5,
                     fillOpacity: 1.0
                 })
             }
@@ -710,21 +710,21 @@ $(function() {
                 return L.circleMarker(latlng, {
                     stroke: false,
                     fillColor: 'red',
-                    radius: 4,
+                    radius: 5,
                     fillOpacity: 1.0
                 })
             } else if(feature.properties.load_stat === '24 Hrs'){
                 return L.circleMarker(latlng, {
                     stroke: false,
                     fillColor: 'yellow',
-                    radius: 4,
+                    radius: 5,
                     fillOpacity: 1.0
                 })
             } else if(feature.properties.load_stat === '48 Hrs'){
                 return L.circleMarker(latlng, {
                     stroke: false,
                     fillColor: 'black',
-                    radius: 4,
+                    radius: 5,
                     fillOpacity: 1.0
                 })
             }

@@ -151,7 +151,7 @@ $(function() {
         "</div>" + // row
         "<div class='row'>" +
         "<div class='col-xs-12'>" +
-        "<a target='_blank' href='{url}'>More info</a> " +
+        "<a target='_blank' href='{url}' rel='noreferrer'>More info</a> " +
         "</a>" +
         "</div>" + // col
         "</div>" + // row
@@ -495,7 +495,7 @@ $(function() {
                             "</tbody>" +
                         "</table>" + //table
                     "</div>" + //responsive table
-                    "<span class='text-muted'><small>Source: <a href='http://www.wildcad.net/WildCADWeb.asp' target='_blank'>WildCAD</a> via NIFC EGP</small></span>" +
+                    "<span class='text-muted'><small>Source: <a href='http://www.wildcad.net/WildCADWeb.asp' target='_blank' rel='noreferrer'>WildCAD</a> via NIFC EGP</small></span>" +
                 "</div>" + // col
             "</div>" + // row
         "</div>", evt.feature.properties
@@ -556,7 +556,7 @@ $(function() {
                             "</tbody>" +
                         "</table>" + //table
                     "</div>" + //responsive table
-                    "<span class='text-muted'><small>Source: <a href='http://www.wildcad.net/WildCADWeb.asp' target='_blank'>WildCAD</a> via NIFC EGP</small></span>" +
+                    "<span class='text-muted'><small>Source: <a href='http://www.wildcad.net/WildCADWeb.asp' target='_blank' rel='noreferrer'>WildCAD</a> via NIFC EGP</small></span>" +
                 "</div>" + // col
             "</div>" + // row
         "</div>", evt.feature.properties
@@ -853,7 +853,7 @@ $(function() {
         "</div>" + // row
         "<div class='row'>" +
         "<div class='col-xs-12'>" +
-        "<span class='text-muted'><a href='https://www.cpc.ncep.noaa.gov/products/expert_assessment/mdo_summary.php' target='_blank'> More Info</a></span>" +
+        "<span class='text-muted'><a href='https://www.cpc.ncep.noaa.gov/products/expert_assessment/mdo_summary.php' target='_blank' rel='noreferrer'> More Info</a></span>" +
         "</div>" + // col
         "</div>" + // row
         "</div>", evt.feature.properties
@@ -909,7 +909,7 @@ $(function() {
         "</div>" + // row
         "<div class='row'>" +
         "<div class='col-xs-12'>" +
-        "<span class='text-muted'><a class='popup-a-link' href='https://www.cpc.ncep.noaa.gov/products/expert_assessment/sdo_summary.php' target='_blank'> More Info</a></span>" +
+        "<span class='text-muted'><a class='popup-a-link' href='https://www.cpc.ncep.noaa.gov/products/expert_assessment/sdo_summary.php' target='_blank' rel='noreferrer'> More Info</a></span>" +
         "</div>" + // col
         "</div>" + // row
         "</div>", evt.feature.properties

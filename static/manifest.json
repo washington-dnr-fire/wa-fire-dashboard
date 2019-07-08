@@ -47,7 +47,7 @@
    ],
   "start_url": "/?utm_source=a2hs",
   "background_color": "#003d6b",
-  "display": "standalone",
+ "display": "standalone",
   "scope": "/",
   "theme_color": "#003d6b"
 }

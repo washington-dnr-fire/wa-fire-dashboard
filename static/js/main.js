@@ -1,4 +1,8 @@
 $(function() {
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/serv-worker.js');
+    }
   // Positive polarity lightning icon
     var redLightningIcon = L.icon({
     iconUrl: "../../../static/images/red_lightning.svg",
@@ -803,123 +807,11 @@ $(function() {
         "</div>", evt.feature.properties
     )});
 
-    // CPC MONTHLY DROUGHT
-    var CPC_Monthly_Drought = L.esri.featureLayer({
-        url: 'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Climate_Outlooks/cpc_drought_outlk/MapServer/0',
-        simplifyFactor: 1,
-        style: function (feature) {
-              if(feature.properties.fid_improv === 1){
-                return {fillColor: '#DED3BC', fillOpacity: '0.5', stroke: false};
-              } else if(feature.properties.fid_persis === 1){
-                return {fillColor: '#9B634A', fillOpacity: '0.5', stroke: false};
-              } else if(feature.properties.fid_dev === 1){
-                return {fillColor: '#FFDE62', fillOpacity: '0.5', stroke: false};
-              } else if (feature.properties.fid_remove === 1){
-                return {fillColor: '#B2AD69', fillOpacity: '0.5', stroke: false};
-              } else {
-                return { fillOpacity: '0.5', stroke: false};
-              }
-            },
-        pane: 'overlays'
-    });
-
-    // CPC monthly drought popup template
-    CPC_Monthly_Drought.bindPopup(function(evt) {
-        if(evt.feature.properties.fid_improv === 1){
-            var drought_status = 'improve';
-        } else if(evt.feature.properties.fid_persis === 1){
-            var drought_status = 'continue ';
-        } else if(evt.feature.properties.fid_dev === 1){
-            var drought_status = 'develop';
-        } else if(evt.feature.properties.fid_remove === 1){
-            var drought_status = 'end';
-        }
-        return L.Util.template(
-        "<div class='container rounded-0' style='max-width:375px;margin-top:5px;'>" +
-        "<div class='row'>" +
-        "<div class='col-xs-12' style='padding:0;'>" +
-        "<span style='text-align: center;'>One-Month Drought Outlook</span>" +
-        "</div>" + // col
-        "</div>" + // row
-        "<div class='row'>" +
-        "<div class='col-xs-12' style='padding:0;'>" +
-        "<span style='font-size: 1.2em; font-weight: 700; color: #003d6b;'>Drought will likely " + drought_status + " in this area</span>" +
-        "</div>" + // col
-        "</div>" + // row
-        "<div class='row'>" +
-        "<div class='col-xs-12'>" +
-        "<span class='text-muted'>Valid until {target}</span>" +
-        "</div>" + // col
-        "</div>" + // row
-        "<div class='row'>" +
-        "<div class='col-xs-12'>" +
-        "<span class='text-muted'><a href='https://www.cpc.ncep.noaa.gov/products/expert_assessment/mdo_summary.php' target='_blank' rel='noreferrer'> More Info</a></span>" +
-        "</div>" + // col
-        "</div>" + // row
-        "</div>", evt.feature.properties
-    )});
-
-    // CPC SEASONAL OUTLOOK
-    var CPC_Seasonal_Drought = L.esri.featureLayer({
-        url: 'https://idpgis.ncep.noaa.gov/arcgis/rest/services/NWS_Climate_Outlooks/cpc_drought_outlk/MapServer/1',
-        simplifyFactor: 1,
-        style: function (feature) {
-              if(feature.properties.fid_improv === 1){
-                return {fillColor: '#DED3BC', fillOpacity: '0.5', stroke: false};
-              } else if(feature.properties.fid_persis === 1){
-                return {fillColor: '#9B634A', fillOpacity: '0.5', stroke: false};
-              } else if(feature.properties.fid_dev === 1){
-                return {fillColor: '#FFDE62', fillOpacity: '0.5', stroke: false};
-              } else if (feature.properties.fid_remove === 1){
-                return {fillColor: '#B2AD69', fillOpacity: '0.5', stroke: false};
-              } else {
-                return { fillOpacity: '0.5', stroke: false};
-              }
-            },
-        pane: 'overlays'
-    });
-
-    // CPC seasonal drought popup template
-    CPC_Seasonal_Drought.bindPopup(function(evt) {
-        if(evt.feature.properties.fid_improv === 1){
-            var drought_status = 'improve';
-        } else if(evt.feature.properties.fid_persis === 1){
-            var drought_status = 'continue ';
-        } else if(evt.feature.properties.fid_dev === 1){
-            var drought_status = 'develop';
-        } else if(evt.feature.properties.fid_remove === 1){
-            var drought_status = 'end';
-        }
-        return L.Util.template(
-        "<div class='container rounded-0' style='max-width:375px;margin-top:5px;'>" +
-        "<div class='row'>" +
-        "<div class='col-xs-12' style='padding:0;'>" +
-        "<span style='text-align: center;'>Three-Month Drought Outlook</span>" +
-        "</div>" + // col
-        "</div>" + // row
-        "<div class='row'>" +
-        "<div class='col-xs-12' style='padding:0;'>" +
-        "<span style='font-size: 1.2em; font-weight: 700;color: #003d6b;'>Drought will likely " + drought_status + " in this area</span>" +
-        "</div>" + // col
-        "</div>" + // row
-        "<div class='row'>" +
-        "<div class='col-xs-12'>" +
-        "<span class='text-muted'>Valid until {target}</span>" +
-        "</div>" + // col
-        "</div>" + // row
-        "<div class='row'>" +
-        "<div class='col-xs-12'>" +
-        "<span class='text-muted'><a class='popup-a-link' href='https://www.cpc.ncep.noaa.gov/products/expert_assessment/sdo_summary.php' target='_blank' rel='noreferrer'> More Info</a></span>" +
-        "</div>" + // col
-        "</div>" + // row
-        "</div>", evt.feature.properties
-    )});
-
     // Map base layers
     var baseLayers = {
-        "Topographic": L.esri.basemapLayer("Topographic"),
-        "Satellite": L.esri.basemapLayer("Imagery"),
-        "Topo Maps": L.esri.basemapLayer("USATopo"),
+        "Terrain": L.esri.basemapLayer("Topographic"),
+        "Topographic": L.esri.basemapLayer("USATopo"),
+        "Imagery": L.esri.basemapLayer("Imagery")
     };
 
     // Home point
@@ -948,7 +840,7 @@ $(function() {
         // .open('home');
 
     // Add a basemap to map
-    baseLayers.Topographic.addTo(map);
+    baseLayers.Terrain.addTo(map);
 
     // Create panes to handle z-index stuff and be tidy
     map.createPane('boundaries');
@@ -977,8 +869,6 @@ $(function() {
         "NWS Current Warnings": NWS_warnings,
         "24-Hour Lightning Strikes": lightning,
         "NWS 7-Day Rain Forecast": NWS_QPE,
-        "1-Month Drought Outlook": CPC_Monthly_Drought,
-        "3-Month Drought Outlook": CPC_Seasonal_Drought,
       }
     };
 
@@ -1096,4 +986,5 @@ $(function() {
     // }],
     //     position: 'bottomright'
     // }).addTo(map);
+
 });

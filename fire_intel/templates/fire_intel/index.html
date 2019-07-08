@@ -11,7 +11,7 @@
     <div class="leaflet-sidebar-tabs">
         <!-- top aligned tabs -->
         <ul role="tablist">
-            <li><a href="#home" role="tab"><i class="fas fa-home text-white"></i></a></li>
+            <li><a href="#home" role="tab"><i class="fas fa-clipboard-list text-white"></i></a></li>
             <li><a href="#ground" role="tab"><i class="icon-Fire-Truck-B align-middle text-white" style="font-size: 1.33em; line-height: 1.33em"></i></a></li>
             <li><a href="#aviation" role="tab"><i class="fas fa-plane text-white fa-rotate-45"></i></a></li>
             <li><a href="#statistics" role="tab"><i class="fas fa-chart-bar text-white"></i></a></li>
@@ -40,13 +40,18 @@
     </div>
 
     <div class="leaflet-sidebar-content">
+
         <!-- home panel -->
         <div class="leaflet-sidebar-pane" id="home">
             <h1 class="leaflet-sidebar-header">Situation Snapshot
                 <span class="leaflet-sidebar-close"><i class="fa fa-caret-left"></i></span>
             </h1>
             <!-- date row -->
-            <p class="mt-2 date-update mb-2">Last Updated: {{ updated_date_txt }}</p>
+            <div class="row">
+                <div class="col-12">
+                    <p class="mt-2 date-update mb-2">Last Updated: {{ updated_date_txt }}</p>
+                </div>
+            </div>
 
             <!-- 1st row -->
             <div class="row">
@@ -124,7 +129,11 @@
                 <span class="leaflet-sidebar-close"><i class="fas fa-caret-left"></i></span>
             </h1>
             <!-- date row -->
-            <p class="date-update my-2">Last Updated: {{ updated_date_txt }}</p>
+            <div class="row">
+                <div class="col-12">
+                    <p class="mt-2 date-update mb-2">Last Updated: {{ updated_date_txt }}</p>
+                </div>
+            </div>
 
             <!-- engines/crews table -->
             <div class="table-responsive">
@@ -199,7 +208,11 @@
                 <span class="leaflet-sidebar-close"><i class="fas fa-caret-left"></i></span>
             </h1>
             <!-- date row -->
-            <p class="date-update my-2">Last Updated: {{ updated_date_txt }}</p>
+            <div class="row">
+                <div class="col-12">
+                    <p class="mt-2 date-update mb-2">Last Updated: {{ updated_date_txt }}</p>
+                </div>
+            </div>
 
             <!-- aviation row-->
             <div class="table-responsive">
@@ -255,7 +268,11 @@
                 <span class="leaflet-sidebar-close"><i class="fa fa-caret-left"></i></span>
             </h1>
             <!-- date row -->
-            <p class="date-update my-2">Last Updated: {{ updated_date_txt }}</p>
+            <div class="row">
+                <div class="col-12">
+                    <p class="mt-2 date-update mb-2">Last Updated: {{ updated_date_txt }}</p>
+                </div>
+            </div>
 
             <!-- summary table -->
             <div class="table-responsive">

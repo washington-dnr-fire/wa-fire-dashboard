@@ -14,29 +14,32 @@
     <!-- Site Title -->
     <title>DNR Fire Dashboard</title>
 
+    <!-- MANIFEST -->
     <link rel="manifest" href="{%  static '/manifest.json' %}">
 
+    <!-- CSS -->
     <!-- Local Icons -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.9.0/css/all.css">
     <link rel="stylesheet" href="{% static 'images/wf-icons/style.css' %}">
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="{% static 'css/vendor/bootstrap.min.css' %}">
     <!-- Leaflet Maps CSS -->
     <link rel="stylesheet" href="{% static 'css/vendor/leaflet.css' %}">
-    <!-- EasyButton Leaflet -->
-    <link rel="stylesheet" href="{% static 'css/vendor/easy-button.css' %}">
-    <!-- EasyButton Leaflet -->
-    <link rel="stylesheet" href="{% static 'css/vendor/leaflet.groupedlayercontrol.min.css' %}">
     <!-- Leaflet Sidebar -->
     <link rel="stylesheet" href="{% static 'css/vendor/leaflet-sidebar.min.css' %}">
+    <!-- GroupedLayerControl Leaflet -->
+    <link rel="stylesheet" href="{% static 'css/vendor/leaflet.groupedlayercontrol.min.css' %}">
+    <!-- EasyButton Leaflet -->
+    <link rel="preload" href="{% static 'css/vendor/easy-button.css' %}" as="style" onload="this.rel='stylesheet'">
     <!-- Leaflet Geolocation -->
-    <link rel="stylesheet" href="{% static 'css/vendor/L.Control.Locate.min.css' %}">
+    <link rel="preload" href="{% static 'css/vendor/L.Control.Locate.min.css' %}" as="style" onload="this.rel='stylesheet'">
     <!-- Leaflet MarkerCluster -->
-    <link rel="stylesheet" href="{% static 'css/vendor/MarkerCluster.css' %}">
-    <link rel="stylesheet" href="{% static 'css/vendor/MarkerCluster.Default.css' %}">
+    <link rel="preload" href="{% static 'css/vendor/MarkerCluster.css' %}" as="style" onload="this.rel='stylesheet'">
+    <link rel="preload" href="{% static 'css/vendor/MarkerCluster.Default.css' %}" as="style" onload="this.rel='stylesheet'">
     <!-- Custom style sheets -->
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 
-    <!-- Fav Icons -->
+    <!-- FAV ICONS -->
     <link rel="apple-touch-icon" sizes="57x57" href="{%  static '/images/favicon_package.ico/apple-icon-57x57.png' %}">
     <link rel="apple-touch-icon" sizes="60x60" href="{%  static '/images/favicon_package.ico/apple-icon-60x60.png' %}">
     <link rel="apple-touch-icon" sizes="72x72" href="{%  static '/images/favicon_package.ico/apple-icon-72x72.png' %}">
@@ -71,7 +74,7 @@
     <!-- jQuery -->
     <script src="{% static 'js/vendor/jquery-3.4.1.min.js' %}"></script>
     <!-- Font Awesome -->
-    <script type="text/javascript"> (function() { var css = document.createElement('link'); css.href = 'https://use.fontawesome.com/releases/v5.9.0/css/all.css'; css.rel = 'stylesheet'; css.type = 'text/css'; document.getElementsByTagName('head')[0].appendChild(css); })(); </script>
+{#    <script type="text/javascript"> (function() { var css = document.createElement('link'); css.href = 'https://use.fontawesome.com/releases/v5.9.0/css/all.css'; css.rel = 'stylesheet'; css.type = 'text/css'; document.getElementsByTagName('head')[0].appendChild(css); })(); </script>#}
     <!-- Bootstrap -->
     <script src="{% static 'js/vendor/bootstrap.min.js' %}"></script>
     <!-- Leaflet Maps -->

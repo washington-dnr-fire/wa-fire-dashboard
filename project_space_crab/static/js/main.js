@@ -1,7 +1,22 @@
 $(function() {
 
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./serv-worker.js');
+    // disable service worker until it's figured out
+    // if ('serviceWorker' in navigator) {
+    //   navigator.serviceWorker.register('./serv-worker.js');
+    // }
+
+    //unregister the buggy service worker, if its there
+    if ('serviceWorker' in navigator){
+        navigator.serviceWorker.getRegistrations().then(
+
+            function(registrations) {
+        
+                for(let registration of registrations) {  
+                    registration.unregister();
+        
+                }
+        
+        });
     }
   // Positive polarity lightning icon
     var redLightningIcon = L.icon({

@@ -3,7 +3,7 @@ $(function() {
     // disable service worker until it's figured out
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('./serv-worker.js');
-    }
+    };
 
   // Positive polarity lightning icon
     var redLightningIcon = L.icon({
@@ -189,82 +189,74 @@ $(function() {
     });
 
     // DNR IFPLs
-    var ifpl = L.esri.featureLayer({
-        url: "https://gis.dnr.wa.gov/site3/rest/services/Public_Wildfire/WADNR_PUBLIC_WD_WildFire_EGP_Portal/MapServer/11",
+    var ifpl = L.esri.dynamicMapLayer({
+        url: "https://gis.dnr.wa.gov/site3/rest/services/Public_Wildfire/WADNR_PUBLIC_WD_IFPL/MapServer",
+        layers: [0],
         pane: "overlays",
-        style: function (feature) {
-            return {
-                color: '#000000',
-                fillOpacity: '0.5',
-            };
-        },
+        opacity: 0.7,
     });
 
     // DNR IFPLs popup template
-    ifpl.bindPopup(function(evt) {
+    ifpl.bindPopup(function(error, featureCollection) {
         return L.Util.template(
         "<div class='container rounded-0' style='max-width:375px;margin-top:5px;'>" +
         "<div class='row'>" +
         "<div class='col-xs-12' style='padding:0;'>" +
-        "<span style='text-align: center;'>Zone {ZONE}</span>" +
+        "<span style='text-align: center;'>Zone " + featureCollection.features[0].properties["Shutdown Zone"] + "</span>" +
         "</div>" + // col
         "</div>" + // row
         "<div class='row'>" +
         "<div class='col-xs-12' style='padding:0;'>" +
-        "<span style='font-size: 1.5em; font-weight:bolder;color: #003d6b;'>Level {FIRE_PRECAUTION_LEVEL} </span>" +
+        "<span style='font-size: 1.5em; font-weight:bolder;color: #003d6b;'>Level " + featureCollection.features[0].properties["Fire Precaution Level"] + " </span>" +
         "</div>" + // col
         "</div>" + // row
         "<div class='row'>" +
         "<div class='col-xs-12'>" +
-        "<p class='text-muted'>{NOTES_TXT}</p>" +
+        "<p class='text-muted'>" + featureCollection.features[0].properties["Comments"] + "</p>" +
         "</div>" + // col
         "</div>" + // row
         "<div class='row'>" +
         "<div class='col-xs-12'>" +
-        "<span>ISSUED BY: DNR {RNG_NM} REGION &nbsp;&nbsp;<a class='popup-a-link' href='mailto:{RGN_EMAIL}'><i class='fas fa-envelope' style='color: #003d6b!important;'></i></a></span>" +
+        "<span>ISSUED BY: DNR " + featureCollection.features[0].properties["Region"] + " REGION &nbsp;&nbsp;<a class='popup-a-link' href='mailto:" + featureCollection.features[0].properties["Email"]+ "'><i class='fas fa-envelope' style='color: #003d6b!important;'></i></a></span>" +
         "</div>" + // col
         "</div>" + // row
-        "</div>", evt.feature.properties
+        "</div>", featureCollection.features[0].properties 
 
     )});
 
     // DNR FIRE DANGER
-    var firedanger = L.esri.featureLayer({
-        url: "https://gis.dnr.wa.gov/site3/rest/services/Public_Wildfire/WADNR_PUBLIC_WD_WildfireDanger/MapServer/0",
+    var firedanger = L.esri.dynamicMapLayer({
+        url: "https://gis.dnr.wa.gov/site3/rest/services/Public_Wildfire/WADNR_PUBLIC_WD_WildfireDanger/MapServer",
+        layers: [0],
         pane: "overlays",
-        style: function (feature) {
-            return {
-                color: '#000000',
-                fillOpacity: '0.5',
-            };
-        },
+        opacity: 0.7,
     });
 
     // DNR FIRE DANGER POPUP TEMPLATE
-    firedanger.bindPopup(function(evt) {
+    firedanger.bindPopup(function(error, featureCollection) {
         return L.Util.template(
         "<div class='container rounded-0' style='max-width:375px;margin-top:5px;'>" +
         "<div class='row'>" +
         "<div class='col-xs-12' style='padding:0;'>" +
-        "<span style='text-align: center;'>{FIREDANGER_AREA_NM}</span>" +
+        "<span style='text-align: center;'>" + featureCollection.features[0].properties.FIREDANGER_AREA_NM + "</span>" +
         "</div>" + // col
         "</div>" + // row
         "<div class='row'>" +
         "<div class='col-xs-12' style='padding:0;'>" +
-        "<span style='font-size: 1.5em; font-weight:bolder;color: #003d6b;'>{FIRE_DANGER_LEVEL_NM} Fire Danger</span>" +
+        "<span style='font-size: 1.5em; font-weight:bolder;color: #003d6b;'>" + featureCollection.features[0].properties.FIRE_DANGER_LEVEL_NM + " Fire Danger</span>" +
         "</div>" + // col
         "</div>" + // row
         "<div class='row'>" +
         "<div class='col-xs-12'>" +
-        "<p class='text-muted'>{NOTES_TXT}</p>" +
+        "<p class='text-muted'>" + featureCollection.features[0].properties.NOTES_TXT + "</p>" +
         "</div>" + // col
         "</div>" + // row
         "<div class='row'>" +
         "<div class='col-xs-12'>" +
-        "<span>ISSUED BY: DNR {DNR_REGION_NAME} REGION &nbsp;&nbsp;<a class='popup-a-link' href='mailto:{REGION_EMAIL_ADDR}'><i class='fas fa-envelope' style='color: #003d6b!important;'></i></a></span>" +
+        "<span>ISSUED BY: DNR " + featureCollection.features[0].properties.DNR_REGION_NAME + " REGION &nbsp;&nbsp;<a class='popup-a-link' href='mailto:" + featureCollection.features[0].properties.REGION_EMAIL_ADDR + "'><i class='fas fa-envelope' style='color: #003d6b!important;'></i></a></span>" +
         "</div>" + // col
         "</div>" + // row
-        "</div>", evt.feature.properties
+        "</div>", featureCollection.features[0].properties 
 
     )});
 

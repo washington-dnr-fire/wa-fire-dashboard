@@ -1,5 +1,7 @@
 from django.contrib import admin
 from .models import IntelReport
+from .models import AviationLog
+from .models import AviationDoc
 
 # Register your models here.
 admin.site.site_header = "Fire Intel Dashboard"
@@ -8,6 +10,9 @@ admin.site.index_title = "Intel Reports"
 
 class IntelReportAdmin(admin.ModelAdmin):
     fieldsets = [
+        ("Date of Report", {
+            'fields': ['date_of_report']}),
+
         ("Situation Snapshot", {
             'fields': ['preparedness_level_national', 'preparedness_level_nw', 'type_1_teams_assigned',
                        'type_2_teams_assigned', 'wa_large_fires', 'dnr_ia_fires']}),
@@ -47,3 +52,5 @@ class IntelReportAdmin(admin.ModelAdmin):
 
 
 admin.site.register(IntelReport, IntelReportAdmin)
+admin.site.register(AviationLog)
+admin.site.register(AviationDoc)

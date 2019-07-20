@@ -166,6 +166,11 @@ def aviation(request):
     return HttpResponse(template.render(context, request))
 
 
+def current_fire_stats(request):
+    all_reports = list(IntelReport.objects.values('id', 'date_of_report', 'westside_dnr_responses_count', 'westside_dnr_fire_count', 'westside_dnr_fire_acres',
+                                                  'westside_all_fire_acres',  'eastside_dnr_responses_count', 'eastside_dnr_fire_count', 'eastside_dnr_fire_acres', 'eastside_all_fire_acres'))
+    return JsonResponse({'data':all_reports}, safe=False)
+
 def egp_data(request, layer_type, layer_id):
     referer = 'http://dnr.wa.gov'
     WA_ENVELOPE = {

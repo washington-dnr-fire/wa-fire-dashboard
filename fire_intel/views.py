@@ -159,11 +159,12 @@ def aviation(request):
     aviation_docs_no_cost_sheet = AviationDoc.objects.filter(is_cost_sheet=False).order_by('-date')
     cost_sheet_docs = AviationDoc.objects.filter(is_cost_sheet=True)
     context = {
-        "aviation_logs":aviation_logs,
-        "aviation_docs":aviation_docs_no_cost_sheet,
+        "aviation_logs": aviation_logs,
+        "aviation_docs": aviation_docs_no_cost_sheet,
         "cost_sheets": cost_sheet_docs,
     }
     return HttpResponse(template.render(context, request))
+
 
 def egp_data(request, layer_type, layer_id):
     referer = 'http://dnr.wa.gov'

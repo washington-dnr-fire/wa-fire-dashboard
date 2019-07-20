@@ -98,7 +98,7 @@ html, body{
                     <button type="button" class="btn btn-sm border-0 text-white dnr-red-bg nwcc-link ml-2" onclick="location.href='{% url 'admin:index' %}'">Go to Admin Page</button>
                     <button type="button" class="btn btn-sm btn-secondary border-0 text-white m-2" style="padding:5px 10px;" onclick="location.href='{% url 'logout' %}'"><i class="fas fa-sign-out-alt"></i>&nbsp;&nbsp;Log Out</button>
                 {% else %}
-                    <button type="button" class="btn btn-sm border-0 text-white dnr-red-bg nwcc-link m-2" onclick="location.href='{% url 'login' %}'"><i class="fas fa-key"></i>&nbsp;&nbsp;Sign In</button>
+                    <button type="button" class="btn btn-sm border-0 text-white dnr-red-bg nwcc-link m-2" onclick="location.href='{% url "login" %}?next={{request.path}}'"><i class="fas fa-key"></i>&nbsp;&nbsp;Sign In</button>
                 {% endif %}
 
             </p>

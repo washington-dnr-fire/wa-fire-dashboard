@@ -25,7 +25,7 @@ $(function() {
     );
 
     // BLM 24hr Lightning
-    var blm_lightning_24hr = new L.GeoJSON.AJAX("./egp_data/blm_lightning/ghj1", {
+    var blm_lightning_24hr = new L.GeoJSON.AJAX("./egp_data/blm_lightning/1", {
         pointToLayer: function (feature, latlng) {
             if(feature.properties.Polarity === 'N'){
                 return L.marker(latlng, {icon: blueLightningIcon});

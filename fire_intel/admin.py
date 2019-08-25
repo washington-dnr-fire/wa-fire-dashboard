@@ -9,6 +9,10 @@ admin.site.index_title = "Intel Reports"
 
 
 class IntelReportAdmin(admin.ModelAdmin):
+
+    # replace "save and add another" with "save as" - essential copy this form and save it as new one
+    save_as = True
+
     fieldsets = [
         ("Date of Report", {
             'fields': ['date_of_report']}),

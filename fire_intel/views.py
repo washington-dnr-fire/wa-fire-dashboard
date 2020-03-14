@@ -165,6 +165,9 @@ def aviation(request):
     }
     return HttpResponse(template.render(context, request))
 
+def season_end(request):
+    template = loader.get_template('fire_intel/season_end.html')
+    return HttpResponse(template.render(None, request))
 
 def current_fire_stats(request):
     all_reports = list(IntelReport.objects.values('id', 'date_of_report', 'westside_dnr_responses_count', 'westside_dnr_fire_count', 'westside_dnr_fire_acres',

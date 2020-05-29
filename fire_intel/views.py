@@ -85,6 +85,51 @@ def season_end(request):
 #                                                   'westside_all_fire_acres',  'eastside_dnr_responses_count', 'eastside_dnr_fire_count', 'eastside_dnr_fire_acres', 'eastside_all_fire_acres'))
 #     return JsonResponse({'data':all_reports}, safe=False)
 
+def region_view(request, region):
+    template = loader.get_template('fire_intel/region_view.html')
+
+    overview_intel = OverviewIntelReport.objects.latest("date_of_report")
+    aviation = AviationIntelReport.objects.latest("date_of_report")
+    if region == "ne-region":
+        region_data = NortheastRegionIntelReport.objects.latest("date_of_report")
+        region_short_label = 'NE'
+        region_long_label = 'Northeast'
+    if region == "se-region":
+        region_data = SoutheastRegionIntelReport.objects.latest("date_of_report")
+        region_short_label = 'SE'
+        region_long_label = 'Southeast'
+    if region == "nw-region":
+        region_data = NorthwestRegionIntelReport.objects.latest("date_of_report")
+        region_short_label = 'NW'
+        region_long_label = 'Northwest'
+    if region == "sps-region":
+        region_data = SouthPugetSoundRegionIntelReport.objects.latest("date_of_report")
+        region_short_label = 'SPS'
+        region_long_label = 'South Puget Sound'
+    if region == "pc-region":
+        region_data = PacificCascadeRegionIntelReport.objects.latest("date_of_report")
+        region_short_label = 'PC'
+        region_long_label = 'Pacific Cascade'
+    if region == "oly-region":
+        region_data = OlympicRegionIntelReport.objects.latest("date_of_report")
+        region_short_label = 'OLY'
+        region_long_label = 'Olympic'
+
+    context = {
+        'overview_intel_data': overview_intel,
+        'aviation_data': aviation,
+        'region_data': region_data,
+        "region_short_label": region_short_label,
+        "region_long_label": region_long_label,
+
+        # all summed up information
+        'dnr_response_count_sum': (overview_intel.westside_dnr_responses_count + overview_intel.eastside_dnr_responses_count),
+        'dnr_fire_count_sum': (overview_intel.westside_dnr_fire_count + overview_intel.eastside_dnr_fire_count),
+        'dnr_fire_acres_sum': round(overview_intel.westside_dnr_fire_acres + overview_intel.eastside_dnr_fire_acres, 2),
+        'all_fire_acres_sum': round(overview_intel.westside_all_fire_acres + overview_intel.eastside_all_fire_acres, 2),
+    }
+    return HttpResponse(template.render(context, request))
+
 def egp_data(request, layer_type, layer_id):
     referer = 'http://dnr.wa.gov'
     WA_ENVELOPE = {

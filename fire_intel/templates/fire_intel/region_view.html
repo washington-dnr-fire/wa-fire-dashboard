@@ -1,0 +1,466 @@
+{% extends 'fire_intel/base.html' %}
+{% block content %}
+{% load static %}
+{% load humanize %}
+
+<!-- Sidebar -->
+<div id="sidebar" class="leaflet-sidebar collapsed">
+
+    <!-- nav tabs -->
+    <div class="leaflet-sidebar-tabs">
+        <!-- top aligned tabs -->
+        <ul role="tablist">
+            <li><a href="#home" role="tab"><i class="fas fa-clipboard-list text-white"></i></a></li>
+            <li><a href="#statistics" role="tab"><i class="fas fa-chart-bar text-white"></i></a></li>
+            <li><a href="#ground" role="tab"><i class="icon-Fire-Truck-B align-middle text-white" style="font-size: 1.33em; line-height: 1.33em"></i></a></li>
+            <li><a href="#aviation" role="tab"><i class="fas fa-plane text-white fa-rotate-45"></i></a></li>
+            <li><a href="#twitter" role="tab"><i class="fab fa-twitter text-white"></i></a></li>
+        </ul>
+
+        <!-- bottom aligned tabs -->
+        <ul role="tablist">
+            <li>
+                <a href="#legend" role="tab"><i class='fas fa-list-ul text-white'></i></a>
+            </li>
+            <li>
+                <a href="#about" role="tab"><i class='fas fa-info-circle text-white'></i></a>
+            </li>
+            <li>
+                {% if user.is_authenticated %}
+                <a href="{% url 'profile' %}">
+                    <i class="fas fa-user-circle user-green align-middle"></i>
+                </a>
+                {% else %}
+                <a href="{% url 'login' %}" >
+                    <i class="fas fa-user-circle text-muted align-middle"></i></a>
+                {% endif %}
+            </li>
+        </ul>
+    </div>
+
+    <div class="leaflet-sidebar-content">
+
+        <!-- home panel -->
+        <div class="leaflet-sidebar-pane" id="home">
+            <h1 class="leaflet-sidebar-header">{{ region_short_label }} Situation Snapshot
+                <span class="leaflet-sidebar-close"><i class="fa fa-caret-left"></i></span>
+            </h1>
+            <!-- date row -->
+            <div class="row">
+                <div class="col-12">
+                    <p class="mt-2 date-update mb-2 text-white dnr-red-bg small-title py-2 my-2 text-center" style="font-size:1em;">See you in the 2020 Fire Season! This data will no longer be updated, but the map data will stay current. Have a great winter! </p>
+                    <p class="mt-2 date-update mb-2">Last Updated: {{ region_data.updated_date_txt }}</p>
+                </div>
+            </div>
+
+            <!-- 1st row -->
+            <div class="row">
+                <div class="col-6 pr-2 mt-2">
+                    <div class="card rounded-0 h-100 dnr-blue-bg border-0" id="nationalprep">
+                        <div class="card-body text-center">
+                            <h5 class="card-num text-white" id="nat_id" >{{ overview_intel_data.preparedness_level_national }}</h5>
+                            <small class="small-title text-white">National Preparedness Level</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-6 pl-2 mt-2">
+                    <div class="card rounded-0 h-100 dnr-blue-bg border-0" id="northwestprep">
+                        <div class="card-body text-center">
+                            <h5 class="card-num text-white" id="nw_id">{{ overview_intel_data.preparedness_level_nw }}</h5>
+                            <small class="small-title text-white">Northwest Preparedness Level</small>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- /end 1st row -->
+            
+            <!-- 2nd row -->
+            <div class="row my-2">
+                <div class="col-6 pr-2">
+                    <div class="card rounded-0 h-100 dnr-blue-bg border-0" id="type1teams">
+                        <div class="card-body text-center">
+                            <h5 class="card-num text-white" id="type1_id">{{ overview_intel_data.type_1_teams_assigned }}</h5>
+                            <small class="small-title text-white">Northwest Type 1 Teams Deployed</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-6 pl-2">
+                    <div class="card rounded-0 h-100 dnr-blue-bg border-0" id="type2teams">
+                        <div class="card-body text-center ">
+                            <h5 class="card-num text-white" id="type2_id">{{ overview_intel_data.type_2_teams_assigned }}</h5>
+                            <small class="small-title text-white">Northwest Type 2 Teams Deployed</small>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- /end 2nd row -->
+            
+            <!-- 3rd row row -->
+            <div class="row my-2">
+                <div class="col-6 pr-2">
+                    <div class="card rounded-0 h-100 dnr-blue-bg border-0" id="walargefires">
+                        <div class="card-body text-center">
+                            <h5 class="card-num text-white" id="wafires_id">{{ region_data.wa_large_fires }}</h5>
+                            <small class="small-title text-white">Current {{ region_short_label }} WA Large Fires</small>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="col-6 pl-2">
+                    <div class="card rounded-0 h-100 dnr-blue-bg border-0" id="dnrfires">
+                        <div class="card-body text-center">
+                            <h5 class="card-num text-white" id="dnrfires_id">{{ region_data.dnr_ia_fires }}</h5>
+                            <small class="small-title text-white">New {{ region_short_label }} DNR IA Fires</small>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- /end 3rd row -->
+            <div class="row my-2">
+                <div class="col-12">
+                    <a href="https://gacc.nifc.gov/nwcc/content/products/intelligence/MORNINGBRIEF.pdf" class="btn btn-sm border-0 btn-block text-white text-left dnr-blue-bg nwcc-link-blue" target="_blank" rel='noreferrer'>Northwest Morning Briefing<i class="fas fa-chevron-right text-white chevron-fix" ></i></a>
+                    <a href="https://gacc.nifc.gov/nwcc/content/products/intelligence/teams.pdf" class="btn btn-sm  border-0 btn-block text-white text-left dnr-blue-bg nwcc-link-blue" target="_blank" rel='noreferrer'>Northwest Teams Status<i class="fas fa-chevron-right text-white chevron-fix" ></i></a>
+                </div>
+            </div>
+        </div> <!-- /end panel -->
+
+        <!-- stats panel -->
+        <div class="leaflet-sidebar-pane" id="statistics">
+            <h1 class="leaflet-sidebar-header">{{ region_short_label }} Fire Statistics
+                <span class="leaflet-sidebar-close"><i class="fa fa-caret-left"></i></span>
+            </h1>
+            <!-- date row -->
+            <div class="row">
+                <div class="col-12">
+                    <p class="mt-2 date-update mb-2 text-white dnr-red-bg small-title py-2 my-2 text-center" style="font-size:1em;">See you in the 2020 Fire Season! This data will no longer be updated, but the map data will stay current. Have a great winter! </p>
+                    <p class="mt-2 date-update mb-2">Last Updated: {{ updated_date_txt }}</p>
+                </div>
+            </div>
+
+            <!-- summary table -->
+            <div class="table-responsive">
+                <table class="table table-sm table-striped table-hover table-bordered mb-2">
+                    <caption style="caption-side: top; padding-bottom: 2px;font-size: 1.5em;"><i class="fas fa-table"></i>&nbsp; Summary Statistics</caption>
+                    <thead>
+                        <tr>
+                            <th>Location</th>
+                            <th class="text-center">DNR Responses</th>
+                            <th class="text-center">DNR Fires</th>
+                            <th class="text-center">DNR Acres Burned</th>
+                            <th class="text-center">All-Lands Acres Burned</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">Westside</th>
+                            <td class="text-center">{{ overview_intel_data.westside_dnr_responses_count|intcomma }}</td>
+                            <td class="text-center">{{ overview_intel_data.westside_dnr_fire_count|intcomma }}</td>
+                            <td class="text-center">{{ overview_intel_data.westside_dnr_fire_acres|intcomma }} ac.</td>
+                            <td class="text-center">{{ overview_intel_data.westside_all_fire_acres|intcomma }} ac.</td>
+
+                        </tr>
+                        <tr>
+                            <th scope="row">Eastside</th>
+                            <td class="text-center">{{ overview_intel_data.eastside_dnr_responses_count|intcomma }}</td>
+                            <td class="text-center">{{ overview_intel_data.eastside_dnr_fire_count|intcomma }}</td>
+                            <td class="text-center">{{ overview_intel_data.eastside_dnr_fire_acres|intcomma }} ac.</td>
+                            <td class="text-center">{{ overview_intel_data.eastside_all_fire_acres|intcomma }} ac.</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Totals</th>
+                            <td class="text-center">{{dnr_response_count_sum|intcomma}}</td>
+                            <td class="text-center">{{dnr_fire_count_sum|intcomma}}</td>
+                            <td class="text-center">{{dnr_fire_acres_sum|intcomma}} ac.</td>
+                            <td class="text-center">{{all_fire_acres_sum|intcomma}} ac.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div> <!-- /end 1st table row -->
+            
+            <!-- region-specific-stats row -->
+            <div class="row">
+                <p>{{ region_long_label }} Region-Specific Fire Statistics</p>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-sm table-striped table-hover table-bordered mb-2">
+                    <caption style="caption-side: top; padding-bottom: 2px;font-size: 1.5em;"><i class="fas fa-table"></i>&nbsp; Summary Statistics</caption>
+                    <thead>
+                        <tr>
+                            <th>Location</th>
+                            <th class="text-center">{{ region_short_label }} Region Responses</th>
+                            <th class="text-center">{{ region_short_label }} Region Fires</th>
+                            <th class="text-center">{{ region_short_label }} Region Acres Burned</th>
+                            <th class="text-center">All-Lands in {{ region_short_label }} Acres Burned</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">Totals</th>
+                            <td class="text-center">{{region_data.total_responses|intcomma}}</td>
+                            <td class="text-center">{{region_data.total_dnr_fires|intcomma}}</td>
+                            <td class="text-center">{{region_data.total_dnr_acres|intcomma}} ac.</td>
+                            <td class="text-center">{{region_data.total_response_acres|intcomma}} ac.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div> <!-- /end  table row -->
+
+        </div> <!-- /end panel -->
+
+        <!-- resources panel -->
+        <div class="leaflet-sidebar-pane" id="ground">
+            <h1 class="leaflet-sidebar-header">{{ region_short_label }} Ground Resources
+                <span class="leaflet-sidebar-close"><i class="fas fa-caret-left"></i></span>
+            </h1>
+            <!-- date row -->
+            <div class="row">
+                <div class="col-12">
+                    <p class="mt-2 date-update mb-2 text-white dnr-red-bg small-title py-2 my-2 text-center" style="font-size:1em;">See you in the 2020 Fire Season! This data will no longer be updated, but the map data will stay current. Have a great winter! </p>
+                    <p class="mt-2 date-update mb-2">Last Updated: {{ updated_date_txt }}</p>
+                </div>
+            </div>
+
+            <!-- engines/crews table -->
+            <div class="table-responsive">
+                <table class="table table-sm table-striped table-hover table-bordered mb-2">
+                    <caption class="table-caption"><i class="icon-Firefighter-A" style="font-size: 1.33em;"></i>&nbsp; Engines and Crews</caption>
+                    <thead>
+                        <tr>
+                            <th scope="col" rowspan="2">Region</th>
+                            <th scope="col" colspan="2" class="text-center">Available in Region</th>
+                            <th scope="col" colspan="2" class="text-center">Available out of Region</th>
+                        </tr>
+                        <tr>
+                            <th class="text-center">Engines</th>
+                            <th class="text-center">Crews</th>
+                            <th class="text-center">Engines</th>
+                            <th class="text-center">Crews</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">{{region_long_label}}</th>
+                            <td class="text-center">{{ region_data.committed_engines }}</td>
+                            <td class="text-center">{{ region_data.committed_crews }}</td>
+                            <td class="text-center">{{ region_data.available_engines }}</td>
+                            <td class="text-center">{{ region_data.available_crews }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div> <!-- /end 1st table row -->
+
+            <a href="https://gacc.nifc.gov/nwcc/content/products/intelligence/crews.pdf" class="btn btn-sm border-0 btn-block text-white text-left dnr-red-bg nwcc-link" target="_blank" rel='noreferrer'>Northwest Hotshot Crews<i class="fas fa-chevron-right text-white chevron-fix" ></i></a>
+        </div>
+
+        <!-- aviation panel -->
+        <div class="leaflet-sidebar-pane" id="aviation">
+            <h1 class="leaflet-sidebar-header">Aviation Resources
+                <span class="leaflet-sidebar-close"><i class="fas fa-caret-left"></i></span>
+            </h1>
+            <!-- date row -->
+            <div class="row">
+                <div class="col-12">
+                    <p class="mt-2 date-update mb-2 text-white dnr-red-bg small-title py-2 my-2 text-center" style="font-size:1em;">See you in the 2020 Fire Season! This data will no longer be updated, but the map data will stay current. Have a great winter! </p>
+                    <p class="mt-2 date-update mb-2">Last Updated: {{ updated_date_txt }}</p>
+                </div>
+            </div>
+
+            <!-- aviation row-->
+            <div class="table-responsive">
+                <table class="table table-sm table-striped table-hover table-bordered mb-2">
+                    <caption class="table-caption"><i class="fas fa-helicopter"></i> &nbsp; Helicopters and Tankers</caption>
+                    <thead>
+                        <tr>
+                            <th>Location</th>
+                            <th class="text-center">Rotor</th>
+                            <th class="text-center">Fire Boss</th>
+                            <th class="text-center">Air Attack</th>
+                            <th class="text-center">LAT</th>
+                            <th class="text-center">VLAT</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">Westside</th>
+                            <td class="text-center">{{ aviation_data.westside_rotors }}</td>
+                            <td class="text-center">{{ aviation_data.westside_firebosses }}</td>
+                            <td class="text-center">{{ aviation_data.westside_atgs }}</td>
+                            <td class="text-center">-</td>
+                            <td class="text-center">-</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Eastside</th>
+                            <td class="text-center">{{ aviation_data.eastside_rotors }}</td>
+                            <td class="text-center">{{ aviation_data.eastside_firebosses }}</td>
+                            <td class="text-center">{{ aviation_data.eastside_atgs }}</td>
+                            <td class="text-center">-</td>
+                            <td class="text-center">-</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">In GACC</th>
+                            <td class="text-center">-</td>
+                            <td class="text-center">-</td>
+                            <td class="text-center">-</td>
+                            <td class="text-center">{{ aviation_data.in_region_lat }}</td>
+                            <td class="text-center">{{ aviation_data.in_region_vlat }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div> <!-- /end 2nd table row -->
+
+            <a href="https://gacc.nifc.gov/nwcc/content/products/intelligence/Aviation.pdf" class="btn btn-sm border-0 btn-block text-white text-left dnr-red-bg nwcc-link" target="_blank" rel='noreferrer'>Northwest Aviation Report<i class="fas fa-chevron-right text-white chevron-fix" ></i></a>
+            <a href="https://firecrew.us/" class="btn btn-sm border-0 btn-block text-white text-left dnr-red-bg nwcc-link" target="_blank" rel='noreferrer'>National Rapellers<i class="fas fa-chevron-right text-white chevron-fix" ></i></a>
+            <a href="https://www.nifc.gov/smokejumper/reports/smjrpt.php" class="btn btn-sm border-0 btn-block text-white text-left dnr-red-bg nwcc-link" target="_blank" rel='noreferrer'>National Smokejumpers<i class="fas fa-chevron-right text-white chevron-fix" ></i></a>
+        </div> <!-- /end panel -->
+
+        <!-- twitter panel -->
+        <div class="leaflet-sidebar-pane" id="twitter">
+            <h1 class="leaflet-sidebar-header">DNR Fire Twitter
+                <span class="leaflet-sidebar-close"><i class="fa fa-caret-left"></i></span>
+            </h1>
+            <div class="row">
+                <div class="col-12 twit-column">
+                    <a class="twitter-timeline" data-height="90vh" data-width="100%" data-lang="en" data-theme="light" data-chrome="noheader nofooter" data-link-color="#C8102E" href="https://twitter.com/waDNR_fire?ref_src=twsrc%5Etfw" >Tweets by waDNR_fire</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+            </div> <!-- /end 1st row -->
+        </div> <!-- /end panel -->
+
+        <!-- legend panel -->
+        <div class="leaflet-sidebar-pane" id="legend">
+            <h1 class="leaflet-sidebar-header">Map Legend
+                <span class="leaflet-sidebar-close"><i class="fa fa-caret-left"></i></span>
+            </h1>
+            <div class="row">
+                <div class="col-12">
+                    <div class="table-responsive my-2">
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th colspan="2">Layer</th>
+                                    <th class="text-center">Symbol</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="align-middle" colspan="2">Boundaries (Counties, Regions, etc.)</td>
+                                    <td class="text-center align-middle"><hr style="border-top: 2.5px solid black; margin-top: 0; margin-bottom: 0;" width="50%"></td>
+
+
+                                </tr>
+                                <tr>
+                                    <td class="align-middle" colspan="2">NWCC Large Fires</td>
+                                    <td class="text-center align-middle"><img src="../../../static/images/Flames_Large.svg" style="max-height: 20px"></td>
+
+                                </tr>
+                                <tr>
+                                    <td class="align-middle" colspan="2">SIT-209 Fires</td>
+                                    <td class="text-center align-middle"><img src="../../../static/images/Flames_Emerging.svg" style="max-height: 20px"></td>
+                                </tr>
+                                <tr>
+                                    <td class="align-middle" rowspan="2">WildCAD Fires</td>
+                                    <td class="align-middle">< 24 Hrs Old</td>
+                                    <td class="text-center align-middle"><img src="../../../static/images/square_red.svg" style="max-height: 15px"></td>
+                                </tr>
+                                <tr>
+                                    <td class="align-middle">> 24 Hrs Old</td>
+                                    <td class="text-center align-middle"><img src="../../../static/images/square_black.svg" style="max-height: 15px"></td>
+                                </tr>
+                                <tr>
+                                    <td class="align-middle" rowspan="3"> Satellite Hotspots</td>
+                                    <td class="align-middle"> < 12 Hrs Old</td>
+                                    <td class="text-center align-middle"><img src="../../../static/images/circle_red.svg" style="max-height: 15px"></td>
+                                </tr>
+                                <tr>
+                                    <td class="align-middle">12-24 Hrs Old</td>
+                                    <td class="text-center align-middle"><img src="../../../static/images/circle_yellow.svg" style="max-height: 15px"></td>
+                                </tr>
+                                <tr>
+                                    <td class="align-middle">24-48 Hrs Old</td>
+                                    <td class="text-center align-middle"><img src="../../../static/images/circle_black.svg" style="max-height: 15px"></td>
+                                </tr>
+                                <tr>
+                                    <td class="align-middle" rowspan="4"> DNR Fire Danger</td>
+                                    <td class="align-middle">Low</td>
+                                    <td class="align-middle"><div style="background: #CCE2CF; border: 1px solid black; height: 1.5em;"></div></td>
+                                </tr>
+                                <tr>
+                                    <td class="align-middle">Moderate</td>
+                                    <td class="align-middle"><div style="background: #CFD6F8; border: 1px solid black; height: 1.5em;"></div></td>
+                                </tr>
+                                <tr>
+                                    <td class="align-middle">High</td>
+                                    <td class="align-middle"><div style="background: #F8F9AB; border: 1px solid black; height: 1.5em;"></div></td>
+                                </tr>
+                                <tr>
+                                    <td class="align-middle">Extreme</td>
+                                    <td class="align-middle"><div style="background: #FF8E8E; border: 1px solid black; height: 1.5em;"></div></td>
+                                </tr>
+                                <tr>
+                                    <td class="align-middle" rowspan="4"> DNR IFPLs</td>
+                                    <td class="align-middle">Closed Season</td>
+                                    <td class="align-middle"><div style="background: #74B374; border: 1px solid black; height: 1.5em;"></div></td>
+                                </tr>
+                                <tr>
+                                    <td class="align-middle">Partial Hootowl</td>
+                                    <td class="align-middle"><div style="background: #7B8DF5; border: 1px solid black; height: 1.5em;"></div></td>
+                                </tr>
+                                <tr>
+                                    <td class="align-middle">Partial Shutdown</td>
+                                    <td class="align-middle"><div style="background: #FFFF00; border: 1px solid black; height: 1.5em;"></div></td>
+                                </tr>
+                                <tr>
+                                    <td class="align-middle">General Shutdown</td>
+                                    <td class="align-middle"><div style="background: #E69900; border: 1px solid black; height: 1.5em;"></div></td>
+                                </tr>
+                                <tr>
+                                    <td class="align-middle" colspan="2">NWS Current Warnings</td>
+                                    <td class="align-middle text-center">Varies</td>
+                                </tr>
+                                <tr>
+                                    <td class="align-middle" rowspan="2">24-Hr Lightning Strikes</td>
+                                    <td class="align-middle">Positive Strike</td>
+                                    <td class="text-center align-middle"><img src="../../../static/images/red_lightning.svg" style="max-height: 20px"></td>
+
+                                </tr>
+                                <tr>
+                                    <td class="align-middle">Negative Strike</td>
+                                    <td class="text-center align-middle"><img src="../../../static/images/blue_lightning.svg" style="max-height: 20px"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div> <!-- /end 1st row -->
+        </div> <!-- /end panel -->
+
+        <!-- about panel -->
+        <div class="leaflet-sidebar-pane" id="about">
+            <h1 class="leaflet-sidebar-header">About
+                <span class="leaflet-sidebar-close"><i class="fa fa-caret-left"></i></span>
+            </h1>
+            <div class="row">
+                <div class="col-12">
+                    <h5 class="my-2">DNR Fire Dashboard</h5>
+                    <p class="my-2">The <a href="https://www.dnr.wa.gov/" target="_blank" rel='noreferrer'>Washington DNR</a> fire dashboard is a situational awareness and decision support tool for state fire managers. It conveys numerous geospatial, statistical, and tabular information in a mobile-friendly, lightweight design where data updates are driven by our intelligence officers and partner agencies. We made this application open access to encourage public and other agency benefit and hope you find it useful! </p>
+                    <p class="my-2">For help, feedback, or suggestions, please contact <a href="mailto:josh.clark@dnr.wa.gov?subject=[HELP] DNR Fire Dashboard">Josh Clark</a> or <a href="mailto:kirk.davis@dnr.wa.gov?subject=[HELP] DNR Fire Dashboard">Kirk Davis</a>, DNR Fire Planning and Information. </p>
+
+                    <img class="img-responsive my-2" src="{%  static '/images/em_dnr_logo_wildfire.png' %}" alt="DNR Logo" style="max-height: 150px; max-width: 100%; padding: 0; display:block; margin:auto;">
+                    <p class="text-muted pb-0 mb-0">Version 0.1 (BETA)</p>
+                    <p class="text-muted pt-0 mb-2" >Not suitable for public use (yet). <a href="mailto:josh.clark@dnr.wa.gov?subject=[BUG REPORT] DNR Fire Dashboard">Report a bug!</a></p>
+                    <p class="text-muted pt-0" ><u>Disclaimer:</u> The map data provided here are mostly from external sources (NIFC EGP, NOAA, NWCC, etc.), loaded here for your convenience. As DNR does not own this data directly, we cannot promise 100% uptime or availability of each source's data. Further, map data is for informational purposes only and should not be considered the only source for decision-making. This application is focused specifically on WA DNR wildfire operations, utilize the <a href="https://egp.nwcg.gov" target="_blank">NIFC Enterprise Geospatial Portal (EGP)</a> for more fire information inside of WA and nationally.</p>
+                </div>
+            </div> <!-- /end 1st row -->
+        </div> <!-- /end panel -->
+    </div> <!-- /end sidebar content -->
+</div> <!-- /end sidebar -->
+
+<!-- Map -->
+
+<div id="mapdiv">
+    <div class="overlay">
+        <img class="img-responsive text-right" src="{%  static '/images/em_dnr_logo_wildfire.png' %}" alt="DNR Logo" style="max-height: 100%; padding: 0; margin:0;">
+    </div>
+</div>
+
+
+{% endblock %}

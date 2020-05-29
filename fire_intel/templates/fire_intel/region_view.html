@@ -49,7 +49,7 @@
             <div class="row">
                 <div class="col-12">
                     <p class="mt-2 date-update mb-2 text-white dnr-red-bg small-title py-2 my-2 text-center" style="font-size:1em;">See you in the 2020 Fire Season! This data will no longer be updated, but the map data will stay current. Have a great winter! </p>
-                    <p class="mt-2 date-update mb-2">Last Updated: {{ region_data.updated_date_txt }}</p>
+                    <p class="mt-2 date-update mb-2">Last Updated: {{ updated_date_txt }}</p>
                 </div>
             </div>
 
@@ -100,7 +100,7 @@
                 <div class="col-6 pr-2">
                     <div class="card rounded-0 h-100 dnr-blue-bg border-0" id="walargefires">
                         <div class="card-body text-center">
-                            <h5 class="card-num text-white" id="wafires_id">{{ region_data.wa_large_fires }}</h5>
+                            <h5 class="card-num text-white" id="wafires_id">{{ region_data.region_large_fires }}</h5>
                             <small class="small-title text-white">Current {{ region_short_label }} WA Large Fires</small>
                         </div>
                     </div>
@@ -109,7 +109,7 @@
                 <div class="col-6 pl-2">
                     <div class="card rounded-0 h-100 dnr-blue-bg border-0" id="dnrfires">
                         <div class="card-body text-center">
-                            <h5 class="card-num text-white" id="dnrfires_id">{{ region_data.dnr_ia_fires }}</h5>
+                            <h5 class="card-num text-white" id="dnrfires_id">{{ region_data.new_initial_attack }}</h5>
                             <small class="small-title text-white">New {{ region_short_label }} DNR IA Fires</small>
                         </div>
                     </div>
@@ -139,7 +139,7 @@
             <!-- summary table -->
             <div class="table-responsive">
                 <table class="table table-sm table-striped table-hover table-bordered mb-2">
-                    <caption style="caption-side: top; padding-bottom: 2px;font-size: 1.5em;"><i class="fas fa-table"></i>&nbsp; Summary Statistics</caption>
+                    <caption style="caption-side: top; padding-bottom: 2px;font-size: 1.5em;"><i class="fas fa-table"></i>&nbsp; Statewide Summary Statistics</caption>
                     <thead>
                         <tr>
                             <th>Location</th>
@@ -177,24 +177,21 @@
             </div> <!-- /end 1st table row -->
             
             <!-- region-specific-stats row -->
-            <div class="row">
-                <p>{{ region_long_label }} Region-Specific Fire Statistics</p>
-            </div>
             <div class="table-responsive">
                 <table class="table table-sm table-striped table-hover table-bordered mb-2">
-                    <caption style="caption-side: top; padding-bottom: 2px;font-size: 1.5em;"><i class="fas fa-table"></i>&nbsp; Summary Statistics</caption>
+                    <caption style="caption-side: top; padding-bottom: 2px;font-size: 1.5em;"><i class="fas fa-table"></i>&nbsp; {{ region_short_label }} Region-Fire Statistics</caption>
                     <thead>
                         <tr>
                             <th>Location</th>
-                            <th class="text-center">{{ region_short_label }} Region Responses</th>
-                            <th class="text-center">{{ region_short_label }} Region Fires</th>
-                            <th class="text-center">{{ region_short_label }} Region Acres Burned</th>
-                            <th class="text-center">All-Lands in {{ region_short_label }} Acres Burned</th>
+                            <th class="text-center">Region Responses</th>
+                            <th class="text-center">Region DNR Fires</th>
+                            <th class="text-center">Region Acres Burned</th>
+                            <th class="text-center">All-Lands Acres Burned</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <th scope="row">Totals</th>
+                            <th scope="row">{{region_long_label}}</th>
                             <td class="text-center">{{region_data.total_responses|intcomma}}</td>
                             <td class="text-center">{{region_data.total_dnr_fires|intcomma}}</td>
                             <td class="text-center">{{region_data.total_dnr_acres|intcomma}} ac.</td>

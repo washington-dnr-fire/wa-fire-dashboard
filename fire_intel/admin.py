@@ -1,12 +1,19 @@
 from django.contrib import admin
-from .models import IntelReport
+from .models import OverviewIntelReport, 
+                    AviationIntelReport, 
+                    NortheastRegionIntelReport,
+                    SoutheastRegionIntelReportAdmin, 
+                    NorthwestRegionIntelReport, 
+                    SouthPugetSoundRegionIntelReport, 
+                    PacificCascadeRegionIntelReport, 
+                    OlympicRegionIntelReport
 
 # Register your models here.
 admin.site.site_header = "Fire Intel Dashboard"
 admin.site.index_title = "Intel Reports"
 
 
-class IntelReportAdmin(admin.ModelAdmin):
+class OverviewIntelReportAdmin(admin.ModelAdmin):
 
     # replace "save and add another" with "save as" - essential copy this form and save it as new one
     save_as = True
@@ -17,31 +24,7 @@ class IntelReportAdmin(admin.ModelAdmin):
 
         ("Situation Snapshot", {
             'fields': ['preparedness_level_national', 'preparedness_level_nw', 'type_1_teams_assigned',
-                       'type_2_teams_assigned', 'wa_large_fires', 'dnr_ia_fires']}),
-
-        ("OLS Region Resource Availablity",
-         {'fields': ['oly_committed_engines', 'oly_committed_crews', 'oly_available_engines', 'oly_available_crews']}),
-
-        ("NWS Region Resource Availability",
-         {'fields': ['nw_committed_engines', 'nw_committed_crews', 'nw_available_engines', 'nw_available_crews']}),
-
-        ("SPS Region Resource Availability",
-         {'fields': ['sps_committed_engines', 'sps_committed_crews', 'sps_available_engines', 'sps_available_crews']}),
-
-        ("PCS Region Resource Availability",
-         {'fields': ['pc_committed_engines', 'pc_committed_crews', 'pc_available_engines', 'pc_available_crews']}),
-
-        ("SES Region Resource Availability",
-         {'fields': ['se_committed_engines', 'se_committed_crews', 'se_available_engines', 'se_available_crews']}),
-
-        ("NES Region Resource Availability",
-         {'fields': ['ne_committed_engines', 'ne_committed_crews', 'ne_available_engines', 'ne_available_crews']}),
-
-        ("Westside Aviation Resources", {'fields':['westside_rotors', 'westside_firebosses', 'westside_atgs']}),
-
-        ("Eastside Aviation Resources", {'fields':['eastside_rotors', 'eastside_firebosses', 'eastside_atgs']}),
-
-        ("In Region Aviation Resources", {'fields':['in_region_vlat', 'in_region_lat']}),
+                       'type_2_teams_assigned']}),
 
         ("Westside Fire Statistics", {
             'fields': ['westside_dnr_responses_count', 'westside_dnr_fire_count', 'westside_dnr_fire_acres',
@@ -53,4 +36,146 @@ class IntelReportAdmin(admin.ModelAdmin):
     ]
 
 
-admin.site.register(IntelReport, IntelReportAdmin)
+class AviationIntelReportAdmin(admin.ModelAdmin):
+
+    # replace "save and add another" with "save as" - essential copy this form and save it as new one
+    save_as = True
+
+    fieldsets = [
+        
+        ("Date of Report", {
+            'fields': ['date_of_report']}),
+
+        ("Westside Aviation Resources", {'fields':['westside_rotors', 'westside_firebosses', 'westside_atgs']}),
+
+        ("Eastside Aviation Resources", {'fields':['eastside_rotors', 'eastside_firebosses', 'eastside_atgs']}),
+
+        ("In Region Aviation Resources", {'fields':['in_region_vlat', 'in_region_lat']}),
+        
+        ]
+
+
+class NortheastRegionIntelReportAdmin(admin.ModelAdmin):
+    
+    # replace "save and add another" with "save as" - essential copy this form and save it as new one
+    save_as = True
+
+    fieldsets = [
+        
+        ("Date of Report", {
+            'fields': ['date_of_report']}),
+
+        ("Region Situation Snapshot", {
+            'fields': ['new_initial_attack', 'new_ia_acres', 'region_large_fires']}),
+
+        ("Region Resource Availablity",
+         {'fields': ['committed_engines', 'committed_crews', 'available_engines', 'available_crews']}),
+        
+        ]
+
+
+class SoutheastRegionIntelReportAdmin(admin.ModelAdmin):
+    
+    # replace "save and add another" with "save as" - essential copy this form and save it as new one
+    save_as = True
+
+    fieldsets = [
+        
+        ("Date of Report", {
+            'fields': ['date_of_report']}),
+
+        ("Region Situation Snapshot", {
+            'fields': ['new_initial_attack', 'new_ia_acres', 'region_large_fires']}),
+
+        ("Region Resource Availablity",
+         {'fields': ['committed_engines', 'committed_crews', 'available_engines', 'available_crews']}),
+        
+        ]
+
+
+class NorthwestRegionIntelReportAdmin(admin.ModelAdmin):
+    
+    # replace "save and add another" with "save as" - essential copy this form and save it as new one
+    save_as = True
+
+    fieldsets = [
+        
+        ("Date of Report", {
+            'fields': ['date_of_report']}),
+
+        ("Region Situation Snapshot", {
+            'fields': ['new_initial_attack', 'new_ia_acres', 'region_large_fires']}),
+
+        ("Region Resource Availablity",
+         {'fields': ['committed_engines', 'committed_crews', 'available_engines', 'available_crews']}),
+        
+        ]
+
+
+
+class SouthPugetSoundRegionIntelReportAdmin(admin.ModelAdmin):
+    
+    # replace "save and add another" with "save as" - essential copy this form and save it as new one
+    save_as = True
+
+    fieldsets = [
+        
+        ("Date of Report", {
+            'fields': ['date_of_report']}),
+
+        ("Region Situation Snapshot", {
+            'fields': ['new_initial_attack', 'new_ia_acres', 'region_large_fires']}),
+
+        ("Region Resource Availablity",
+         {'fields': ['committed_engines', 'committed_crews', 'available_engines', 'available_crews']}),
+        
+        ]
+
+
+class PacificCascadeRegionIntelReportAdmin(admin.ModelAdmin):
+    
+    # replace "save and add another" with "save as" - essential copy this form and save it as new one
+    save_as = True
+
+    fieldsets = [
+        
+        ("Date of Report", {
+            'fields': ['date_of_report']}),
+
+        ("Region Situation Snapshot", {
+            'fields': ['new_initial_attack', 'new_ia_acres', 'region_large_fires']}),
+
+        ("Region Resource Availablity",
+         {'fields': ['committed_engines', 'committed_crews', 'available_engines', 'available_crews']}),
+        
+        ]
+
+
+class OlympicRegionIntelReportAdmin(admin.ModelAdmin):
+    
+    # replace "save and add another" with "save as" - essential copy this form and save it as new one
+    save_as = True
+
+    fieldsets = [
+        
+        ("Date of Report", {
+            'fields': ['date_of_report']}),
+
+        ("Region Situation Snapshot", {
+            'fields': ['new_initial_attack', 'new_ia_acres', 'region_large_fires']}),
+
+        ("Region Resource Availablity",
+         {'fields': ['committed_engines', 'committed_crews', 'available_engines', 'available_crews']}),
+        
+        ]
+
+
+# register the models with the admin site
+admin.site.register(OverviewIntelReport, OverviewIntelReportAdmin)
+admin.site.register(AviationIntelReport, AviationIntelReportAdmin)
+admin.site.register(NortheastRegionIntelReport, NortheastRegionIntelReportAdmin)
+admin.site.register(SoutheastRegionIntelReport, SoutheastRegionIntelReportAdmin)
+admin.site.register(NorthwestRegionIntelReport, NorthwestRegionIntelReportAdmin)
+admin.site.register(SouthPugetSoundRegionIntelReport, SouthPugetSoundRegionIntelReportAdmin)
+admin.site.register(PacificCascadeRegionIntelReport, PacificCascadeRegionIntelReportAdmin)
+admin.site.register(OlympicRegionIntelReport, OlympicRegionIntelReportAdmin)

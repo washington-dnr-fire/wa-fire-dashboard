@@ -32,7 +32,6 @@ class IntelReport(models.Model):
         (5, 5),
         (6, 6),
         (7, 7),
-        (8, 8),
     }
 
     date_of_report = models.DateTimeField(help_text="REMEMBER - the latest date's Fire Intel is always shown in the application. The date should always be 'today' and 'now', but if you need to update values be sure to update the date too", blank=False)

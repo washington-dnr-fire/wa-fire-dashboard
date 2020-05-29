@@ -1,7 +1,5 @@
 from django.contrib import admin
 from .models import IntelReport
-from .models import AviationLog
-from .models import AviationDoc
 
 # Register your models here.
 admin.site.site_header = "Fire Intel Dashboard"
@@ -56,5 +54,3 @@ class IntelReportAdmin(admin.ModelAdmin):
 
 
 admin.site.register(IntelReport, IntelReportAdmin)
-admin.site.register(AviationLog)
-admin.site.register(AviationDoc)

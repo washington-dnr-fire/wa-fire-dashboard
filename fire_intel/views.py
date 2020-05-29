@@ -1,8 +1,6 @@
 from django.http import HttpResponse
 from django.template import loader
 from .models import IntelReport
-from .models import AviationLog
-from .models import AviationDoc
 from datetime import timezone
 from django.http import JsonResponse
 import requests
@@ -151,19 +149,6 @@ def profile(request):
             'updated_date_txt': updated_date_txt,
         }
         return HttpResponse(template.render(context, request))
-
-
-def aviation(request):
-    template = loader.get_template('fire_intel/aviation.html')
-    aviation_logs = AviationLog.objects.all().order_by('-date')
-    aviation_docs_no_cost_sheet = AviationDoc.objects.filter(is_cost_sheet=False).order_by('-date')
-    cost_sheet_docs = AviationDoc.objects.filter(is_cost_sheet=True)
-    context = {
-        "aviation_logs": aviation_logs,
-        "aviation_docs": aviation_docs_no_cost_sheet,
-        "cost_sheets": cost_sheet_docs,
-    }
-    return HttpResponse(template.render(context, request))
 
 def season_end(request):
     template = loader.get_template('fire_intel/season_end.html')

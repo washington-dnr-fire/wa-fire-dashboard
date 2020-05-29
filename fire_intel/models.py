@@ -20,6 +20,15 @@ class IntelAbstractBaseMixin(DateTimeStampMixin):
     new_ia_acres = models.DecimalField("New Initial Attack Acres", help_text="Value is rounded to two decimals places", blank=False,
                                                      max_digits=8, decimal_places=2)
     region_large_fires = models.IntegerField("Current Number of Large Fires in Region", blank=False, help_text="How many WA-based large fires are there currently in your region")
+    
+    total_responses = models.IntegerField("Total Responses in Region", help_text="To-date value, how many responses are reported in EIRS?", blank=False)
+    total_dnr_fires = models.IntegerField("Total DNR Fires in Region to-date", blank=False, help_text="To-date value, how many DNR fires are reported in EIRS?")
+    
+    total_response_acres = models.DecimalField("Total Response Acres in Region", help_text="Value is rounded to two decimals places", blank=False,
+                                                     max_digits=10, decimal_places=2)
+    total_dnr_acres = models.DecimalField("Total DNR Acres Burned in Region", help_text="To-date value comes from EIRS data, also value is rounded to two decimals places", blank=False,
+                                                     max_digits=10, decimal_places=2)
+
     committed_engines = models.SmallIntegerField("In Region Engines", blank=False,
                                                      validators=[MinValueValidator(0), MaxValueValidator(250)])
     committed_crews = models.SmallIntegerField("In Region Crews", blank=False,

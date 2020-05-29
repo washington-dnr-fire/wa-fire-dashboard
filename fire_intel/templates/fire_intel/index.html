@@ -210,45 +210,45 @@
                     <tbody>
                         <tr>
                             <th scope="row">Northeast</th>
-                            <td class="text-center">{{ ne.committed_engines }}</td>
-                            <td class="text-center">{{ ne.committed_crews }}</td>
-                            <td class="text-center">{{ ne.available_engines }}</td>
-                            <td class="text-center">{{ ne.available_crews }}</td>
+                            <td class="text-center">{{ ne_data.committed_engines }}</td>
+                            <td class="text-center">{{ ne_data.committed_crews }}</td>
+                            <td class="text-center">{{ ne_data.available_engines }}</td>
+                            <td class="text-center">{{ ne_data.available_crews }}</td>
                         </tr>
                         <tr>
                             <th scope="row">Southeast</th>
-                            <td class="text-center">{{ se.committed_engines }}</td>
-                            <td class="text-center">{{ se.committed_crews }}</td>
-                            <td class="text-center">{{ se.available_engines }}</td>
-                            <td class="text-center">{{ se.available_crews }}</td>
+                            <td class="text-center">{{ se_data.committed_engines }}</td>
+                            <td class="text-center">{{ se_data.committed_crews }}</td>
+                            <td class="text-center">{{ se_data.available_engines }}</td>
+                            <td class="text-center">{{ se_data.available_crews }}</td>
                         </tr>
                         <tr>
                             <th scope="row">Northwest</th>
-                            <td class="text-center">{{ nw.committed_engines }}</td>
-                            <td class="text-center">{{ nw.committed_crews }}</td>
-                            <td class="text-center">{{ nw.available_engines }}</td>
-                            <td class="text-center">{{ nw.available_crews }}</td>
+                            <td class="text-center">{{ nw_data.committed_engines }}</td>
+                            <td class="text-center">{{ nw_data.committed_crews }}</td>
+                            <td class="text-center">{{ nw_data.available_engines }}</td>
+                            <td class="text-center">{{ nw_data.available_crews }}</td>
                         </tr>
                         <tr>
                             <th scope="row">Olympic</th>
-                            <td class="text-center">{{ oly.committed_engines }}</td>
-                            <td class="text-center">{{ oly.committed_crews }}</td>
-                            <td class="text-center">{{ oly.available_engines }}</td>
-                            <td class="text-center">{{ oly.available_crews }}</td>
+                            <td class="text-center">{{ oly_data.committed_engines }}</td>
+                            <td class="text-center">{{ oly_data.committed_crews }}</td>
+                            <td class="text-center">{{ oly_data.available_engines }}</td>
+                            <td class="text-center">{{ oly_data.available_crews }}</td>
                         </tr>
                         <tr>
                             <th scope="row">South Puget</th>
-                            <td class="text-center">{{ sps.committed_engines }}</td>
-                            <td class="text-center">{{ sps.committed_crews }}</td>
-                            <td class="text-center">{{ sps.available_engines }}</td>
-                            <td class="text-center">{{ sps.available_crews }}</td>
+                            <td class="text-center">{{ sps_data.committed_engines }}</td>
+                            <td class="text-center">{{ sps_data.committed_crews }}</td>
+                            <td class="text-center">{{ sps_data.available_engines }}</td>
+                            <td class="text-center">{{ sps_data.available_crews }}</td>
                         </tr>
                         <tr>
                             <th scope="row">Pacific Cascade</th>
-                            <td class="text-center">{{ pc.committed_engines }}</td>
-                            <td class="text-center">{{ pc.committed_crews }}</td>
-                            <td class="text-center">{{ pc.available_engines }}</td>
-                            <td class="text-center">{{ pc.available_crews }}</td>
+                            <td class="text-center">{{ pc_data.committed_engines }}</td>
+                            <td class="text-center">{{ pc_data.committed_crews }}</td>
+                            <td class="text-center">{{ pc_data.available_engines }}</td>
+                            <td class="text-center">{{ pc_data.available_crews }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -287,17 +287,17 @@
                     <tbody>
                         <tr>
                             <th scope="row">Westside</th>
-                            <td class="text-center">{{ aviation.westside_rotors }}</td>
-                            <td class="text-center">{{ aviation.westside_firebosses }}</td>
-                            <td class="text-center">{{ aviation.westside_atgs }}</td>
+                            <td class="text-center">{{ aviation_data.westside_rotors }}</td>
+                            <td class="text-center">{{ aviation_data.westside_firebosses }}</td>
+                            <td class="text-center">{{ aviation_data.westside_atgs }}</td>
                             <td class="text-center">-</td>
                             <td class="text-center">-</td>
                         </tr>
                         <tr>
                             <th scope="row">Eastside</th>
-                            <td class="text-center">{{ aviation.eastside_rotors }}</td>
-                            <td class="text-center">{{ aviation.eastside_firebosses }}</td>
-                            <td class="text-center">{{ aviation.eastside_atgs }}</td>
+                            <td class="text-center">{{ aviation_data.eastside_rotors }}</td>
+                            <td class="text-center">{{ aviation_data.eastside_firebosses }}</td>
+                            <td class="text-center">{{ aviation_data.eastside_atgs }}</td>
                             <td class="text-center">-</td>
                             <td class="text-center">-</td>
                         </tr>
@@ -306,8 +306,8 @@
                             <td class="text-center">-</td>
                             <td class="text-center">-</td>
                             <td class="text-center">-</td>
-                            <td class="text-center">{{ aviation.in_region_lat }}</td>
-                            <td class="text-center">{{ aviation.in_region_vlat }}</td>
+                            <td class="text-center">{{ aviation_data.in_region_lat }}</td>
+                            <td class="text-center">{{ aviation_data.in_region_vlat }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -316,7 +316,6 @@
             <a href="https://gacc.nifc.gov/nwcc/content/products/intelligence/Aviation.pdf" class="btn btn-sm border-0 btn-block text-white text-left dnr-red-bg nwcc-link" target="_blank" rel='noreferrer'>Northwest Aviation Report<i class="fas fa-chevron-right text-white chevron-fix" ></i></a>
             <a href="https://firecrew.us/" class="btn btn-sm border-0 btn-block text-white text-left dnr-red-bg nwcc-link" target="_blank" rel='noreferrer'>National Rapellers<i class="fas fa-chevron-right text-white chevron-fix" ></i></a>
             <a href="https://www.nifc.gov/smokejumper/reports/smjrpt.php" class="btn btn-sm border-0 btn-block text-white text-left dnr-red-bg nwcc-link" target="_blank" rel='noreferrer'>National Smokejumpers<i class="fas fa-chevron-right text-white chevron-fix" ></i></a>
-            <!-- /disable until ready <a href="{% url 'aviation' %}" class="btn btn-sm border-0 btn-block text-white text-left dnr-gray-bg nwcc-link">WA State Aviation Managers <small>(disabled)</small><i class="fas fa-chevron-right text-white chevron-fix" ></i></a>  -->
         </div> <!-- /end panel -->
 
         <!-- twitter panel -->

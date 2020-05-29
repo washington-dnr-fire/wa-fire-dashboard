@@ -48,6 +48,28 @@ class AviationIntelReportAdmin(admin.ModelAdmin):
         ]
 
 
+class RegionIntelReportAdmin(admin.ModelAdmin):
+    
+    # replace "save and add another" with "save as" - essential copy this form and save it as new one
+    save_as = True
+
+    fieldsets = [
+        
+        ("Date of Report", {
+            'fields': ['date_of_report']}),
+
+        ("Region Situation Snapshot", {
+            'fields': ['new_initial_attack', 'new_ia_acres', 'region_large_fires']}),
+
+        ("Region Fire Stats Snapshot", {
+            'fields': ['total_responses', 'total_dnr_fires', 'total_dnr_acres', 'total_response_acres']}),
+
+        ("Region Resource Availablity",
+         {'fields': ['committed_engines', 'committed_crews', 'available_engines', 'available_crews']}),
+        
+        ]
+
+
 class NortheastRegionIntelReportAdmin(admin.ModelAdmin):
     
     # replace "save and add another" with "save as" - essential copy this form and save it as new one
@@ -138,6 +160,9 @@ class PacificCascadeRegionIntelReportAdmin(admin.ModelAdmin):
         ("Region Situation Snapshot", {
             'fields': ['new_initial_attack', 'new_ia_acres', 'region_large_fires']}),
 
+        ("Region Fire Stats Snapshot", {
+            'fields': ['total_responses', 'total_dnr_fires', 'total_dnr_acres', 'total_response_acres']}),
+
         ("Region Resource Availablity",
          {'fields': ['committed_engines', 'committed_crews', 'available_engines', 'available_crews']}),
         
@@ -166,9 +191,9 @@ class OlympicRegionIntelReportAdmin(admin.ModelAdmin):
 # register the models with the admin site
 admin.site.register(OverviewIntelReport, OverviewIntelReportAdmin)
 admin.site.register(AviationIntelReport, AviationIntelReportAdmin)
-admin.site.register(NortheastRegionIntelReport, NortheastRegionIntelReportAdmin)
-admin.site.register(SoutheastRegionIntelReport, SoutheastRegionIntelReportAdmin)
-admin.site.register(NorthwestRegionIntelReport, NorthwestRegionIntelReportAdmin)
-admin.site.register(SouthPugetSoundRegionIntelReport, SouthPugetSoundRegionIntelReportAdmin)
-admin.site.register(PacificCascadeRegionIntelReport, PacificCascadeRegionIntelReportAdmin)
-admin.site.register(OlympicRegionIntelReport, OlympicRegionIntelReportAdmin)
+admin.site.register(NortheastRegionIntelReport, RegionIntelReportAdmin)
+admin.site.register(SoutheastRegionIntelReport, RegionIntelReportAdmin)
+admin.site.register(NorthwestRegionIntelReport, RegionIntelReportAdmin)
+admin.site.register(SouthPugetSoundRegionIntelReport, RegionIntelReportAdmin)
+admin.site.register(PacificCascadeRegionIntelReport, RegionIntelReportAdmin)
+admin.site.register(OlympicRegionIntelReport, RegionIntelReportAdmin)

@@ -1,12 +1,5 @@
 from django.contrib import admin
-from .models import OverviewIntelReport, 
-                    AviationIntelReport, 
-                    NortheastRegionIntelReport,
-                    SoutheastRegionIntelReportAdmin, 
-                    NorthwestRegionIntelReport, 
-                    SouthPugetSoundRegionIntelReport, 
-                    PacificCascadeRegionIntelReport, 
-                    OlympicRegionIntelReport
+from .models import *
 
 # Register your models here.
 admin.site.site_header = "Fire Intel Dashboard"

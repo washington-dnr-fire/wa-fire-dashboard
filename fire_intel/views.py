@@ -1,133 +1,109 @@
 from django.http import HttpResponse
 from django.template import loader
-from .models import IntelReport
 from datetime import timezone
 from django.http import JsonResponse
 import requests
+
+# import all models because we USE THEM ALL!
+from .models import *
+
+
+# utility function
+def get_better_date_txt(input_date):
+    return input_date.replace(tzinfo=timezone.utc).astimezone(tz=None).strftime("%A, %b %d, %Y at %H:%M %Z")
 
 
 # Create your views here.
 def index(request):
     template = loader.get_template('fire_intel/index.html')
-    if IntelReport.objects.count() > 0:
-        latest_intel_report = IntelReport.objects.latest("date_of_report")
-        updated_date_txt = latest_intel_report.date_of_report.replace(tzinfo=timezone.utc).astimezone(tz=None).strftime(
-            "%A, %b %d, %Y at %H:%M %Z")
-        context = {
-            'preparedness_level_national': latest_intel_report.preparedness_level_national,
-            'preparedness_level_nw': latest_intel_report.preparedness_level_nw,
-            'type_1_teams_assigned': latest_intel_report.type_1_teams_assigned,
-            'type_2_teams_assigned': latest_intel_report.type_2_teams_assigned,
-            'wa_large_fires': latest_intel_report.wa_large_fires,
-            'dnr_ia_fires': latest_intel_report.dnr_ia_fires,
-            'westside_dnr_responses_count': latest_intel_report.westside_dnr_responses_count,
-            'westside_dnr_fire_count': latest_intel_report.westside_dnr_fire_count,
-            'westside_dnr_fire_acres': latest_intel_report.westside_dnr_fire_acres,
-            'westside_all_fire_acres': latest_intel_report.westside_all_fire_acres,
-            'eastside_dnr_responses_count': latest_intel_report.eastside_dnr_responses_count,
-            'eastside_dnr_fire_count': latest_intel_report.eastside_dnr_fire_count,
-            'eastside_dnr_fire_acres': latest_intel_report.eastside_dnr_fire_acres,
-            'eastside_all_fire_acres': latest_intel_report.eastside_all_fire_acres,
-            'sum_dnr_response_count': latest_intel_report.westside_dnr_responses_count + latest_intel_report.eastside_dnr_responses_count,
-            'sum_dnr_fire_count': latest_intel_report.westside_dnr_fire_count + latest_intel_report.eastside_dnr_fire_count,
-            'sum_dnr_fire_acres': latest_intel_report.westside_dnr_fire_acres + latest_intel_report.eastside_dnr_fire_acres,
-            'sum_all_fire_acres': latest_intel_report.westside_all_fire_acres + latest_intel_report.eastside_all_fire_acres,
-            'ne_committed_engines': latest_intel_report.ne_committed_engines,
-            'ne_committed_crews': latest_intel_report.ne_committed_crews,
-            'ne_available_engines': latest_intel_report.ne_available_engines,
-            'ne_available_crews': latest_intel_report.ne_available_crews,
-            'se_committed_engines': latest_intel_report.se_committed_engines,
-            'se_committed_crews': latest_intel_report.se_committed_crews,
-            'se_available_engines': latest_intel_report.se_available_engines,
-            'se_available_crews': latest_intel_report.se_available_crews,
-            'nw_committed_engines': latest_intel_report.nw_committed_engines,
-            'nw_committed_crews': "-",  # Northwest doesn't have any crews currently
-            'nw_available_engines': latest_intel_report.nw_available_engines,
-            'nw_available_crews': "-",  # Northwest doesn't have any crews currently
-            'pc_committed_engines': latest_intel_report.pc_committed_engines,
-            'pc_committed_crews': latest_intel_report.pc_committed_crews,
-            'pc_available_engines': latest_intel_report.pc_available_engines,
-            'pc_available_crews': latest_intel_report.pc_available_crews,
-            'oly_committed_engines': latest_intel_report.oly_committed_engines,
-            'oly_committed_crews': latest_intel_report.oly_committed_crews,
-            'oly_available_engines': latest_intel_report.oly_available_engines,
-            'oly_available_crews': latest_intel_report.oly_available_crews,
-            'sps_committed_engines': latest_intel_report.sps_committed_engines,
-            'sps_committed_crews': latest_intel_report.sps_committed_crews,
-            'sps_available_engines': latest_intel_report.sps_available_engines,
-            'sps_available_crews': latest_intel_report.sps_available_crews,
-            'westside_rotors': latest_intel_report.westside_rotors,
-            'westside_firebosses': latest_intel_report.westside_firebosses,
-            'westside_atgs': latest_intel_report.westside_atgs,
-            'eastside_rotors': latest_intel_report.eastside_rotors,
-            'eastside_firebosses': latest_intel_report.eastside_firebosses,
-            'eastside_atgs': latest_intel_report.eastside_atgs,
-            'in_region_vlat': latest_intel_report.in_region_vlat,
-            'in_region_lat': latest_intel_report.in_region_lat,
-            'updated_date_txt': updated_date_txt,
-        }
-    else:
-        context = {
-            'preparedness_level_national': 0,
-            'preparedness_level_nw': 0,
-            'type_1_teams_assigned': 0,
-            'type_2_teams_assigned': 0,
-            'wa_large_fires': 0,
-            'dnr_ia_fires': 0,
-            'westside_dnr_responses_count': 0,
-            'westside_dnr_fire_count': 0,
-            'westside_dnr_fire_acres': 0,
-            'westside_all_fire_acres': 0,
-            'eastside_dnr_responses_count': 0,
-            'eastside_dnr_fire_count': 0,
-            'eastside_dnr_fire_acres': 0,
-            'eastside_all_fire_acres': 0,
-            'sum_dnr_response_count': 0,
-            'sum_dnr_fire_count': 0,
-            'sum_dnr_fire_acres': 0,
-            'sum_all_fire_acres': 0,
-            'ne_committed_engines': 0,
-            'ne_committed_crews': 0,
-            'ne_available_engines': 0,
-            'ne_available_crews': 0,
-            'se_committed_engines': 0,
-            'se_committed_crews': 0,
-            'se_available_engines': 0,
-            'se_available_crews': 0,
-            'nw_committed_engines': 0,
-            'nw_committed_crews': 0,
-            'nw_available_engines': 0,
-            'nw_available_crews': 0,
-            'pc_committed_engines': 0,
-            'pc_committed_crews': 0,
-            'pc_available_engines': 0,
-            'pc_available_crews': 0,
-            'oly_committed_engines': 0,
-            'oly_committed_crews': 0,
-            'oly_available_engines': 0,
-            'oly_available_crews': 0,
-            'sps_committed_engines': 0,
-            'sps_committed_crews': 0,
-            'sps_available_engines': 0,
-            'sps_available_crews': 0,
-            'westside_rotors': 0,
-            'westside_firebosses': 0,
-            'westside_atgs': 0,
-            'eastside_rotors': 0,
-            'eastside_firebosses': 0,
-            'eastside_atgs': 0,
-            'in_region_vlat': 0,
-            'in_region_lat': 0,
-            'updated_date_txt': "No reports available",
-        }
+    # if IntelReport.objects.count() > 0:
+    # grab the latest intel records
+    overview_intel = OverviewIntelReport.objects.latest("date_of_report")
+    aviation = AviationIntelReport.objects.latest("date_of_report")
+    ne = NortheastRegionIntelReport.objects.latest("date_of_report")
+    se = SoutheastRegionIntelReport.objects.latest("date_of_report")
+    nw = NorthwestRegionIntelReport.objects.latest("date_of_report")
+    sps = SouthPugetSoundRegionIntelReport.objects.latest("date_of_report")
+    pc = PacificCascadeRegionIntelReport.objects.latest("date_of_report")
+    oly = OlympicRegionIntelReport.objects.latest("date_of_report")
+
+    context = {
+        'overview_intel_data': overview_intel,
+        'aviation_data': aviation,
+        'ne_data': ne,
+        'se_data': se,
+        'nw_data': nw,
+        'sps_data': sps,
+        'pc_data': pc,
+        'oly_data': oly,
+        'updated_date_txt': get_better_date_txt(overview_intel.date_of_report),
+
+        # all summed up information
+        'wa_large_fires_sum': (ne.region_large_fires + se.region_large_fires  + nw.region_large_fires  + sps.region_large_fires + pc.region_large_fires  + oly.region_large_fires) ,
+        'dnr_ia_fires_sum': round(ne.new_ia_acres + se.new_ia_acres + nw.new_ia_acres + sps.new_ia_acres + pc.new_ia_acres + oly.new_ia_acres, 2),
+        'dnr_response_count_sum': overview_intel.westside_dnr_responses_count + overview_intel.eastside_dnr_responses_count,
+        'dnr_fire_count_sum': overview_intel.westside_dnr_fire_count + overview_intel.eastside_dnr_fire_count,
+        'dnr_fire_acres_sum': round(overview_intel.westside_dnr_fire_acres + overview_intel.eastside_dnr_fire_acres, 2),
+        'all_fire_acres_sum': round(overview_intel.westside_all_fire_acres + overview_intel.eastside_all_fire_acres, 2),
+        # 'preparedness_level_national': latest_intel_report.preparedness_level_national,
+        # 'preparedness_level_nw': latest_intel_report.preparedness_level_nw,
+        # 'type_1_teams_assigned': latest_intel_report.type_1_teams_assigned,
+        # 'type_2_teams_assigned': latest_intel_report.type_2_teams_assigned,
+        # 'wa_large_fires': latest_intel_report.wa_large_fires,
+        # 'dnr_ia_fires': latest_intel_report.dnr_ia_fires,
+        # 'westside_dnr_responses_count': latest_intel_report.westside_dnr_responses_count,
+        # 'westside_dnr_fire_count': latest_intel_report.westside_dnr_fire_count,
+        # 'westside_dnr_fire_acres': latest_intel_report.westside_dnr_fire_acres,
+        # 'westside_all_fire_acres': latest_intel_report.westside_all_fire_acres,
+        # 'eastside_dnr_responses_count': latest_intel_report.eastside_dnr_responses_count,
+        # 'eastside_dnr_fire_count': latest_intel_report.eastside_dnr_fire_count,
+        # 'eastside_dnr_fire_acres': latest_intel_report.eastside_dnr_fire_acres,
+        # 'eastside_all_fire_acres': latest_intel_report.eastside_all_fire_acres,
+        # 'sum_dnr_response_count': latest_intel_report.westside_dnr_responses_count + latest_intel_report.eastside_dnr_responses_count,
+        # 'sum_dnr_fire_count': latest_intel_report.westside_dnr_fire_count + latest_intel_report.eastside_dnr_fire_count,
+        # 'sum_dnr_fire_acres': latest_intel_report.westside_dnr_fire_acres + latest_intel_report.eastside_dnr_fire_acres,
+        # 'sum_all_fire_acres': latest_intel_report.westside_all_fire_acres + latest_intel_report.eastside_all_fire_acres,
+        # 'ne_committed_engines': latest_intel_report.ne_committed_engines,
+        # 'ne_committed_crews': latest_intel_report.ne_committed_crews,
+        # 'ne_available_engines': latest_intel_report.ne_available_engines,
+        # 'ne_available_crews': latest_intel_report.ne_available_crews,
+        # 'se_committed_engines': latest_intel_report.se_committed_engines,
+        # 'se_committed_crews': latest_intel_report.se_committed_crews,
+        # 'se_available_engines': latest_intel_report.se_available_engines,
+        # 'se_available_crews': latest_intel_report.se_available_crews,
+        # 'nw_committed_engines': latest_intel_report.nw_committed_engines,
+        # 'nw_committed_crews': "-",  # Northwest doesn't have any crews currently
+        # 'nw_available_engines': latest_intel_report.nw_available_engines,
+        # 'nw_available_crews': "-",  # Northwest doesn't have any crews currently
+        # 'pc_committed_engines': latest_intel_report.pc_committed_engines,
+        # 'pc_committed_crews': latest_intel_report.pc_committed_crews,
+        # 'pc_available_engines': latest_intel_report.pc_available_engines,
+        # 'pc_available_crews': latest_intel_report.pc_available_crews,
+        # 'oly_committed_engines': latest_intel_report.oly_committed_engines,
+        # 'oly_committed_crews': latest_intel_report.oly_committed_crews,
+        # 'oly_available_engines': latest_intel_report.oly_available_engines,
+        # 'oly_available_crews': latest_intel_report.oly_available_crews,
+        # 'sps_committed_engines': latest_intel_report.sps_committed_engines,
+        # 'sps_committed_crews': latest_intel_report.sps_committed_crews,
+        # 'sps_available_engines': latest_intel_report.sps_available_engines,
+        # 'sps_available_crews': latest_intel_report.sps_available_crews,
+        # 'westside_rotors': latest_intel_report.westside_rotors,
+        # 'westside_firebosses': latest_intel_report.westside_firebosses,
+        # 'westside_atgs': latest_intel_report.westside_atgs,
+        # 'eastside_rotors': latest_intel_report.eastside_rotors,
+        # 'eastside_firebosses': latest_intel_report.eastside_firebosses,
+        # 'eastside_atgs': latest_intel_report.eastside_atgs,
+        # 'in_region_vlat': latest_intel_report.in_region_vlat,
+        # 'in_region_lat': latest_intel_report.in_region_lat,
+    }
     return HttpResponse(template.render(context, request))
 
 
 def profile(request):
     template = loader.get_template('fire_intel/profile.html')
-    if IntelReport.objects.count() > 0:
-        latest_intel_report = IntelReport.objects.latest("date_of_report")
-        updated_date_txt = latest_intel_report.date_of_report.strftime(
+    if OverviewIntelReport.objects.count() > 0:
+        intel_report_overview = OverviewIntelReport.objects.latest("date_of_report")
+        updated_date_txt = intel_report_overview.date_of_report.strftime(
             "%m/%d/%Y, %H:%M:%S")
     else:
         updated_date_txt = "No reports available"
@@ -154,10 +130,10 @@ def season_end(request):
     template = loader.get_template('fire_intel/season_end.html')
     return HttpResponse(template.render(None, request))
 
-def current_fire_stats(request):
-    all_reports = list(IntelReport.objects.values('id', 'date_of_report', 'westside_dnr_responses_count', 'westside_dnr_fire_count', 'westside_dnr_fire_acres',
-                                                  'westside_all_fire_acres',  'eastside_dnr_responses_count', 'eastside_dnr_fire_count', 'eastside_dnr_fire_acres', 'eastside_all_fire_acres'))
-    return JsonResponse({'data':all_reports}, safe=False)
+# def current_fire_stats(request):
+#     all_reports = list(IntelReport.objects.values('id', 'date_of_report', 'westside_dnr_responses_count', 'westside_dnr_fire_count', 'westside_dnr_fire_acres',
+#                                                   'westside_all_fire_acres',  'eastside_dnr_responses_count', 'eastside_dnr_fire_count', 'eastside_dnr_fire_acres', 'eastside_all_fire_acres'))
+#     return JsonResponse({'data':all_reports}, safe=False)
 
 def egp_data(request, layer_type, layer_id):
     referer = 'http://dnr.wa.gov'
@@ -188,7 +164,7 @@ def egp_data(request, layer_type, layer_id):
 
     # making the EGP data request
     request_params = {
-        'token': IntelReport.get_that_egp_token(),
+        'token': OverviewIntelReport.get_that_egp_token(),
         'where': str(where),
         'geometry': str(WA_ENVELOPE),
         'geometryType': 'esriGeometryEnvelope',

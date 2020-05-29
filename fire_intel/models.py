@@ -141,19 +141,4 @@ class IntelReport(models.Model):
         }
         r = requests.post(agol_token_url, params=TOKEN_CREDENTIALS_PAYLOAD)
         return r.json()['token']
-
-
-# Aviation Log Model
-class AviationLog(models.Model):
-    updated_by = models.CharField(max_length=50, default="Adam Jones", blank=False)
-    notes = models.TextField(max_length=500, blank=False)
-    date = models.DateTimeField(auto_now=True)
-
-class AviationDoc(models.Model):
-    file_name = models.CharField(max_length=50, blank=False)
-    file_upload = models.FileField(upload_to='aviation_docs/')
-    short_description = models.CharField(max_length=100, blank=False) 
-    date = models.DateTimeField(auto_now=True)
-    is_cost_sheet = models.BooleanField(default=False, help_text="Is this uploaded document a Cost Sheet?")
-    uploaded_by = models.CharField(max_length=50, default="Adam Jones", blank=False)
     

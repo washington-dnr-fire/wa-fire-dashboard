@@ -1,10 +1,5 @@
 $(function() {
 
-    // disable service worker until it's figured out
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./serv-worker.js');
-    };
-
   // Positive polarity lightning icon
     var redLightningIcon = L.icon({
     iconUrl: "../../../static/images/red_lightning.svg",
@@ -701,69 +696,8 @@ $(function() {
         "</div>", evt.feature.properties
     )});
 
-    // HMS SATELLITE DETECTIONS
-    var hms_detects = new L.GeoJSON.AJAX("./egp_data/HMS_detects/6", {
-        pointToLayer: function (feature, latlng) {
-            if(feature.properties.load_stat === 'Active Burning'){
-                return L.circleMarker(latlng, {
-                    stroke: false,
-                    fillColor: 'red',
-                    radius: 5,
-                    fillOpacity: 1.0
-                })
-            } else if(feature.properties.load_stat === '24 Hrs'){
-                return L.circleMarker(latlng, {
-                    stroke: false,
-                    fillColor: 'yellow',
-                    radius: 5,
-                    fillOpacity: 1.0
-                })
-            } else if(feature.properties.load_stat === '48 Hrs'){
-                return L.circleMarker(latlng, {
-                    stroke: false,
-                    fillColor: 'black',
-                    radius: 5,
-                    fillOpacity: 1.0
-                })
-            }
-        },
-        onEachFeature: function (feature, layer) {
-            layer.setStyle({pane: 'points'});
-        }
-    });
-
-    hms_detects.bindPopup(function(evt) {
-        var lat = evt.feature.geometry.coordinates[1].toFixed(3);
-        var lng = evt.feature.geometry.coordinates[0].toFixed(3);
-        if(evt.feature.properties.load_stat === 'Active Burning'){
-            var load_stat = 'Last 12 hours';
-        } else if(evt.feature.properties.load_stat === '24 Hrs'){
-            var load_stat = 'Last 12-24 hours ';
-        } else if(evt.feature.properties.load_stat === '48 Hrs') {
-            var load_stat = 'Last 24-48 hours';
-        }
-        return L.Util.template(
-        "<div class='container rounded-0' style='max-width:375px;margin-top:5px;'>" +
-        "<div class='row'>" +
-        "<div class='col-xs-12' style='padding:0;'>" +
-        "<span>Hotspot detected at " + lat + ', ' + lng + "</span>" +
-        "</div>" + // col
-        "</div>" + // row
-        "<div class='row'>" +
-        "<div class='col-xs-12' style='padding:0; text-align: center'>" +
-        "<span style='font-size: 2em; font-weight: 700;color: #003d6b;'>" + load_stat + "</span>" +
-        "</div>" + // col
-        "</div>" + // row
-        "<div class='row'>" +
-        "<div class='col-xs-12'>" +
-        "<span class='text-muted'>Detected via {det_method}</span>" +
-        "</div>" + // col
-        "</div>" + // row
-        "</div>", evt.feature.properties
-    )});
-
     // All da satellites group
-    var satellite_detects = L.layerGroup([viirs_hotspot_centroids, modis_hotspot_centroids, hms_detects]);
+    var satellite_detects = L.layerGroup([viirs_hotspot_centroids, modis_hotspot_centroids]);
 
     // NWS 7-DAY RAINFALL
     var NWS_QPE = L.esri.featureLayer({
@@ -820,7 +754,7 @@ $(function() {
         center: [home.lat, home.lng],
         zoom: home.zoom,
         minZoom: 6,
-        layers: [regions, NWS_warnings, satellite_detects, daily_fires, sit209_fires, wildcad_fires],
+        layers: [regions, NWS_warnings, daily_fires, sit209_fires, wildcad_fires],
         attributionControl: false,
         cursor: false
     });

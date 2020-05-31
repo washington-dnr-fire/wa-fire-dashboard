@@ -20,16 +20,10 @@ def get_latest_or_none(classmodel):
         return classmodel.objects.latest("date_of_report")
     except classmodel.DoesNotExist:
         return None
-
-def user_on_ie_test(request_obj):
-    user_agent = request_obj.META.get('HTTP_USER_AGENT','').lower()
-    if 'trident' in user_agent or 'msie' in user_agent:
-        return True
-    else:
-        return False
     
 
 # Create your views here.
+@ie_test_redirect
 def index(request):
 
     # grab the latest intel records
@@ -89,6 +83,7 @@ def index(request):
     return HttpResponse(template.render(context, request))
 
 
+@ie_test_redirect
 def profile(request):
     
     if OverviewIntelReport.objects.count() > 0:
@@ -118,7 +113,7 @@ def profile(request):
         template = loader.get_template('fire_intel/profile.html')
         return HttpResponse(template.render(context, request))
 
-
+@ie_test_redirect
 def season_end(request):
     template = loader.get_template('fire_intel/season_end.html')
     return HttpResponse(template.render(None, request))
@@ -129,6 +124,7 @@ def season_end(request):
 #     return JsonResponse({'data':all_reports}, safe=False)
 
 
+@ie_test_redirect
 def region_view(request, region):
 
     # grab the latest intel records
@@ -140,27 +136,27 @@ def region_view(request, region):
     region_short_label = None
     region_long_label = None
 
-    if region == "ne":
+    if region == "ne-region":
         region_data = get_latest_or_none(NortheastRegionIntelReport)
         region_short_label = 'NE'
         region_long_label = 'Northeast'
-    if region == "se":
+    if region == "se-region":
         region_data = get_latest_or_none(SoutheastRegionIntelReport)
         region_short_label = 'SE'
         region_long_label = 'Southeast'
-    if region == "nw":
+    if region == "nw-region":
         region_data = get_latest_or_none(NorthwestRegionIntelReport)
         region_short_label = 'NW'
         region_long_label = 'Northwest'
-    if region == "sps":
+    if region == "sps-region":
         region_data = get_latest_or_none(SouthPugetSoundRegionIntelReport)
         region_short_label = 'SPS'
         region_long_label = 'South Puget Sound'
-    if region == "pc":
+    if region == "pc-region":
         region_data = get_latest_or_none(PacificCascadeRegionIntelReport)
         region_short_label = 'PC'
         region_long_label = 'Pacific Cascade'
-    if region == "oly":
+    if region == "oly-region":
         region_data = get_latest_or_none(OlympicRegionIntelReport)
         region_short_label = 'OLY'
         region_long_label = 'Olympic'
@@ -204,9 +200,10 @@ def region_view(request, region):
     return HttpResponse(template.render(context, request))
 
 
+
 def unsupported_ie(request):
     template = loader.get_template('fire_intel/ie_bad.html')
-    return HttpResponse(template.render(context, request))
+    return HttpResponse(template.render(None, request))
 
 
 def egp_data(request, layer_type, layer_id):

@@ -49,7 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # 'fire_intel.middleware.InternetExplorerCheckMiddleware',
+    'fire_intel.middleware.InternetExplorerCheckMiddleware',
 ]
 
 ROOT_URLCONF = 'project_space_crab.urls'

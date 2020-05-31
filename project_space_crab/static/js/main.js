@@ -127,6 +127,9 @@ $(function() {
     NWS_warnings.bindPopup(function(evt) {
         var t = moment.utc(evt.feature.properties['expiration']).local().fromNow();
         var s = moment.utc(evt.feature.properties['issuance']).local().fromNow();
+        // This is a ghetto fix until the NWS decides to do things the right way
+        alert_id = 'https://alerts-v2.weather.gov/#/?id=' + evt.feature.properties['url'].split('products/')[1]
+       
         return L.Util.template(
         "<div class='container rounded-0' style='max-width:375px;margin-top:5px;'>" +
         "<div class='row'>" +
@@ -152,7 +155,7 @@ $(function() {
         "</div>" + // row
         "<div class='row'>" +
         "<div class='col-xs-12'>" +
-        "<a target='_blank' href='{url}' rel='noreferrer'>More info</a> " +
+        "<a target='_blank' href='" + alert_id + "' rel='noreferrer'>More info</a> " +
         "</a>" +
         "</div>" + // col
         "</div>" + // row
@@ -455,7 +458,7 @@ $(function() {
             "<div class='container rounded-0' style='max-width:375px;margin-top:5px;'>" +
             "<div class='row'>" +
             "<div class='col-xs-12' style='padding:0;'>" +
-            "<span>Emerging fire at " + lat + ', ' + lng + "</span>" +
+            "<span>Emerging fire (< 24 hrs old) at " + lat + ', ' + lng + "</span>" +
             "</div>" + // col
             "</div>" + // row
             "<div class='row'>" +
@@ -516,7 +519,7 @@ $(function() {
             "<div class='container rounded-0' style='max-width:375px;margin-top:5px;'>" +
             "<div class='row'>" +
             "<div class='col-xs-12' style='padding:0;'>" +
-            "<span>Emerging fire at " + lat + ', ' + lng + "</span>" +
+            "<span>Emerging fire (24 - 48 hrs old) at " + lat + ', ' + lng + "</span>" +
             "</div>" + // col
             "</div>" + // row
             "<div class='row'>" +

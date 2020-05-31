@@ -140,27 +140,27 @@ def region_view(request, region):
     region_short_label = None
     region_long_label = None
 
-    if region == "ne-region":
+    if region == "ne":
         region_data = get_latest_or_none(NortheastRegionIntelReport)
         region_short_label = 'NE'
         region_long_label = 'Northeast'
-    if region == "se-region":
+    if region == "se":
         region_data = get_latest_or_none(SoutheastRegionIntelReport)
         region_short_label = 'SE'
         region_long_label = 'Southeast'
-    if region == "nw-region":
+    if region == "nw":
         region_data = get_latest_or_none(NorthwestRegionIntelReport)
         region_short_label = 'NW'
         region_long_label = 'Northwest'
-    if region == "sps-region":
+    if region == "sps":
         region_data = get_latest_or_none(SouthPugetSoundRegionIntelReport)
         region_short_label = 'SPS'
         region_long_label = 'South Puget Sound'
-    if region == "pc-region":
+    if region == "pc":
         region_data = get_latest_or_none(PacificCascadeRegionIntelReport)
         region_short_label = 'PC'
         region_long_label = 'Pacific Cascade'
-    if region == "oly-region":
+    if region == "oly":
         region_data = get_latest_or_none(OlympicRegionIntelReport)
         region_short_label = 'OLY'
         region_long_label = 'Olympic'

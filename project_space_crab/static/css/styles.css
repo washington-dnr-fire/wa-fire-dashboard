@@ -161,6 +161,23 @@ button, .leaflet-bar-part{
 
 }
 
+.close-button{
+    /* float: right; */
+    text-align: right;
+    padding-bottom: 5px;
+}
+
+.leaflet-layerstree-header-name {
+    padding-left: 3px !important;
+}
+
+.leaflet-layerstree-node {
+    padding-top: 5px;
+    padding-left: 0px;
+}
+.leaflet-layerstree-header-label{
+    margin-bottom: 0px;
+}
 /*--- Home Panel -----------------------------------------------------------------------------------------------------*/
 .card-num{
     font-size:5em;

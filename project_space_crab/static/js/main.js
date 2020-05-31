@@ -706,7 +706,7 @@ $(function() {
         style: function (feature) {
             return {
                 stroke: false,
-                fillOpacity: '0.4',
+                fillOpacity: '0.22',
             };
         },
         pane: 'overlays'
@@ -765,7 +765,6 @@ $(function() {
     // Create sidebar instance and add it to the map
     var sidebar = L.control.sidebar({ container: 'sidebar', autopan: true, closeButton: true })
         .addTo(map);
-        // .open('home');
 
     // Add a basemap to map
     baseLayers.Terrain.addTo(map);
@@ -778,38 +777,115 @@ $(function() {
 
 
     // Create groupings of overlays for layer pick list
-    var groupedOverlays = {
-      "Boundaries": {
-        "Counties": counties,
-        "DNR Regions": regions
-      },
-      "Fires": {
-        "NWCC Large Fires": daily_fires,
-        "SIT-209 Fires": sit209_fires,
-        "WildCAD Fires": wildcad_fires,
-        "Satellite Hotspots": satellite_detects,
-      },
-      "Fire Risk":{
-          "DNR Fire Danger": firedanger,
-          "IFPLs": ifpl
-      },
-      "Weather": {
-        "NWS Current Warnings": NWS_warnings,
-        "24-Hour Lightning Strikes": lightning,
-        "NWS 7-Day Rain Forecast": NWS_QPE,
-      }
+    var baseTree = {
+        label: 'Basemaps',
+        children: [
+            {
+                label: 'Terrain', layer: baseLayers.Terrain
+            },
+            {
+                label: 'Topographic', layer: baseLayers.Topographic 
+            },
+            {
+                label: 'Imagery', layer: baseLayers.Imagery
+   
+            },
+        ]
+    };
+    var overlaysTree = {
+        label: 'Overlays',
+        noShow: true,
+        children: [ 
+            {
+                label: 'Boundaries',
+                children:  [
+                    {
+                        label: 'Counties', layer: counties
+                    },
+                    {
+                        label: 'DNR Regions', layer: regions
+                    },
+                ],
+                collapsed: true
+            },
+            {
+                label: 'Fires',
+                children:  [
+                {
+                    label: 'NWCC Large Fires', layer: daily_fires
+                },
+                {
+                    label: 'SIT-209 Fires', layer: sit209_fires
+                },
+                {
+                    label: 'WildCAD Fires', layer: wildcad_fires
+                },
+                {
+                    label: 'Satellite Hotspots', layer: satellite_detects
+                },
+                ],
+                collapsed: true
+            },
+            {
+                label: 'Fire Risk',
+                children:  [
+                    {
+                        label: 'DNR Fire Danger', layer: firedanger
+                    },
+                    {
+                        label: 'IFPLs', layer: ifpl
+                    },
+                ],
+                collapsed: true
+            },
+            {
+                label: 'Weather',
+                children:  [
+                    {
+                        label: 'NWS Current Warnings', layer: NWS_warnings
+                    },
+                    {
+                        label: '24-Hour Lightning Strikes', layer: lightning
+                    },
+                    {
+                        label: 'NWS 7-Day Rain Forecast', layer: NWS_QPE
+                    },
+                ],
+                collapsed: true
+            },
+
+            
+        ]
     };
 
+
     // Add layer group control to map
-    var layerControl = L.control.groupedLayers(baseLayers, groupedOverlays).addTo(map);
+    var layerControl = L.control.layers.tree(baseTree, overlaysTree).addTo(map);
+
     L.DomEvent.disableClickPropagation(layerControl._container);
     L.DomEvent.disableScrollPropagation(layerControl._container);
 
     // Add some pretty to layer control
-    $( ".leaflet-control-layers-base" ).prepend( "<label class=\"leaflet-control-layers-group-label\"><span class=\"leaflet-control-layers-group-name\">Basemaps</span></label>" );
-    $( "#leaflet-control-layers-group-1" ).after( "<div class='leaflet-control-layers-separator'></div>" );
-    $( "#leaflet-control-layers-group-2" ).after( "<div class='leaflet-control-layers-separator'></div>" );
-    $( "#leaflet-control-layers-group-3" ).after( "<div class='leaflet-control-layers-separator'></div>" );
+    $( ".leaflet-control-layers-base" ).before( "<div class='close-button text-secondary'>Close Layer Control <i class='fas fa-times'></i></div>" );
+    $( ".close-button" ).mouseover(function() {
+        $(this).addClass('text-danger');
+        $(this).css('cursor', 'pointer');
+
+
+    });
+    $( ".close-button" ).mouseout(function() {
+        $(this).removeClass('text-danger');
+        $(this).addClass('text-secondary');
+        $(this).css('cursor', 'none');
+
+
+    });
+
+    $( ".close-button" ).click(function() {
+        $(".leaflet-control-layers").removeClass("leaflet-control-layers-expanded")
+
+    });
+
 
     // Set zoom control to bottom right
     map.zoomControl.setPosition('bottomright');
@@ -836,83 +912,5 @@ $(function() {
                maxZoom: 13
         }
     }).addTo(map);
-
-    // // Create empty layergroup for weather forecast points
-    // var weatherGroup = L.layerGroup();
-    //
-    // // States are in bad shape
-    // var weatherbutton = L.easyButton({
-    //     states: [{
-    //         stateName: 'get-forecast',
-    //         icon: 'fa-bolt fa-rotate-15',
-    //         title: 'Get forecast',
-    //         onClick: function(control) {
-    //             // Change to clicked state in case they dont want to do anything
-    //             control.state('purgatory-state');
-    //             map.on('click', function (e) {
-    //                 control.state('loading');
-    //                 var popLocation = e.latlng;
-    //                 var popup = L.popup()
-    //                     .setLatLng(popLocation)
-    //                     .setContent(
-    //                         "<div class='container rounded-0' style='max-width:375px;margin-top:5px;'>" +
-    //                         "<div class='row'>" +
-    //                         "<div class='col-xs-12' style='padding:0;'>" +
-    //                         "<p>Loading...</p>" +
-    //                         "</div>" + // col
-    //                         "</div>" + // row
-    //                         "</div>"
-    //                     ).openOn(map);
-    //                 var lat = e.latlng.lat.toString();
-    //                 var lon = e.latlng.lng.toString();
-    //                 $.getJSON('https://api.weather.gov/points/' + lat + ',' + lon, function (data) {
-    //                     $.getJSON(data.properties.forecastGridData, function (data) {
-    //                         console.log(data);
-    //                         var t = moment.utc(data.properties.updateTime).local().fromNow();
-    //                         var popLocation = e.latlng;
-    //                         var popup = L.popup()
-    //                             .setLatLng(popLocation)
-    //                             .setContent(
-    //                                 "<div class='container rounded-0' style='max-width:375px;margin-top:5px;'>" +
-    //                                 "<div class='row'>" +
-    //                                 "<div class='col-xs-12' style='padding:0;'>" +
-    //                                 "<span style='text-align: center;'>NWS forecast for " + e.latlng.lat.toFixed(3).toString() + ", " + e.latlng.lng.toFixed(3).toString() + "</span>" +
-    //                                 "</div>" + // col
-    //                                 "</div>" + // row
-    //                                 "<div class='row'>" +
-    //                                 "<div class='col-xs-12' style='padding:0;'>" +
-    //                                 "<span class='text-left text-muted'>Last updated " + t  + "</span>" +
-    //                                 "</div>" + // col
-    //                                 "</div>" + // row
-    //                                 "<div class='row'>" +
-    //                                 "<div class='col-xs-12' style='padding:0;'>" +
-    //                                 "<span class='text-left text-muted'>Forecast elevation: " + (data.properties.elevation.value * 3.28084).toFixed(0) + " ft</span>" +
-    //                                 "</div>" + // col
-    //                                 "</div>" + // row
-    //                                 "</div>" // container
-    //                                 ).openOn(map);
-    //                         control.state('remove-forecast');
-    //                     });
-    //                 });
-    //             });
-    //         }
-    //         }, {
-    //         icon: 'fa-bolt fa-rotate-15',
-    //         stateName: 'remove-forecast',
-    //         title: 'Remove forecast',
-    //         onClick: function(control) {
-    //             map.removeLayer(markerGroup);
-    //             control.state('get-forecast');
-    //         }
-    //         }, {
-    //         icon: 'fa-spinner fa-spin',
-    //         stateName: 'loading',
-    //     },{
-    //         icon: 'fa-bolt fa-rotate-15 clicked-color',
-    //         stateName: 'purgatory-state',
-    //         title: 'Get forecast',
-    // }],
-    //     position: 'bottomright'
-    // }).addTo(map);
 
 });

@@ -754,7 +754,7 @@ $(function() {
         center: [home.lat, home.lng],
         zoom: home.zoom,
         minZoom: 6,
-        layers: [regions, NWS_warnings, daily_fires, sit209_fires, wildcad_fires],
+        layers: [counties, NWS_warnings, daily_fires, sit209_fires, wildcad_fires],
         attributionControl: false,
         cursor: false
     });
@@ -870,8 +870,6 @@ $(function() {
     $( ".close-button" ).mouseover(function() {
         $(this).addClass('text-danger');
         $(this).css('cursor', 'pointer');
-
-
     });
     $( ".close-button" ).mouseout(function() {
         $(this).removeClass('text-danger');

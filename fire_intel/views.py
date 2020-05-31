@@ -2,6 +2,9 @@ from django.http import HttpResponse
 from django.template import loader
 from datetime import timezone
 from django.http import JsonResponse
+from django.shortcuts import redirect
+from .decorators import ie_test_redirect
+from project_space_crab.settings import IE_BROWSER_REDIRECT_URL
 import requests
 
 # import all models because we USE THEM ALL!
@@ -18,6 +21,13 @@ def get_latest_or_none(classmodel):
     except classmodel.DoesNotExist:
         return None
 
+def user_on_ie_test(request_obj):
+    user_agent = request_obj.META.get('HTTP_USER_AGENT','').lower()
+    if 'trident' in user_agent or 'msie' in user_agent:
+        return True
+    else:
+        return False
+    
 
 # Create your views here.
 def index(request):
@@ -108,6 +118,7 @@ def profile(request):
         template = loader.get_template('fire_intel/profile.html')
         return HttpResponse(template.render(context, request))
 
+
 def season_end(request):
     template = loader.get_template('fire_intel/season_end.html')
     return HttpResponse(template.render(None, request))
@@ -116,6 +127,7 @@ def season_end(request):
 #     all_reports = list(IntelReport.objects.values('id', 'date_of_report', 'westside_dnr_responses_count', 'westside_dnr_fire_count', 'westside_dnr_fire_acres',
 #                                                   'westside_all_fire_acres',  'eastside_dnr_responses_count', 'eastside_dnr_fire_count', 'eastside_dnr_fire_acres', 'eastside_all_fire_acres'))
 #     return JsonResponse({'data':all_reports}, safe=False)
+
 
 def region_view(request, region):
 
@@ -189,6 +201,11 @@ def region_view(request, region):
         }
 
     template = loader.get_template('fire_intel/region_view.html')
+    return HttpResponse(template.render(context, request))
+
+
+def unsupported_ie(request):
+    template = loader.get_template('fire_intel/ie_bad.html')
     return HttpResponse(template.render(context, request))
 
 

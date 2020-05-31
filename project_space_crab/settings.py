@@ -49,6 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'fire_intel.middleware.InternetExplorerCheckMiddleware',
 ]
 
 ROOT_URLCONF = 'project_space_crab.urls'
@@ -133,6 +134,8 @@ MEDIA_URL = '/media/'
 
 LOGIN_REDIRECT_URL = '/profile'
 LOGOUT_REDIRECT_URL = '/'
+
+IE_BROWSER_REDIRECT_URL = "/unsupported-browser"
 
 try:
     from .local_settings import *

@@ -729,7 +729,7 @@ $(function() {
         "</div>" + // row
         "<div class='row'>" +
         "<div class='col-xs-12'>" +
-        "<span class='text-muted'>Valid until " + t + "</span>" +
+        "<span class='text-muted'>Valid through " + t + "</span>" +
         "</div>" + // col
         "</div>" + // row
         "</div>", evt.feature.properties

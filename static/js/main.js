@@ -729,7 +729,7 @@ $(function() {
         "</div>" + // row
         "<div class='row'>" +
         "<div class='col-xs-12'>" +
-        "<span class='text-muted'>Valid until " + t + "</span>" +
+        "<span class='text-muted'>Valid through " + t + "</span>" +
         "</div>" + // col
         "</div>" + // row
         "</div>", evt.feature.properties
@@ -754,7 +754,7 @@ $(function() {
         center: [home.lat, home.lng],
         zoom: home.zoom,
         minZoom: 6,
-        layers: [regions, NWS_warnings, daily_fires, sit209_fires, wildcad_fires],
+        layers: [counties, NWS_warnings, daily_fires, sit209_fires, wildcad_fires],
         attributionControl: false,
         cursor: false
     });
@@ -870,8 +870,6 @@ $(function() {
     $( ".close-button" ).mouseover(function() {
         $(this).addClass('text-danger');
         $(this).css('cursor', 'pointer');
-
-
     });
     $( ".close-button" ).mouseout(function() {
         $(this).removeClass('text-danger');

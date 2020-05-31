@@ -12,5 +12,5 @@ urlpatterns = [
     path('current_fire_stats', views.current_fire_stats, name="current_fire_stats"),
     path('season_end', views.season_end, name='season_end'),
     path('unsupported-browser', views.unsupported_ie, name='unsupported-browser'),
-    path('<str:region>', views.region_view, name='region_view'),
+    path('region/<str:region>', views.region_view, name='region_view'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '5mv0ehbfc(5_-!4tgga_!s-u(_h=6c&-5=3$okw(ps(reislbj'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1']
 
@@ -136,6 +136,8 @@ LOGIN_REDIRECT_URL = '/profile'
 LOGOUT_REDIRECT_URL = '/'
 
 IE_BROWSER_REDIRECT_URL = "/unsupported-browser"
+
+REGION_ALLOWED_URL_SET = {'nw','se','ne','nw','sps','pc'}
 
 try:
     from .local_settings import *

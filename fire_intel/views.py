@@ -1,10 +1,10 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotFound
 from django.template import loader
 from datetime import timezone
-from django.http import JsonResponse
+from django.http import JsonResponse, Http404
 from django.shortcuts import redirect
 from .decorators import ie_test_redirect
-from project_space_crab.settings import IE_BROWSER_REDIRECT_URL
+from project_space_crab.settings import IE_BROWSER_REDIRECT_URL, REGION_ALLOWED_URL_SET
 import requests
 
 # import all models because we USE THEM ALL!
@@ -127,6 +127,9 @@ def current_fire_stats(request):
 
 @ie_test_redirect
 def region_view(request, region):
+
+    if region not in REGION_ALLOWED_URL_SET:
+        return Http404()
 
     # grab the latest intel records
     overview_intel = get_latest_or_none(OverviewIntelReport)

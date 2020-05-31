@@ -118,10 +118,11 @@ def season_end(request):
     template = loader.get_template('fire_intel/season_end.html')
     return HttpResponse(template.render(None, request))
 
-# def current_fire_stats(request):
-#     all_reports = list(IntelReport.objects.values('id', 'date_of_report', 'westside_dnr_responses_count', 'westside_dnr_fire_count', 'westside_dnr_fire_acres',
-#                                                   'westside_all_fire_acres',  'eastside_dnr_responses_count', 'eastside_dnr_fire_count', 'eastside_dnr_fire_acres', 'eastside_all_fire_acres'))
-#     return JsonResponse({'data':all_reports}, safe=False)
+
+def current_fire_stats(request):
+    all_overview_intel_reports = list(OverviewIntelReport.objects.values('id', 'date_of_report', 'westside_dnr_responses_count', 'westside_dnr_fire_count', 'westside_dnr_fire_acres',
+                                                  'westside_all_fire_acres',  'eastside_dnr_responses_count', 'eastside_dnr_fire_count', 'eastside_dnr_fire_acres', 'eastside_all_fire_acres'))
+    return JsonResponse({'data':all_reports}, safe=False)
 
 
 @ie_test_redirect

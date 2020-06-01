@@ -26,6 +26,9 @@ class OverviewIntelReportAdmin(admin.ModelAdmin):
         ("Eastside Fire Statistics", {
             'fields': ['eastside_dnr_responses_count', 'eastside_dnr_fire_count', 'eastside_dnr_fire_acres',
                        'eastside_all_fire_acres']}),
+
+        ("Report PDF File Uploads", {
+            'fields': ['intel_report_doc', 'fire_weather_doc', 'fuels_danger_report_doc']}),
     ]
 
 

@@ -249,6 +249,13 @@
                             <td class="text-center">{{ pc_data.available_engines }}</td>
                             <td class="text-center">{{ pc_data.available_crews }}</td>
                         </tr>
+                        <tr>
+                            <th scope="row">Totals</th>
+                            <td class="text-center">{{available_in_region_engines_sum|intcomma}}</td>
+                            <td class="text-center">{{available_in_region_crews_sum|intcomma}}</td>
+                            <td class="text-center">{{available_out_of_region_engines_sum|intcomma}}</td>
+                            <td class="text-center">{{available_out_of_region_crews_sum|intcomma}}</td>
+                        </tr>
                     </tbody>
                 </table>
                 <a href='https://www.dnr.wa.gov/FightingFire'>Learn more about DNR's engines and crews <i class="fas fa-external-link-alt"></i></a>

@@ -42,7 +42,7 @@
 /*--- Globals --------------------------------------------------------------------------------------------------------*/
 html, body, #mapdiv{
     height:100%;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Lato', sans-serif;
 }
 
 #mapdiv{
@@ -74,7 +74,7 @@ button, .leaflet-bar-part{
 }
 
 .date-update{
-    font-size: 1.2em;
+    font-size: 1.35em;
     font-weight: bold;
     margin-bottom: 0;
 }
@@ -188,7 +188,7 @@ button, .leaflet-bar-part{
     font-size:5em;
     color: #000000;
     font-weight: bold;
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Lato', sans-serif;
 
 }
 
@@ -202,6 +202,8 @@ button, .leaflet-bar-part{
     caption-side: top;
     padding-bottom: 2px;
     font-size: 1.35em;
+    font-weight: bold;
+
 }
 
 .table-caption-no-top-pad{

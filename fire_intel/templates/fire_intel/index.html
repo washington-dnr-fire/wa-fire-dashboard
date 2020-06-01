@@ -46,80 +46,121 @@
             </h1>
             <!-- date row -->
             <div class="row">
-                <div class="col-12">
-                    <p class="mt-2 date-update mb-2">Situation as of {{ updated_date_txt }}</p>
+                <div class="col-12 text-center">
+                    <p class="mt-2 date-update-2 mb-2">Situation as of <span class='context-red-text'>{{ updated_date_txt }}</span></p>
                 </div>
             </div>
 
+             <!-- 3rd row row -->
+             <p class="mt-0 date-update mb-2">Fires in Washington</p>
+             <div class="row my-2 px-3">
+                 <div class="col-4 px-0 mt-0">
+                     <div class="card rounded-0 h-100 dnr-blue-bg" id="walargefires">
+                         <div class="card-body text-center">
+                             <h5 class="card-num text-white" id="wafires_id">{{ wa_large_fires_sum }}</h5>
+                             <small class="small-title text-white">Current Large Fires</small>
+                         </div>
+                     </div>
+                 </div>
+             
+                 <div class="col-4 px-0 mt-0">
+                     <div class="card rounded-0 h-100 dnr-blue-bg" id="dnrfires">
+                         <div class="card-body text-center">
+                             <h5 class="card-num text-white" id="dnrfires_id">{{ dnr_ia_fires_sum }}</h5>
+                             <small class="small-title text-white">Last 24hrs DNR Fires </small>
+                         </div>
+                     </div>
+                 </div>
+                 <div class="col-4 px-0 mt-0">
+                     <div class="card rounded-0 h-100 dnr-blue-bg" id="dnrfires48">
+                         <div class="card-body text-center">
+                             <h5 class="card-num text-white" id="dnrfires48_id">{{ dnr_ia_fires_sum }}</h5>
+                             <small class="small-title text-white">Last 48hrs DNR Fires</small>
+                         </div>
+                     </div>
+                 </div>
+             </div> <!-- /end 3rd row -->
+
+             <hr>
+
             <!-- 1st row -->
-            <div class="row">
-                <div class="col-6 pr-2 mt-2">
-                    <div class="card rounded-0 h-100 dnr-blue-bg border-0" id="nationalprep">
+            <p class="mt-0 date-update mb-2">Preparedness Levels</p>
+            <div class="row px-3">
+                <div class="col-4 px-0">
+                    <div class="card rounded-0 h-100 dnr-blue-bg" id="nationalprep">
                         <div class="card-body text-center">
                             <h5 class="card-num text-white" id="nat_id" >{{ overview_intel_data.preparedness_level_national }}</h5>
-                            <small class="small-title text-white">National Preparedness Level</small>
+                            <small class="small-title text-white">National</small>
                         </div>
                     </div>
                 </div>
                 
-                <div class="col-6 pl-2 mt-2">
-                    <div class="card rounded-0 h-100 dnr-blue-bg border-0" id="northwestprep">
+                <div class="col-4 px-0">
+                    <div class="card rounded-0 h-100 dnr-blue-bg" id="northwestprep">
                         <div class="card-body text-center">
                             <h5 class="card-num text-white" id="nw_id">{{ overview_intel_data.preparedness_level_nw }}</h5>
-                            <small class="small-title text-white">Northwest Preparedness Level</small>
+                            <small class="small-title text-white">Northwest</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-4 px-0">
+                    <div class="card rounded-0 h-100 dnr-blue-bg" id="northwestprep">
+                        <div class="card-body text-center">
+                            <h5 class="card-num text-white" id="nw_id">{{ overview_intel_data.preparedness_level_dnr }}</h5>
+                            <small class="small-title text-white">DNR</small>
                         </div>
                     </div>
                 </div>
             </div> <!-- /end 1st row -->
-            
+            <hr>
             <!-- 2nd row -->
-            <div class="row my-2">
-                <div class="col-6 pr-2">
-                    <div class="card rounded-0 h-100 dnr-blue-bg border-0" id="type1teams">
+            <p class="mt-2 date-update mb-2">NW Teams Deployed</p>
+            <div class="row my-2 px-3">
+                <div class="col-4 px-0">
+                    <div class="card rounded-0 h-100 dnr-blue-bg" id="type1teams">
                         <div class="card-body text-center">
                             <h5 class="card-num text-white" id="type1_id">{{ overview_intel_data.type_1_teams_assigned }}</h5>
-                            <small class="small-title text-white">Northwest Type 1 Teams Deployed</small>
+                            <small class="small-title text-white">Type 1</small>
                         </div>
                     </div>
                 </div>
                 
-                <div class="col-6 pl-2">
-                    <div class="card rounded-0 h-100 dnr-blue-bg border-0" id="type2teams">
+                <div class="col-4 px-0">
+                    <div class="card rounded-0 h-100 dnr-blue-bg" id="type2teams">
                         <div class="card-body text-center ">
                             <h5 class="card-num text-white" id="type2_id">{{ overview_intel_data.type_2_teams_assigned }}</h5>
-                            <small class="small-title text-white">Northwest Type 2 Teams Deployed</small>
+                            <small class="small-title text-white"> Type 2</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4 px-0">
+                    <div class="card rounded-0 h-100 dnr-blue-bg" id="type3teams">
+                        <div class="card-body text-center ">
+                            <h5 class="card-num text-white" id="type3_id">{{ overview_intel_data.type_3_teams_assigned }}</h5>
+                            <small class="small-title text-white"> Type 3</small>
                         </div>
                     </div>
                 </div>
             </div> <!-- /end 2nd row -->
-            
-            <!-- 3rd row row -->
-            <div class="row my-2">
-                <div class="col-6 pr-2">
-                    <div class="card rounded-0 h-100 dnr-blue-bg border-0" id="walargefires">
-                        <div class="card-body text-center">
-                            <h5 class="card-num text-white" id="wafires_id">{{ wa_large_fires_sum }}</h5>
-                            <small class="small-title text-white">Current WA Large Fires</small>
-                        </div>
-                    </div>
-                </div>
-            
-                <div class="col-6 pl-2">
-                    <div class="card rounded-0 h-100 dnr-blue-bg border-0" id="dnrfires">
-                        <div class="card-body text-center">
-                            <h5 class="card-num text-white" id="dnrfires_id">{{ dnr_ia_fires_sum }}</h5>
-                            <small class="small-title text-white">New DNR IA Fires</small>
-                        </div>
-                    </div>
-                </div>
-            </div> <!-- /end 3rd row -->
             <hr>
+        
+        
             <div class="row my-2">
                 <div class="col-12">
-                    <p class="mt-0 date-update mb-2">Daily Situation Unit Products</p>
+                    <p class="mt-0 date-update mb-2">Latest DNR Situation Unit Products</p>
                     <a href="{{ overview_intel_data.intel_report_doc.url }}" class="btn btn-sm border-0 btn-block text-white text-left bg-danger nwcc-link-blue" target="_blank" rel='noreferrer'><i class="fas fa-file-alt text-white" ></i> Intelligence Report<i class="fas fa-chevron-right text-white chevron-fix" ></i></a>
                     <a href="{{ overview_intel_data.fire_weather_doc.url }}" class="btn btn-sm border-0 btn-block text-white text-left bg-primary nwcc-link-blue" target="_blank" rel='noreferrer'><i class="fas fa-cloud-sun text-white" ></i> Fire Weather Briefing<i class="fas fa-chevron-right text-white chevron-fix" ></i></a>
                     <a href="{{ overview_intel_data.fuels_danger_report_doc.url }}" class="btn btn-sm border-0 btn-block text-white text-left bg-success nwcc-link-blue" target="_blank" rel='noreferrer'><i class="fas fa-tree text-white" ></i> Fuels/Fire Danger Report<i class="fas fa-chevron-right text-white chevron-fix" ></i></a>
+                </div>
+            </div>
+
+            <hr>
+            <div class="row my-2">
+                <div class="col-12">
+                    <p class="mt-0 date-update mb-2">Northwest Coordination Center Products</p>
+                    <a href="https://gacc.nifc.gov/nwcc/content/products/intelligence/MORNINGBRIEF.pdf" class="btn btn-sm border-0 btn-block text-white text-left bg-secondary nwcc-link-blue" target="_blank" rel='noreferrer'><i class="fas fa-file-alt text-white" ></i> Morning Intelligence Report<i class="fas fa-chevron-right text-white chevron-fix" ></i></a>
+                    <a href="https://gacc.nifc.gov/nwcc/content/products/intelligence/teams.pdf" class="btn btn-sm border-0 btn-block text-white text-left bg-secondary nwcc-link-blue" target="_blank" rel='noreferrer'><i class="fas fa-users text-white" ></i> Northwest Teams Status<i class="fas fa-chevron-right text-white chevron-fix" ></i></a>
                 </div>
             </div>
         </div> <!-- /end panel -->
@@ -131,8 +172,8 @@
             </h1>
             <!-- date row -->
             <div class="row">
-                <div class="col-12">
-                    <p class="mt-2 date-update mb-2">Last updated on {{ updated_date_txt }}</p>
+                <div class="col-12 text-center">
+                    <p class="mt-2 date-update-2 mb-2">Last updated on <span class='context-red-text'>{{ updated_date_txt }}</span></p>
                 </div>
             </div>
 
@@ -210,8 +251,8 @@
             </h1>
             <!-- date row -->
             <div class="row">
-                <div class="col-12">
-                    <p class="mt-2 date-update mb-2">Last updated on {{ updated_date_txt }}</p>
+                <div class="col-12 text-center">
+                    <p class="mt-2 date-update-2 mb-2">Last updated on <span class='context-red-text'>{{ updated_date_txt }}</span></p>
                 </div>
             </div>
 

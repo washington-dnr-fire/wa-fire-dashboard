@@ -1,5 +1,5 @@
 /*--- Fonts ----------------------------------------------------------------------------------------------------------*/
-@import url('https://fonts.googleapis.com/css?family=Roboto|Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Roboto|Open+Sans|Lato&display=swap');
 
 /*--- Color Classes --------------------------------------------------------------------------------------------------*/
 .dnr-blue-bg{
@@ -22,7 +22,9 @@
     background: #CA304B;
 }
 
-
+.context-red-text{
+    color:#CA304B;
+}
 .context-yellow{
     /*background: #D79933;*/
     background: #F1B34D;
@@ -75,6 +77,12 @@ button, .leaflet-bar-part{
 
 .date-update{
     font-size: 1.35em;
+    font-weight: bold;
+    margin-bottom: 0;
+}
+.date-update-2{
+    font-size: 1.1em;
+    color: #6c757d;
     font-weight: bold;
     margin-bottom: 0;
 }
@@ -188,8 +196,12 @@ button, .leaflet-bar-part{
     font-size:5em;
     color: #000000;
     font-weight: bold;
-    font-family: 'Lato', sans-serif;
+    font-family: 'Lato', sans-serif, !important;
 
+}
+
+.card-body{
+    padding: 0.75rem;
 }
 
 .small-title{

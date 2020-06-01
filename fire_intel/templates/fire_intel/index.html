@@ -117,9 +117,9 @@
             <div class="row my-2">
                 <div class="col-12">
                     <p class="mt-0 date-update mb-2">Daily Situation Unit Products</p>
-                    <a href="https://gacc.nifc.gov/nwcc/content/products/intelligence/MORNINGBRIEF.pdf" class="btn btn-sm border-0 btn-block text-white text-left bg-danger nwcc-link-blue" target="_blank" rel='noreferrer'><i class="fas fa-file-alt text-white" ></i> Intelligence Report<i class="fas fa-chevron-right text-white chevron-fix" ></i></a>
-                    <a href="https://gacc.nifc.gov/nwcc/content/products/intelligence/MORNINGBRIEF.pdf" class="btn btn-sm border-0 btn-block text-white text-left bg-primary nwcc-link-blue" target="_blank" rel='noreferrer'><i class="fas fa-cloud-sun text-white" ></i> Fire Weather Briefing<i class="fas fa-chevron-right text-white chevron-fix" ></i></a>
-                    <a href="https://gacc.nifc.gov/nwcc/content/products/intelligence/MORNINGBRIEF.pdf" class="btn btn-sm border-0 btn-block text-white text-left bg-success nwcc-link-blue" target="_blank" rel='noreferrer'><i class="fas fa-tree text-white" ></i> Fuels/Fire Danger Report<i class="fas fa-chevron-right text-white chevron-fix" ></i></a>
+                    <a href="{{ overview_intel_data.intel_report_doc.url }}" class="btn btn-sm border-0 btn-block text-white text-left bg-danger nwcc-link-blue" target="_blank" rel='noreferrer'><i class="fas fa-file-alt text-white" ></i> Intelligence Report<i class="fas fa-chevron-right text-white chevron-fix" ></i></a>
+                    <a href="{{ overview_intel_data.fire_weather_doc.url }}" class="btn btn-sm border-0 btn-block text-white text-left bg-primary nwcc-link-blue" target="_blank" rel='noreferrer'><i class="fas fa-cloud-sun text-white" ></i> Fire Weather Briefing<i class="fas fa-chevron-right text-white chevron-fix" ></i></a>
+                    <a href="{{ overview_intel_data.fuels_danger_report_doc.url }}" class="btn btn-sm border-0 btn-block text-white text-left bg-success nwcc-link-blue" target="_blank" rel='noreferrer'><i class="fas fa-tree text-white" ></i> Fuels/Fire Danger Report<i class="fas fa-chevron-right text-white chevron-fix" ></i></a>
                 </div>
             </div>
         </div> <!-- /end panel -->
@@ -248,6 +248,13 @@
                             <td class="text-center">{{ pc_data.committed_crews }}</td>
                             <td class="text-center">{{ pc_data.available_engines }}</td>
                             <td class="text-center">{{ pc_data.available_crews }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Totals</th>
+                            <td class="text-center">{{available_in_region_engines_sum|intcomma}}</td>
+                            <td class="text-center">{{available_in_region_crews_sum|intcomma}}</td>
+                            <td class="text-center">{{available_out_of_region_engines_sum|intcomma}}</td>
+                            <td class="text-center">{{available_out_of_region_crews_sum|intcomma}}</td>
                         </tr>
                     </tbody>
                 </table>

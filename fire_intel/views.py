@@ -1,10 +1,10 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotFound
 from django.template import loader
 from datetime import timezone
-from django.http import JsonResponse
+from django.http import JsonResponse, Http404
 from django.shortcuts import redirect
 from .decorators import ie_test_redirect
-from project_space_crab.settings import IE_BROWSER_REDIRECT_URL
+from project_space_crab.settings import IE_BROWSER_REDIRECT_URL, REGION_ALLOWED_URL_SET
 import requests
 
 # import all models because we USE THEM ALL!
@@ -58,6 +58,11 @@ def index(request):
             'dnr_fire_count_sum': (overview_intel.westside_dnr_fire_count + overview_intel.eastside_dnr_fire_count),
             'dnr_fire_acres_sum': round(overview_intel.westside_dnr_fire_acres + overview_intel.eastside_dnr_fire_acres, 2),
             'all_fire_acres_sum': round(overview_intel.westside_all_fire_acres + overview_intel.eastside_all_fire_acres, 2),
+            'available_in_region_engines_sum': (ne.committed_engines+ se.committed_engines  + nw.committed_engines  + sps.committed_engines + pc.committed_engines  + oly.committed_engines),
+            'available_out_of_region_engines_sum': (ne.available_engines + se.available_engines  + nw.available_engines  + sps.available_engines + pc.available_engines  + oly.available_engines),
+            'available_in_region_crews_sum': (ne.committed_crews + se.committed_crews  + nw.committed_crews  + sps.committed_crews + pc.committed_crews  + oly.committed_crews),
+            'available_out_of_region_crews_sum': (ne.available_crews + se.available_crews  + nw.available_crews  + sps.available_crews + pc.available_crews  + oly.available_crews),
+
         }
     else:
         context = {
@@ -78,6 +83,11 @@ def index(request):
             'dnr_fire_count_sum': 0,
             'dnr_fire_acres_sum': 0,
             'all_fire_acres_sum': 0,
+            'available_in_region_engines_sum':0,
+            'available_out_of_region_engines_sum': 0,
+            'available_in_region_crews_sum': 0,
+            'available_out_of_region_crews_sum': 0,
+
         }
     template = loader.get_template('fire_intel/index.html')
     return HttpResponse(template.render(context, request))
@@ -127,6 +137,9 @@ def current_fire_stats(request):
 
 @ie_test_redirect
 def region_view(request, region):
+
+    if region not in REGION_ALLOWED_URL_SET:
+        return Http404()
 
     # grab the latest intel records
     overview_intel = get_latest_or_none(OverviewIntelReport)

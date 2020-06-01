@@ -1,5 +1,5 @@
 from django.db import models
-from django.core.validators import MinValueValidator, MaxValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator, FileExtensionValidator
 import requests
 from django.conf import settings
 
@@ -97,6 +97,11 @@ class OverviewIntelReport(DateTimeStampMixin):
     eastside_dnr_fire_count = models.IntegerField("YTD Eastside DNR Fires", blank=False)
     eastside_dnr_fire_acres = models.IntegerField("YTD Eastside DNR Fire Acres", blank=False)
     eastside_all_fire_acres = models.IntegerField("YTD Eastside All Acres", blank=False)
+
+    # intel docs
+    intel_report_doc = models.FileField(verbose_name="Intelligence Report", upload_to='intel_docs/', validators=[FileExtensionValidator(allowed_extensions=['pdf'])], help_text="This will only accept PDF files!")
+    fire_weather_doc = models.FileField(verbose_name="Fire Weather Report", upload_to='intel_docs/', validators=[FileExtensionValidator(allowed_extensions=['pdf'])], help_text="This will only accept PDF files!")
+    fuels_danger_report_doc = models.FileField(verbose_name="Fuels/Fire Danger Report", upload_to='intel_docs/', validators=[FileExtensionValidator(allowed_extensions=['pdf'])], help_text="This will only accept PDF files!")
 
     def get_that_egp_token():
         agol_token_url = 'https://egp.nwcg.gov/arcgis/tokens'

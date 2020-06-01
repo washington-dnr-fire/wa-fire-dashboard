@@ -137,6 +137,8 @@ LOGOUT_REDIRECT_URL = '/'
 
 IE_BROWSER_REDIRECT_URL = "/unsupported-browser"
 
+REGION_ALLOWED_URL_SET = {'nw','se','ne','nw','sps','pc'}
+
 try:
     from .local_settings import *
 except ImportError:

@@ -1,0 +1,31 @@
+{% extends 'fire_intel/base.html' %}
+{% block content %}
+{% load static %}
+
+
+<style>
+html, body{
+    height: 100%;
+}
+</style>
+<div class="container-fluid" style="min-height: 100%">
+<div class="row">
+    <div class="col-1 dnr-blue-bg" style="min-height:100vh">
+    </div>
+    <div class="col-9 h-100 text-left text-dark align-middle mt-4">
+        <img class="img-responsive d-inline-block" src="{%  static '/images/em_dnr_logo_wildfire.png' %}" alt="DNR Logo" style="max-height: 60px; padding: 0; margin:0;"><h5 class="d-inline-block font-weight-bold">Sorry, something went wrong :(</h5>
+        <hr class="login-line">
+        <p class="text-muted small ml-4">You might be in the wrong place or theres an error behind the scenes. Contact <a href="mailto:sarah.krock@dnr.wa.gov?subject=[500 Error] DNR Fire Dashboard">the WA DNR Fire Intel team</a> for more information.</a></p>
+        <h1 class="d-inline-block ml-4 font-weight-bold">500 Error&nbsp;</h1>  
+        <br> 
+        <hr>
+        <p class="ml-4">
+            <button type="button" class="btn btn-sm border-0 text-white btn-secondary" style="padding:5px 10px;" onclick="location.href='{% url 'home' %}'"><i class="fas fa-chevron-left"></i>&nbsp;&nbsp;Back to the home page</button>
+        </p>
+    </div>
+    <div class="col-2 h-100">
+    </div>
+    </div>
+</div>
+
+{% endblock %}

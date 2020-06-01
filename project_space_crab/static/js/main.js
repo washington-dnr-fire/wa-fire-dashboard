@@ -20,7 +20,7 @@ $(function() {
     );
 
     // BLM 24hr Lightning
-    var blm_lightning_24hr = new L.GeoJSON.AJAX("./egp_data/blm_lightning/1", {
+    var blm_lightning_24hr = new L.GeoJSON.AJAX(location.origin + "/egp_data/blm_lightning/1", {
         pointToLayer: function (feature, latlng) {
             if(feature.properties.Polarity === 'N'){
                 return L.marker(latlng, {icon: blueLightningIcon});
@@ -328,7 +328,7 @@ $(function() {
         });
 
     // SIT209 yuggggeeee fires
-    var large_fires = new L.GeoJSON.AJAX("./egp_data/active_incidents/0",{
+    var large_fires = new L.GeoJSON.AJAX(location.origin + "/egp_data/active_incidents/0",{
         pointToLayer: function (feature, latlng) {
             return L.marker(latlng, {icon: LargeFireIcon});
         },
@@ -382,7 +382,7 @@ $(function() {
     )});
 
     // Unknown SIT209 fires, gotta catch 'em all
-    var large_fires_other = new L.GeoJSON.AJAX("./egp_data/active_incidents/1",{
+    var large_fires_other = new L.GeoJSON.AJAX(location.origin + "/egp_data/active_incidents/1",{
         pointToLayer: function (feature, latlng) {
             return L.marker(latlng, {icon: LargeFireIcon});
         },
@@ -442,7 +442,7 @@ $(function() {
         });
 
     // Emerging incidents < 24 hrs
-    var emerging_incidents_less24 = new L.GeoJSON.AJAX("./egp_data/active_incidents/2",{
+    var emerging_incidents_less24 = new L.GeoJSON.AJAX(location.origin + "/egp_data/active_incidents/2",{
         pointToLayer: function (feature, latlng) {
             return L.marker(latlng, {icon: squareRedIcon});
         },
@@ -504,7 +504,7 @@ $(function() {
         });
 
     // Emerging Incidents > 24 hrs
-    var emerging_incidents_greater24 = new L.GeoJSON.AJAX("./egp_data/active_incidents/3",{
+    var emerging_incidents_greater24 = new L.GeoJSON.AJAX(location.origin + "/egp_data/active_incidents/3",{
         pointToLayer: function (feature, latlng) {
             return L.marker(latlng, {icon: squareBlackIcon});
         },
@@ -564,7 +564,7 @@ $(function() {
 
 
     // MODIS Satellite Detections
-    var modis_hotspot_centroids = new L.GeoJSON.AJAX("./egp_data/hotspots/0",{
+    var modis_hotspot_centroids = new L.GeoJSON.AJAX(location.origin + "/egp_data/hotspots/0",{
         pointToLayer: function (feature, latlng) {
             var s = moment(feature.properties.DetectionDate);
             var duration = moment.duration(moment().diff(s));
@@ -632,7 +632,7 @@ $(function() {
     )});
 
     // VIIRS Satellite Detections
-    var viirs_hotspot_centroids = new L.GeoJSON.AJAX("./egp_data/hotspots/2",{
+    var viirs_hotspot_centroids = new L.GeoJSON.AJAX(location.origin + "/egp_data/hotspots/2",{
         pointToLayer: function (feature, latlng) {
             var s = moment(feature.properties.DetectionDate);
             var duration = moment.duration(moment().diff(s));

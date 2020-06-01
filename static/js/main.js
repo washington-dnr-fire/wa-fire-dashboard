@@ -914,4 +914,254 @@ $(function() {
         }
     }).addTo(map);
 
+
+    var defaultStart = new Date().getFullYear() + '-01-01'
+
+    function createFreqArray (anyArray) {
+
+        // create map for word counts
+        var freqMap = {};
+
+
+        anyArray.forEach(function (key) {
+          if (freqMap.hasOwnProperty(key)) {
+            freqMap[key]++;
+          } else {
+            freqMap[key] = 1;
+          }
+        });
+      
+        return freqMap;
+      
+      }
+    $.getJSON({ 
+        type: "GET",
+        async:true,
+        url: 'https://gis.dnr.wa.gov/site3/rest/services/Public_Wildfire/WADNR_PUBLIC_WD_WildFire_Data/MapServer/2/query?where=START_DT+%3E+DATE+%27' + defaultStart + '%27&outSR=4326&outFields=*&returnGeometry=false&f=pjson', 
+        success: function(results) { 
+            var fires = []
+            var ac_dict = {}
+            for (i in results.features){
+                if (results.features[i].attributes.PROTECTION_TYPE != 'DNR Assist Other Agency'){
+                    month = moment(results.features[i].attributes.START_DT).format('MMMM')
+                    prot_type = results.features[i].attributes.PROTECTION_TYPE
+                    acres = results.features[i].attributes.ACRES_BURNED
+                    county = results.features[i].attributes.COUNTY_LABEL_NM
+                    cause = results.features[i].attributes.FIREGCAUSE_LABEL_NM
+                    date_delta = moment().diff(moment(results.features[i].attributes.START_DT), 'days')
+                    fires.push([month, prot_type, acres, county, cause, date_delta])
+                    if(!ac_dict[month]){
+                        ac_dict[month]=[];
+                    }
+                    ac_dict[month].push(acres);
+                }
+            }
+            for (i in ac_dict){
+                ac_dict[i] = ac_dict[i].reduce(function(acc, val) { return acc + val; }, 0).toFixed(2)
+
+            }
+    
+            //fires in last 7 days and months
+            // count7_fires = 0
+            // count7_acres = 0
+            months = []
+            causes = []
+            counties = []
+            for (i in fires){
+                months.push(fires[i][0])
+                causes.push(fires[i][4])
+                // counties.push(fires[i][3])
+                // if (fires[i][5] <= 7){
+                //     count7_fires += 1
+                //     count7_acres += fires[i][2]
+                // }
+            }
+
+            mo = createFreqArray(months)
+            causes = createFreqArray(causes)
+            // counties = createFreqArray(counties)
+
+            data = {
+                datasets: [{
+                    backgroundColor:["#a6cee3", "#1f78b4","#b2df8a","#33a02c","#e31a1c", "#fb9a99", "#fdbf6f","#ff7f00","#cab2d6","#6a3d9a"],
+                    data: Object.values(causes),
+                }],
+                labels: Object.keys(causes)
+            };
+
+            var ctx = $('#chart1');
+            var myChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: data,
+                options: {
+                    legend: {
+                        display: false
+                    },
+                    responsive: true,
+
+                    plugins: {
+                        datalabels: { 
+                            color: '#000000',
+                            font:{
+                                size: 10
+                            },
+                            anchor: 'end',
+                            align:'end',
+                            // display: 'auto',
+                            formatter: function(value, context) {
+                                return context.chart.data.labels[context.dataIndex] + ' (' + value + ')';
+                            }
+                    }}}
+            });
+
+            data2 = {
+                datasets: [{
+                    data: Object.values(mo),
+                    backgroundColor: "rgba(0,61,107,1)"
+                }],
+                labels: Object.keys(mo)
+            };
+
+            var cty = document.getElementById('chart2').getContext('2d');
+            var chart2 = new Chart(cty, {
+                type: 'bar',
+                data: data2,
+                options: {
+                    legend: {
+                        display: false
+                    },
+                    responsive: true,
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                fontColor: '#000000'
+                            },
+
+                            gridLines: {
+                                drawOnChartArea: false,
+                                tickMarkLength: 5,	
+                                color: '#000000',
+                                zeroLineColor: '#000000'	
+
+                            }   
+                        }],
+                        xAxes: [{
+                            offset: true,
+                            ticks: {
+                                fontColor: '#000000'
+                            },
+                            gridLines: {
+                                drawOnChartArea: false,
+                                tickMarkLength: 5,	
+                                color: '#000000'
+
+                            },
+                            // barPercentage: 1,
+                            categoryPercentage: 1,
+                            type: 'time',
+                            time: {
+                                parser: 'MMMM',
+                                unit: 'month',
+                                displayFormats: {
+                                    'month': 'MMM',
+                                }
+                            },
+                        }]                    
+                    },
+
+                    plugins: {
+                        datalabels: { 
+                            color: '#000000',
+                            font:{
+                                size: 10
+                            },
+                            anchor: 'end',
+                            align:'end',
+                            offset:-5
+                            // // display: 'auto',
+                            // formatter: function(value, context) {
+                            //     return context.chart.data.labels[context.dataIndex] + ' (' + value + ')';
+                            // }
+                    }}
+
+                }
+            });
+    
+            data3 = {
+                datasets: [{
+                    data: Object.values(ac_dict),
+                    backgroundColor: "rgba(227,26,28,1)"
+                }],
+                labels: Object.keys(ac_dict)
+            };
+
+            var ctz = document.getElementById('chart3').getContext('2d');
+            var chart2 = new Chart(ctz, {
+                type: 'bar',
+                data: data3,
+                options: {
+                    legend: {
+                        display: false
+                    },
+                    responsive: true,
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                fontColor: '#000000'
+                            },
+                            gridLines: {
+                                drawOnChartArea: false,
+                                tickMarkLength: 5,	
+                                color: '#000000',
+                                zeroLineColor: '#000000'	
+
+                            }   
+                        }],
+                        xAxes: [{
+                            ticks: {
+                                fontColor: '#000000'
+                            },
+                            offset: true,
+
+                            gridLines: {
+                                drawOnChartArea: false,
+                                tickMarkLength: 5,	
+                                color: '#000000',
+
+                            },
+                            // barPercentage: 1,
+                            categoryPercentage: 1,
+                            type: 'time',
+                            time: {
+                                parser: 'MMMM',
+                                unit: 'month',
+                                displayFormats: {
+                                    'month': 'MMM',
+                                }
+                            },
+                        }]                    
+                    },
+
+                    plugins: {
+                        datalabels: { 
+                            color: '#000000',
+                            font:{
+                                size: 10
+                            },
+                            anchor: 'end',
+                            align:'end',
+                            offset:-5
+
+                            // // display: 'auto',
+                            // formatter: function(value, context) {
+                            //     return context.chart.data.labels[context.dataIndex] + ' (' + value + ')';
+                            // }
+                    }}
+
+                }
+            });
+        }
+    });
+
+   
 });

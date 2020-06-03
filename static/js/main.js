@@ -77,9 +77,16 @@ $(function() {
     if($('#nat_id').text() == 1){
         $('#nationalprep').css('backgroundColor', '#218c71');
     } else if(2 <= $('#nat_id').text() && $('#nat_id').text() <= 3){
-        $('#nationalprep').css('backgroundColor', '#218c71');
+        $('#nationalprep').css('backgroundColor', '#F1B34D');
     } else if($('#nat_id').text() > 3){
-        $('#nationalprep').css('backgroundColor', '#218c71');
+        $('#nationalprep').css('backgroundColor', '#CA304B');
+    }
+    if($('#dnr_id').text() == 1){
+        $('#dnrprep').css('backgroundColor', '#218c71');
+    } else if(2 <= $('#dnr_id').text() && $('#dnr_id').text() <= 3){
+        $('#dnrprep').css('backgroundColor', '#F1B34D');
+    } else if($('#dnr_id').text() > 3){
+        $('#dnrprep').css('backgroundColor', '#CA304B');
     }
     if($('#type1_id').text() == 0){
         $('#type1teams').css('backgroundColor', '#218c71');

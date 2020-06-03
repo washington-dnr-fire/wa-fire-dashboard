@@ -41,6 +41,7 @@
 
         <!-- home panel -->
         <div class="leaflet-sidebar-pane" id="home">
+            
             <h1 class="leaflet-sidebar-header">Situation Snapshot
                 <span class="leaflet-sidebar-close"><i class="fa fa-caret-left"></i></span>
             </h1>
@@ -74,7 +75,7 @@
                  <div class="col-4 px-0 mt-0">
                      <div class="card rounded-0 h-100 dnr-blue-bg" id="dnrfires48">
                          <div class="card-body text-center">
-                             <h5 class="card-num text-white" id="dnrfires48_id">{{ dnr_ia_fires_sum }}</h5>
+                             <h5 class="card-num text-white" id="dnrfires48_id">{{ dnr_ia_fires_sum48 }}</h5>
                              <small class="small-title text-white">Last 48hrs DNR Fires</small>
                          </div>
                      </div>
@@ -105,9 +106,9 @@
                 </div>
 
                 <div class="col-4 px-0">
-                    <div class="card rounded-0 h-100 dnr-blue-bg" id="northwestprep">
+                    <div class="card rounded-0 h-100 dnr-blue-bg" id="dnrprep">
                         <div class="card-body text-center">
-                            <h5 class="card-num text-white" id="nw_id">{{ overview_intel_data.preparedness_level_dnr }}</h5>
+                            <h5 class="card-num text-white" id="dnr_id">{{ overview_intel_data.preparedness_level_dnr }}</h5>
                             <small class="small-title text-white">DNR</small>
                         </div>
                     </div>
@@ -157,13 +158,24 @@
 
             <hr>
             <div class="row my-2">
-                <div class="col-12">
-                    <p class="mt-0 date-update mb-2">Northwest Coordination Center Products</p>
-                    <a href="https://gacc.nifc.gov/nwcc/content/products/intelligence/MORNINGBRIEF.pdf" class="btn btn-sm border-0 btn-block text-white text-left bg-secondary nwcc-link-blue" target="_blank" rel='noreferrer'><i class="fas fa-file-alt text-white" ></i> Morning Intelligence Report<i class="fas fa-chevron-right text-white chevron-fix" ></i></a>
-                    <a href="https://gacc.nifc.gov/nwcc/content/products/intelligence/teams.pdf" class="btn btn-sm border-0 btn-block text-white text-left bg-secondary nwcc-link-blue" target="_blank" rel='noreferrer'><i class="fas fa-users text-white" ></i> Northwest Teams Status<i class="fas fa-chevron-right text-white chevron-fix" ></i></a>
+                <div class="col-6">
+                    <p class="mt-0 date-update mb-2">Northwest Intel</p>
+                    <a href="https://gacc.nifc.gov/nwcc/content/products/intelligence/MORNINGBRIEF.pdf" target="_blank" rel='noreferrer'>Morning Intelligence Report</a><br>
+                    <a href="https://gacc.nifc.gov/nwcc/content/products/intelligence/teams.pdf" target="_blank" rel='noreferrer'>Teams Status</a><br>
+                    <a href="https://gacc.nifc.gov/nwcc/content/products/intelligence/crews.pdf" target="_blank" rel='noreferrer'>Hotshot Crews Status</a><br>
+                    <a href="https://gacc.nifc.gov/nwcc/content/products/intelligence/Aviation.pdf" target="_blank" rel='noreferrer'>Aviation Report</a><br>
+                </div>
+                <div class='col-6'>
+                    <p class="mt-0 date-update mb-2">National Intel</p>
+                    <a href="https://www.nifc.gov/nicc/sitreprt.pdf" target="_blank" rel='noreferrer'>Incident Management Report</a><br>
+                    <a href="https://www.nifc.gov/nicc/logistics/teams/imt_rotate.pdf" target="_blank" rel='noreferrer'>Type 1 Teams Status</a><br>
+                    <a href="https://fsapps.nwcg.gov/afm/index.php" target="_blank" rel='noreferrer'>Large Incidents Map</a>
+                
                 </div>
             </div>
-        </div> <!-- /end panel -->
+            <p class="my-2">For a definition list of terms, click <a href="" target='_blank' rel='noreferrer'>here</a>.</p> 
+
+    </div> <!-- /end panel -->
 
         <!-- stats panel -->
         <div class="leaflet-sidebar-pane" id="statistics">
@@ -207,10 +219,9 @@
                             <td class="text-center">{{ overview_intel_data.eastside_dnr_fire_acres|intcomma }} ac.</td>
                         </tr>
                         <tr>
-                            <th scope="row">Totals</th>
+                            <th scope="row" class='font-weight-bold'>Totals</th>
                             <td class="text-center">{{dnr_response_count_sum|intcomma}}</td>
                             <td class="text-center">{{all_fire_acres_sum|intcomma}} ac.</td>
-
                             <td class="text-center">{{dnr_fire_count_sum|intcomma}}</td>
                             <td class="text-center">{{dnr_fire_acres_sum|intcomma}} ac.</td>
                         </tr>
@@ -240,6 +251,7 @@
                     <canvas id="chart3" class='ml-2'></canvas>
                 </div>
             </div>
+            <p class="my-2">For a definition list of terms, click <a href="" target='_blank' rel='noreferrer'>here</a>.</p> 
 
 
         </div> <!-- /end panel -->
@@ -317,11 +329,11 @@
                             <td class="text-center">{{ pc_data.available_crews }}</td>
                         </tr>
                         <tr>
-                            <th scope="row">Totals</th>
-                            <td class="text-center">{{available_in_region_engines_sum|intcomma}}</td>
-                            <td class="text-center">{{available_in_region_crews_sum|intcomma}}</td>
-                            <td class="text-center">{{available_out_of_region_engines_sum|intcomma}}</td>
-                            <td class="text-center">{{available_out_of_region_crews_sum|intcomma}}</td>
+                            <th scope="row" class='font-weight-bold'>Totals</th>
+                            <td class="text-center">{{ available_in_region_engines_sum }}</td>
+                            <td class="text-center">{{ available_in_region_crews_sum }}</td>
+                            <td class="text-center">{{ available_out_of_region_engines_sum }}</td>
+                            <td class="text-center">{{ available_out_of_region_crews_sum }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -369,6 +381,14 @@
                             <td class="text-center">{{ aviation_data.in_region_lat }}</td>
                             <td class="text-center">{{ aviation_data.in_region_vlat }}</td>
                         </tr>
+                        <tr>
+                            <th scope="row" class='font-weight-bold'>Totals</th>
+                            <td class="text-center">{{ total_rotors }}</td>
+                            <td class="text-center">{{ total_fireboss }}</td>
+                            <td class="text-center">{{ total_airattack }}</td>
+                            <td class="text-center">{{ total_lat }}</td>
+                            <td class="text-center">{{ total_vlat }}</td>
+                        </tr>
                     </tbody>
                 </table>
 
@@ -406,6 +426,7 @@
                 </table>
                 </div> -->
                 <a href='https://www.dnr.wa.gov/Aviation'>Learn more about DNR's aviation program <i class="fas fa-external-link-alt"></i></a>
+                <p class="my-2">For a definition list of terms, click <a href="" target='_blank' rel='noreferrer'>here</a>.</p> 
 
         </div>
 
@@ -526,6 +547,8 @@
                             </tbody>
                         </table>
                     </div>
+                    <p class="my-2">For a definition list of terms, click <a href="" target='_blank' rel='noreferrer'>here</a>.</p> 
+
                 </div>
             </div> <!-- /end 1st row -->
         </div> <!-- /end panel -->
@@ -537,14 +560,18 @@
             </h1>
             <div class="row">
                 <div class="col-12">
-                    <h5 class="my-2">DNR Fire Dashboard</h5>
-                    <p class="my-2">The <a href="https://www.dnr.wa.gov/" target="_blank" rel='noreferrer'>Washington DNR</a> fire dashboard is a situational awareness and decision support tool for state fire managers. It conveys numerous geospatial, statistical, and tabular information in a mobile-friendly, lightweight design where data updates are driven by our intelligence officers and partner agencies. We made this application open access to encourage public and other agency benefit and hope you find it useful! </p>
-                    <p class="my-2">For help, feedback, or suggestions, please contact <a href="mailto:josh.clark@dnr.wa.gov?subject=[HELP] DNR Fire Dashboard">Josh Clark</a> or <a href="mailto:kirk.davis@dnr.wa.gov?subject=[HELP] DNR Fire Dashboard">Kirk Davis</a>, DNR Fire Planning and Information. </p>
+                    <p class="mt-2 date-update mb-2">DNR Fire Dashboard</p>
+                    <p class="my-2">The <a href="https://www.dnr.wa.gov/" target="_blank" rel='noreferrer'>Washington DNR</a> fire dashboard is a situational awareness and decision support tool for state fire managers. We made this application open access to encourage public and other agency benefit and hope you find it useful! </p>
+                    <img class="img-responsive my-2" src="/static/images/em_dnr_logo_wildfire.png" alt="DNR Logo" style="max-height: 150px; max-width: 100%; padding: 0; display:block; margin:auto;">
+                    <hr>
+                    <p class="mt-0 date-update mb-2">Need Help?</p>
+                    <p class="my-2">For help, feedback, or suggestions, please send us an e-mail!</p> 
+                    <div class='text-center'>
+                    <a href="mailto:josh.clark@dnr.wa.gov?subject=[HELP] DNR Fire Dashboard" target="_blank" rel='noreferrer'><button type="button" class="btn btn-primary btn-sm text-center rounded"><i class="fas fa-envelope text-white" ></i> Contact Us! </button></a>
+                    
+                    <p class="text-muted small mt-2 text-left" ><u>Disclaimer:</u> The map data provided here are mostly from external sources (NIFC EGP, NOAA, NWCC, etc.), loaded here for your convenience. As DNR does not own this data directly, we cannot promise 100% uptime or availability of each source's data. Further, map data is for informational purposes only and should not be considered the only source for decision-making. This application is focused specifically on WA DNR wildfire operations, utilize the <a href="https://egp.nwcg.gov" target="_blank">NIFC Enterprise Geospatial Portal (EGP)</a> for more fire information inside of WA and nationally.</p>
+                </div>
 
-                    <img class="img-responsive my-2" src="{%  static '/images/em_dnr_logo_wildfire.png' %}" alt="DNR Logo" style="max-height: 150px; max-width: 100%; padding: 0; display:block; margin:auto;">
-                    <p class="text-muted pb-0 mb-0">Version 0.1 (BETA)</p>
-                    <p class="text-muted pt-0 mb-2" >Not suitable for public use (yet). <a href="mailto:josh.clark@dnr.wa.gov?subject=[BUG REPORT] DNR Fire Dashboard">Report a bug!</a></p>
-                    <p class="text-muted pt-0" ><u>Disclaimer:</u> The map data provided here are mostly from external sources (NIFC EGP, NOAA, NWCC, etc.), loaded here for your convenience. As DNR does not own this data directly, we cannot promise 100% uptime or availability of each source's data. Further, map data is for informational purposes only and should not be considered the only source for decision-making. This application is focused specifically on WA DNR wildfire operations, utilize the <a href="https://egp.nwcg.gov" target="_blank">NIFC Enterprise Geospatial Portal (EGP)</a> for more fire information inside of WA and nationally.</p>
                 </div>
             </div> <!-- /end 1st row -->
         </div> <!-- /end panel -->

@@ -77,16 +77,30 @@ class OverviewIntelReport(DateTimeStampMixin):
         (6, 6),
         (7, 7),
     }
+    WA_TYPE_3_TEAMS = {
+        (0, 0),
+        (1, 1),
+        (2, 2),
+        (3, 3),
+        (4, 4),
+        (5, 5),
+        (6, 6),
+        (7, 7),
+    }
 
     preparedness_level_national = models.SmallIntegerField("National Preparedness Level", choices=sorted(PREPAREDNESS_LEVELS), blank=False,
                                                            help_text="What is the national preparedness level? (out of 5)")
     preparedness_level_nw = models.SmallIntegerField("Northwest Preparedness Level", choices=sorted(PREPAREDNESS_LEVELS), blank=False,
                                                      help_text="What is the current NW GACC preparedness level? (out of 5)")
+    preparedness_level_dnr = models.SmallIntegerField("DNR Preparedness Level", choices=sorted(PREPAREDNESS_LEVELS), blank=False,
+                                                     help_text="What is the current DNR preparedness level? (out of 5)", default=0)
+
     type_1_teams_assigned = models.SmallIntegerField("Type 1 Teams Assigned", choices=sorted(NW_TYPE_1_TEAMS), blank=False,
                                                      help_text="How many NW Type 1 teams are currently assigned?")
     type_2_teams_assigned = models.SmallIntegerField("Type 2 Teams Assigned", choices=sorted(NW_TYPE_2_TEAMS), blank=False,
                                                      help_text="How many NW Type 2 teams are currently assigned?")
-
+    type_3_teams_assigned = models.SmallIntegerField("Type 3 Teams Assigned", choices=sorted(WA_TYPE_3_TEAMS), blank=False,
+                                                     help_text="How many Washington Type 3 teams are currently assigned?", default=0)
     # fire statistics
     westside_dnr_responses_count = models.IntegerField("YTD Westside DNR Responses", blank=False)
     westside_dnr_fire_count = models.IntegerField("YTD Westside DNR Fires", blank=False)

@@ -62,6 +62,11 @@ def index(request):
             'available_out_of_region_engines_sum': (ne.available_engines + se.available_engines  + nw.available_engines  + sps.available_engines + pc.available_engines  + oly.available_engines),
             'available_in_region_crews_sum': (ne.committed_crews + se.committed_crews  + nw.committed_crews  + sps.committed_crews + pc.committed_crews  + oly.committed_crews),
             'available_out_of_region_crews_sum': (ne.available_crews + se.available_crews  + nw.available_crews  + sps.available_crews + pc.available_crews  + oly.available_crews),
+            'total_rotors': (aviation.westside_rotors + aviation.eastside_rotors),
+            'total_fireboss': (aviation.westside_firebosses + aviation.eastside_firebosses),
+            'total_airattack': (aviation.westside_atgs + aviation.eastside_atgs),
+            'total_lat': (aviation.in_region_lat),
+            'total_vlat': (aviation.in_region_vlat)
 
         }
     else:
@@ -87,6 +92,11 @@ def index(request):
             'available_out_of_region_engines_sum': 0,
             'available_in_region_crews_sum': 0,
             'available_out_of_region_crews_sum': 0,
+            'total_rotors': 0,
+            'total_fireboss': 0,
+            'total_airattack': 0,
+            'total_lat': 0,
+            'total_vlat': 0
 
         }
     template = loader.get_template('fire_intel/index.html')

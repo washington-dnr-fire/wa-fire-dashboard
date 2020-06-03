@@ -16,8 +16,8 @@ class OverviewIntelReportAdmin(admin.ModelAdmin):
             'fields': ['date_of_report']}),
 
         ("Situation Snapshot", {
-            'fields': ['preparedness_level_national', 'preparedness_level_nw', 'type_1_teams_assigned',
-                       'type_2_teams_assigned']}),
+            'fields': ['preparedness_level_national', 'preparedness_level_nw', 'preparedness_level_dnr','type_1_teams_assigned',
+                       'type_2_teams_assigned', 'type_3_teams_assigned']}),
 
         ("Westside Fire Statistics", {
             'fields': ['westside_dnr_responses_count', 'westside_dnr_fire_count', 'westside_dnr_fire_acres',

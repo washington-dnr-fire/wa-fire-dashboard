@@ -77,16 +77,16 @@ $(function() {
     if($('#nat_id').text() == 1){
         $('#nationalprep').css('backgroundColor', '#218c71');
     } else if(2 <= $('#nat_id').text() && $('#nat_id').text() <= 3){
-        $('#nationalprep').css('backgroundColor', '#F1B34D');
+        $('#nationalprep').css('backgroundColor', '#218c71');
     } else if($('#nat_id').text() > 3){
-        $('#nationalprep').css('backgroundColor', '#CA304B');
+        $('#nationalprep').css('backgroundColor', '#218c71');
     }
     if($('#dnr_id').text() == 1){
         $('#dnrprep').css('backgroundColor', '#218c71');
     } else if(2 <= $('#dnr_id').text() && $('#dnr_id').text() <= 3){
-        $('#dnrprep').css('backgroundColor', '#F1B34D');
+        $('#dnrprep').css('backgroundColor', '#218c71');
     } else if($('#dnr_id').text() > 3){
-        $('#dnrprep').css('backgroundColor', '#CA304B');
+        $('#dnrprep').css('backgroundColor', '#218c71');
     }
     if($('#type1_id').text() == 0){
         $('#type1teams').css('backgroundColor', '#218c71');
@@ -102,6 +102,13 @@ $(function() {
     } else if($('#type2_id').text() >= 4){
         $('#type2teams').css('backgroundColor', '#CA304B');
     }
+    if(0 <= $('#type3_id').text() && $('#type3_id').text() <= 2){
+        $('#type3teams').css('backgroundColor', '#218c71');
+    } else if(2 <= $('#type3_id').text() && $('#type3_id').text() <= 4){
+        $('#type3teams').css('backgroundColor', '#F1B34D');
+    } else if($('#type3_id').text() >= 4){
+        $('#type3teams').css('backgroundColor', '#CA304B');
+    }
     if(0 <= $('#wafires_id').text() && $('#wafires_id').text() <= 2){
         $('#walargefires').css('backgroundColor', '#218c71');
     } else if(3 <= $('#wafires_id').text() && $('#wafires_id').text() <= 4){
@@ -115,6 +122,13 @@ $(function() {
         $('#dnrfires').css('backgroundColor', '#F1B34D');
     } else if($('#dnrfires_id').text() > 10 ){
         $('#dnrfires').css('backgroundColor', '#CA304B');
+    }
+    if(0 <= $('#dnrfires48_id').text() && $('#dnrfires48_id').text() <= 7){
+        $('#dnrfires48').css('backgroundColor', '#218c71');
+    } else if(8 <= $('#dnrfires48_id').text() && $('#dnrfires48_id').text() <= 18){
+        $('#dnrfires48').css('backgroundColor', '#F1B34D');
+    } else if($('#dnrfires48_id').text() > 19 ){
+        $('#dnrfires48').css('backgroundColor', '#CA304B');
     }
 
     // NWS WATCHES AND WARNINGS
@@ -925,10 +939,7 @@ $(function() {
     var defaultStart = new Date().getFullYear() + '-01-01'
 
     function createFreqArray (anyArray) {
-
-        // create map for word counts
         var freqMap = {};
-
 
         anyArray.forEach(function (key) {
           if (freqMap.hasOwnProperty(key)) {
@@ -968,25 +979,16 @@ $(function() {
 
             }
     
-            //fires in last 7 days and months
-            // count7_fires = 0
-            // count7_acres = 0
             months = []
             causes = []
             counties = []
             for (i in fires){
                 months.push(fires[i][0])
                 causes.push(fires[i][4])
-                // counties.push(fires[i][3])
-                // if (fires[i][5] <= 7){
-                //     count7_fires += 1
-                //     count7_acres += fires[i][2]
-                // }
             }
-
+    
             mo = createFreqArray(months)
             causes = createFreqArray(causes)
-            // counties = createFreqArray(counties)
 
             data = {
                 datasets: [{

@@ -20,6 +20,15 @@ def get_latest_or_none(classmodel):
         return classmodel.objects.latest("date_of_report")
     except classmodel.DoesNotExist:
         return None
+
+def get_yesterdays_model_ia_fire_count(classmodels_list):
+    sum_yesterday = 0
+    for model in classmodels_list:
+        try:
+            sum_yesterday += model.objects.order_by("-date_of_report")[1].new_initial_attack
+        except IndexError:
+            sum_yesterday += 0
+    return sum_yesterday
     
 
 # Create your views here.
@@ -37,6 +46,7 @@ def index(request):
     oly = get_latest_or_none(OlympicRegionIntelReport)
 
     available_model_data = {overview_intel, aviation, ne, se, nw, sps, pc, oly}
+    yesterdays_ia_fire_count = get_yesterdays_model_ia_fire_count([NortheastRegionIntelReport, SoutheastRegionIntelReport,NorthwestRegionIntelReport, SouthPugetSoundRegionIntelReport, PacificCascadeRegionIntelReport, OlympicRegionIntelReport])
 
     # test that every model has data - otherwise set to zero and null
     if all(i for i in available_model_data):
@@ -54,6 +64,7 @@ def index(request):
             'updated_date_txt': get_better_date_txt(overview_intel.date_of_report),
             'wa_large_fires_sum': (ne.region_large_fires + se.region_large_fires  + nw.region_large_fires  + sps.region_large_fires + pc.region_large_fires  + oly.region_large_fires),
             'dnr_ia_fires_sum': (ne.new_initial_attack + se.new_initial_attack + nw.new_initial_attack + sps.new_initial_attack + pc.new_initial_attack + oly.new_initial_attack),
+            'dnr_ia_fires_sum48': yesterdays_ia_fire_count + (ne.new_initial_attack + se.new_initial_attack + nw.new_initial_attack + sps.new_initial_attack + pc.new_initial_attack + oly.new_initial_attack),
             'dnr_response_count_sum': (overview_intel.westside_dnr_responses_count + overview_intel.eastside_dnr_responses_count),
             'dnr_fire_count_sum': (overview_intel.westside_dnr_fire_count + overview_intel.eastside_dnr_fire_count),
             'dnr_fire_acres_sum': round(overview_intel.westside_dnr_fire_acres + overview_intel.eastside_dnr_fire_acres, 2),
@@ -84,6 +95,7 @@ def index(request):
             'updated_date_txt': "INCOMPLETE DATA",
             'wa_large_fires_sum': 0,
             'dnr_ia_fires_sum': 0,
+            'dnr_ia_fires_sum48': 0,
             'dnr_response_count_sum': 0,
             'dnr_fire_count_sum': 0,
             'dnr_fire_acres_sum': 0,

@@ -236,7 +236,8 @@ $(function() {
         "</div>" + // row
         "<div class='row'>" +
         "<div class='col-xs-12'>" +
-        "<span>ISSUED BY: DNR " + featureCollection.features[0].properties["Region"] + " REGION &nbsp;&nbsp;<a class='popup-a-link' href='mailto:" + featureCollection.features[0].properties["Email"]+ "'><i class='fas fa-envelope' style='color: #003d6b!important;'></i></a></span>" +
+        "<span>ISSUED BY: DNR " + featureCollection.features[0].properties["Region"] + " REGION &nbsp;&nbsp;<a class='popup-a-link' href='mailto:" + featureCollection.features[0].properties["Email"]+ "'><i class='fas fa-envelope' style='color: #003d6b!important;'></i></a></span<br>" +
+        "<span class='text-muted'><small>Visit DNR's <a href='https://burnportal.dnr.wa.gov/' target='_blank' rel='noreferrer'>Burn Portal App</a> for more info!</small></span>" +
         "</div>" + // col
         "</div>" + // row
         "</div>", featureCollection.features[0].properties 
@@ -272,7 +273,8 @@ $(function() {
         "</div>" + // row
         "<div class='row'>" +
         "<div class='col-xs-12'>" +
-        "<span>ISSUED BY: DNR " + featureCollection.features[0].properties.DNR_REGION_NAME + " REGION &nbsp;&nbsp;<a class='popup-a-link' href='mailto:" + featureCollection.features[0].properties.REGION_EMAIL_ADDR + "'><i class='fas fa-envelope' style='color: #003d6b!important;'></i></a></span>" +
+        "<span>ISSUED BY: DNR " + featureCollection.features[0].properties.DNR_REGION_NAME + " REGION &nbsp;&nbsp;<a class='popup-a-link' href='mailto:" + featureCollection.features[0].properties.REGION_EMAIL_ADDR + "'><i class='fas fa-envelope' style='color: #003d6b!important;'></i></a></span><br>" +
+        "<span class='text-muted'><small>Visit DNR's <a href='https://burnportal.dnr.wa.gov/' target='_blank' rel='noreferrer'>Burn Portal App</a> for more info!</small></span>" +
         "</div>" + // col
         "</div>" + // row
         "</div>", featureCollection.features[0].properties 

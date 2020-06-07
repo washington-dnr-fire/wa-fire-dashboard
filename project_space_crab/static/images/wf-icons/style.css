@@ -42,6 +42,9 @@
 .icon-Extinguishing:before {
   content: "\e905";
 }
+.icon-Fire-Truck-C:before {
+  content: "\e900";
+}
 .icon-Fire-Truck-B:before {
   content: "\e906";
 }

@@ -236,7 +236,7 @@ $(function() {
         "</div>" + // row
         "<div class='row'>" +
         "<div class='col-xs-12'>" +
-        "<span>ISSUED BY: DNR " + featureCollection.features[0].properties["Region"] + " REGION &nbsp;&nbsp;<a class='popup-a-link' href='mailto:" + featureCollection.features[0].properties["Email"]+ "'><i class='fas fa-envelope' style='color: #003d6b!important;'></i></a></span<br>" +
+        "<span>ISSUED BY: DNR " + featureCollection.features[0].properties["Region"] + " REGION &nbsp;&nbsp;<a class='popup-a-link' href='mailto:" + featureCollection.features[0].properties["Email"]+ "'><i class='fas fa-envelope' style='color: #003d6b!important;'></i></a></span><br>" +
         "<span class='text-muted'><small>Visit DNR's <a href='https://burnportal.dnr.wa.gov/' target='_blank' rel='noreferrer'>Burn Portal App</a> for more info!</small></span>" +
         "</div>" + // col
         "</div>" + // row
@@ -901,15 +901,12 @@ $(function() {
         $(this).removeClass('text-danger');
         $(this).addClass('text-secondary');
         $(this).css('cursor', 'none');
-
-
     });
 
     $( ".close-button" ).click(function() {
         $(".leaflet-control-layers").removeClass("leaflet-control-layers-expanded")
 
     });
-
 
     // Set zoom control to bottom right
     map.zoomControl.setPosition('bottomright');
@@ -1008,10 +1005,21 @@ $(function() {
                     legend: {
                         display: false
                     },
+                    layout: {
+                        padding: {
+                            left: 10,
+                            right: 10,
+                            top: 20,
+                            bottom:20
+                        }
+                    },
                     responsive: true,
 
                     plugins: {
                         datalabels: { 
+                            display: function(context) {
+                                return context.dataset.data[context.dataIndex] >= 10; // or >= 1 or ...
+                             },
                             color: '#000000',
                             font:{
                                 size: 10
@@ -1040,6 +1048,14 @@ $(function() {
                 options: {
                     legend: {
                         display: false
+                    },
+                    layout: {
+                        padding: {
+                            left: 10,
+                            right: 10,
+                            top: 20,
+                            bottom:20
+                        }
                     },
                     responsive: true,
                     scales: {
@@ -1113,6 +1129,14 @@ $(function() {
                 options: {
                     legend: {
                         display: false
+                    },
+                    layout: {
+                        padding: {
+                            left: 10,
+                            right: 10,
+                            top: 20,
+                            bottom:20
+                        }
                     },
                     responsive: true,
                     scales: {

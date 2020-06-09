@@ -39,9 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'fire_intel',
     'django.contrib.humanize',
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -138,6 +140,10 @@ LOGOUT_REDIRECT_URL = '/'
 IE_BROWSER_REDIRECT_URL = "/unsupported-browser"
 
 REGION_ALLOWED_URL_SET = {'nw','se','ne','nw','sps','pc', 'oly'}
+
+INTERNAL_IPS = [
+    '127.0.0.1',
+]
 
 try:
     from .local_settings import *

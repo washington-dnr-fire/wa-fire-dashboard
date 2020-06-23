@@ -101,7 +101,7 @@ class OverviewIntelReport(DateTimeStampMixin):
                                                      help_text="How many NW Type 2 teams are currently assigned?")
     type_3_teams_assigned = models.SmallIntegerField("Type 3 Teams Assigned", choices=sorted(WA_TYPE_3_TEAMS), blank=False,
                                                      help_text="How many Washington Type 3 teams are currently assigned?", default=0)
-    # fire statistics
+    
     westside_dnr_responses_count = models.IntegerField("YTD Westside DNR Responses", blank=False)
     westside_dnr_fire_count = models.IntegerField("YTD Westside DNR Fires", blank=False)
     westside_dnr_fire_acres = models.IntegerField("YTD Westside DNR Fire Acres", blank=False)
@@ -116,20 +116,6 @@ class OverviewIntelReport(DateTimeStampMixin):
     intel_report_doc = models.FileField(verbose_name="Intelligence Report", upload_to='intel_docs/', validators=[FileExtensionValidator(allowed_extensions=['pdf'])], help_text="This will only accept PDF files!")
     fire_weather_doc = models.FileField(verbose_name="Fire Weather Report", upload_to='intel_docs/', validators=[FileExtensionValidator(allowed_extensions=['pdf'])], help_text="This will only accept PDF files!")
     fuels_danger_report_doc = models.FileField(verbose_name="Fuels/Fire Danger Report", upload_to='intel_docs/', validators=[FileExtensionValidator(allowed_extensions=['pdf'])], help_text="This will only accept PDF files!")
-
-    def get_that_egp_token():
-        agol_token_url = 'https://egp.nwcg.gov/arcgis/tokens'
-        referer = 'http://dnr.wa.gov'
-        TOKEN_CREDENTIALS_PAYLOAD = {
-            'client': 'referer',
-            'f': 'json',
-            'referer': referer,
-            'username': settings.EGP_USERNAME,
-            'password': settings.EGP_PASS_ME_A_WORD,
-            'expiration': 60,
-        }
-        r = requests.post(agol_token_url, params=TOKEN_CREDENTIALS_PAYLOAD)
-        return r.json()['token']
 
     class Meta:
         verbose_name = 'Overview Intel Report'

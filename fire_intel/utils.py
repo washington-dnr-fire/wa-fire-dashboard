@@ -1,7 +1,6 @@
 # utils.py
-
-
-from django.conf.settings import EGP_USERNAME, EGP_PASS_ME_A_WORD
+from django.conf import settings
+import requests
 
 def get_that_egp_token():
     agol_token_url = 'https://egp.nwcg.gov/arcgis/tokens'
@@ -10,8 +9,8 @@ def get_that_egp_token():
         'client': 'referer',
         'f': 'json',
         'referer': referer,
-        'username': EGP_USERNAME,
-        'password': EGP_PASS_ME_A_WORD,
+        'username': settings.EGP_USERNAME,
+        'password': settings.EGP_PASS_ME_A_WORD,
         'expiration': 60,
     }
     r = requests.post(agol_token_url, params=TOKEN_CREDENTIALS_PAYLOAD)

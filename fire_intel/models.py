@@ -8,6 +8,62 @@ import datetime
 PACIFIC_TZ = pytz.timezone("US/Pacific")
 
 
+class SpecificRegionQuerySet(models.QuerySet):
+
+    def _get_latest_intel_report(self):
+        try:
+            return self.latest("date_of_report")
+        except:
+            return None
+
+    def _get_previous_intel_report(self):
+        try:
+            return self.order_by("-date_of_report")[1]
+        except:
+            return None
+
+    def get_24hr_48hr_fire_count_and_acres_dict(self):
+        """returns dict of fire count and acres in last 24hrs - the approach
+            here is fairly slow and results in 22 hits to the DB and will need to be changed"""
+        incomplete_data_flg = False
+        intel_dict = {"fire_count_24hr": 0,
+                            "fire_acres_24hr": 0,
+                            "fire_count_48hr": 0,
+                            "fire_acres_48hr": 0}
+        try:
+            latest_report = self._get_latest_intel_report()
+            latest_report_date = latest_report.date_of_report.astimezone(PACIFIC_TZ)
+        except AttributeError: # thrown if something doesn't exist
+            latest_report = None
+        
+        try:
+            previous_report = self._get_previous_intel_report()
+            previous_report_date = previous_report.date_of_report.astimezone(PACIFIC_TZ)
+        except AttributeError:
+            previous_report = None
+
+        # get now for testing
+        now = datetime.datetime.now(tz=PACIFIC_TZ)
+
+        if latest_report:
+            if (now-latest_report_date).days == 0:
+                intel_dict["fire_count_24hr"] += latest_report.new_initial_attack
+                intel_dict["fire_acres_24hr"] += latest_report.new_ia_acres
+                intel_dict["fire_count_48hr"] += latest_report.new_initial_attack
+                intel_dict["fire_acres_48hr"] += latest_report.new_ia_acres
+
+            if  (now-latest_report_date).days > 0 and (now-latest_report_date).days <= 2:
+                intel_dict["fire_count_48hr"] += latest_report.new_initial_attack
+                intel_dict["fire_acres_48hr"] += latest_report.new_ia_acres
+
+        if previous_report:
+            if (now-previous_report_date).days <= 2:
+                intel_dict["fire_count_48hr"] += previous_report.new_initial_attack
+                intel_dict["fire_acres_48hr"] += previous_report.new_ia_acres
+        
+        return intel_dict
+
+
 class IntelQuerySet(models.QuerySet):
 
     def get_latest_intel_report(self):
@@ -22,41 +78,12 @@ class IntelQuerySet(models.QuerySet):
         except:
             return None
 
-    def get_24hr_48hr_fire_count_and_acres(self):
-        """returns tuple of fire count and acres in last 24hrs"""
-        intel_dict = {"fire_count_24hr": 0,
-                            "fire_acres_24hr": 0,
-                            "fire_count_48hr": 0,
-                            "fire_acres_48hr": 0}
-        
-        latest_report = self.get_latest_intel_report()
-        latest_report_date = latest_report.date_of_report.astimezone(PACIFIC_TZ)
-        previous_report = self.get_previous_intel_report()
-        previous_report_date = previous_report.date_of_report.astimezone(PACIFIC_TZ)
-
-        # get now for testing
-        now = datetime.datetime.now(tz=PACIFIC_TZ)
-
-        if (now-latest_report_date).days == 0:
-            intel_dict["fire_count_24hr"] += latest_report.new_initial_attack
-            intel_dict["fire_acres_24hr"] += latest_report.new_ia_acres
-            intel_dict["fire_count_48hr"] += latest_report.new_initial_attack
-            intel_dict["fire_acres_48hr"] += latest_report.new_ia_acres
-
-        if  (now-latest_report_date).days > 0 and (now-latest_report_date).days <= 2:
-            intel_dict["fire_count_48hr"] += latest_report.new_initial_attack
-            intel_dict["fire_acres_48hr"] += latest_report.new_ia_acres
-
-        if (now-previous_report_date).days <= 2:
-            intel_dict["fire_count_48hr"] += previous_report.new_initial_attack
-            intel_dict["fire_acres_48hr"] += previous_report.new_ia_acres
-        
-        return intel_dict
-        
         
 class DateTimeStampMixin(models.Model):
     
     date_of_report = models.DateTimeField(help_text="REMEMBER - the latest date's Fire Intel is always shown in the application by data type. The date should always be 'today' and 'now', but if you need to update values be sure to update the date too", blank=False)
+
+    objects = IntelQuerySet.as_manager()
 
     class Meta:
         abstract = True
@@ -89,7 +116,7 @@ class IntelAbstractBaseMixin(DateTimeStampMixin):
                                                    validators=[MinValueValidator(0), MaxValueValidator(250)])
 
     # definte custom QuerySet as manager
-    objects = IntelQuerySet.as_manager()
+    counts = SpecificRegionQuerySet.as_manager()
 
     def __str__(self):
         return "Intel Report: {}".format(self.date_of_report.strftime("%m/%d/%Y, %H:%M:%S"))

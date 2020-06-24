@@ -2,12 +2,89 @@ from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator, FileExtensionValidator
 import requests
 from django.conf import settings
+import pytz
+import datetime
+
+PACIFIC_TZ = pytz.timezone("US/Pacific")
 
 
+class SpecificRegionQuerySet(models.QuerySet):
+
+    def _get_latest_intel_report(self):
+        try:
+            return self.latest("date_of_report")
+        except:
+            return None
+
+    def _get_previous_intel_report(self):
+        try:
+            return self.order_by("-date_of_report")[1]
+        except:
+            return None
+
+    def get_24hr_48hr_fire_count_and_acres_dict(self):
+        """returns dict of fire count and acres in last 24hrs - the approach
+            here is fairly slow and results in 22 hits to the DB and will need to be changed"""
+        incomplete_data_flg = False
+        intel_dict = {"fire_count_24hr": 0,
+                            "fire_acres_24hr": 0,
+                            "fire_count_48hr": 0,
+                            "fire_acres_48hr": 0}
+        try:
+            latest_report = self._get_latest_intel_report()
+            latest_report_date = latest_report.date_of_report.astimezone(PACIFIC_TZ)
+        except AttributeError: # thrown if something doesn't exist
+            latest_report = None
+        
+        try:
+            previous_report = self._get_previous_intel_report()
+            previous_report_date = previous_report.date_of_report.astimezone(PACIFIC_TZ)
+        except AttributeError:
+            previous_report = None
+
+        # get now for testing
+        now = datetime.datetime.now(tz=PACIFIC_TZ)
+
+        if latest_report:
+            if (now-latest_report_date).days == 0:
+                intel_dict["fire_count_24hr"] += latest_report.new_initial_attack
+                intel_dict["fire_acres_24hr"] += latest_report.new_ia_acres
+                intel_dict["fire_count_48hr"] += latest_report.new_initial_attack
+                intel_dict["fire_acres_48hr"] += latest_report.new_ia_acres
+
+            if  (now-latest_report_date).days > 0 and (now-latest_report_date).days <= 2:
+                intel_dict["fire_count_48hr"] += latest_report.new_initial_attack
+                intel_dict["fire_acres_48hr"] += latest_report.new_ia_acres
+
+        if previous_report:
+            if (now-previous_report_date).days <= 2:
+                intel_dict["fire_count_48hr"] += previous_report.new_initial_attack
+                intel_dict["fire_acres_48hr"] += previous_report.new_ia_acres
+        
+        return intel_dict
+
+
+class IntelQuerySet(models.QuerySet):
+
+    def get_latest_intel_report(self):
+        try:
+            return self.latest("date_of_report")
+        except:
+            return None
+
+    def get_previous_intel_report(self):
+        try:
+            return self.order_by("-date_of_report")[1]
+        except:
+            return None
+
+        
 class DateTimeStampMixin(models.Model):
     
     date_of_report = models.DateTimeField(help_text="REMEMBER - the latest date's Fire Intel is always shown in the application by data type. The date should always be 'today' and 'now', but if you need to update values be sure to update the date too", blank=False)
-    
+
+    objects = IntelQuerySet.as_manager()
+
     class Meta:
         abstract = True
 
@@ -38,8 +115,8 @@ class IntelAbstractBaseMixin(DateTimeStampMixin):
     available_crews = models.SmallIntegerField("Out of Region Crews", blank=False,
                                                    validators=[MinValueValidator(0), MaxValueValidator(250)])
 
-    # def newest_record(self):
-    #     self.objects.latest("date_of_report")
+    # definte custom QuerySet as manager
+    counts = SpecificRegionQuerySet.as_manager()
 
     def __str__(self):
         return "Intel Report: {}".format(self.date_of_report.strftime("%m/%d/%Y, %H:%M:%S"))
@@ -101,7 +178,7 @@ class OverviewIntelReport(DateTimeStampMixin):
                                                      help_text="How many NW Type 2 teams are currently assigned?")
     type_3_teams_assigned = models.SmallIntegerField("Type 3 Teams Assigned", choices=sorted(WA_TYPE_3_TEAMS), blank=False,
                                                      help_text="How many Washington Type 3 teams are currently assigned?", default=0)
-    # fire statistics
+    
     westside_dnr_responses_count = models.IntegerField("YTD Westside DNR Responses", blank=False)
     westside_dnr_fire_count = models.IntegerField("YTD Westside DNR Fires", blank=False)
     westside_dnr_fire_acres = models.IntegerField("YTD Westside DNR Fire Acres", blank=False)
@@ -116,20 +193,6 @@ class OverviewIntelReport(DateTimeStampMixin):
     intel_report_doc = models.FileField(verbose_name="Intelligence Report", upload_to='intel_docs/', validators=[FileExtensionValidator(allowed_extensions=['pdf'])], help_text="This will only accept PDF files!")
     fire_weather_doc = models.FileField(verbose_name="Fire Weather Report", upload_to='intel_docs/', validators=[FileExtensionValidator(allowed_extensions=['pdf'])], help_text="This will only accept PDF files!")
     fuels_danger_report_doc = models.FileField(verbose_name="Fuels/Fire Danger Report", upload_to='intel_docs/', validators=[FileExtensionValidator(allowed_extensions=['pdf'])], help_text="This will only accept PDF files!")
-
-    def get_that_egp_token():
-        agol_token_url = 'https://egp.nwcg.gov/arcgis/tokens'
-        referer = 'http://dnr.wa.gov'
-        TOKEN_CREDENTIALS_PAYLOAD = {
-            'client': 'referer',
-            'f': 'json',
-            'referer': referer,
-            'username': settings.EGP_USERNAME,
-            'password': settings.EGP_PASS_ME_A_WORD,
-            'expiration': 60,
-        }
-        r = requests.post(agol_token_url, params=TOKEN_CREDENTIALS_PAYLOAD)
-        return r.json()['token']
 
     class Meta:
         verbose_name = 'Overview Intel Report'

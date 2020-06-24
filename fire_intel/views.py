@@ -1,5 +1,6 @@
 from django.http import HttpResponse, HttpResponseNotFound
 from django.template import loader
+from django.views.decorators.cache import cache_page
 from datetime import timezone
 from django.http import JsonResponse, Http404
 from django.shortcuts import redirect
@@ -250,6 +251,9 @@ def unsupported_ie(request):
     return HttpResponse(template.render(None, request))
 
 
+# 15 minute cache on the egp-data requests, this is lessen crazy amounts of traffice
+# note: this cache is straight into our DB, could be changed to Redis in the future
+@cache_page(60 * 15)
 def egp_data(request, layer_type, layer_id):
     referer = 'http://dnr.wa.gov'
     WA_ENVELOPE = {

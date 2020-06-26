@@ -149,7 +149,7 @@ $(function() {
         var t = moment.utc(evt.feature.properties['expiration']).local().fromNow();
         var s = moment.utc(evt.feature.properties['issuance']).local().fromNow();
         // This is a ghetto fix until the NWS decides to do things the right way
-        alert_id = 'https://alerts-v2.weather.gov/#/?id=' + evt.feature.properties['url'].split('products/')[1]
+        var alert_id = evt.feature.properties['url']
        
         return L.Util.template(
         "<div class='container rounded-0' style='max-width:375px;margin-top:5px;'>" +

@@ -148,7 +148,7 @@ $(function() {
     NWS_warnings.bindPopup(function(evt) {
         var t = moment.utc(evt.feature.properties['expiration']).local().fromNow();
         var s = moment.utc(evt.feature.properties['issuance']).local().fromNow();
-        alert_id = evt.feature.properties['url']
+        var alert_id = evt.feature.properties['url']
        
         return L.Util.template(
         "<div class='container rounded-0' style='max-width:375px;margin-top:5px;'>" +

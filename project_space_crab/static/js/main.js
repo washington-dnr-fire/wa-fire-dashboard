@@ -280,6 +280,17 @@ $(function() {
 
     )});
 
+    // TEMPORARY - 4th of July Hotspots
+    var july4th_hotspots = L.esri.featureLayer({
+        url: "https://services.arcgis.com/4x406oNViizbGo13/arcgis/rest/services/july_4th_responses_hotspots/FeatureServer/0",
+        pane: "overlays",
+        style: function (feature) {
+            return {
+                fillOpacity: '0.5',
+            };
+        },
+    });
+
     // NWCC daily fires icon
     var fireIcon = L.icon({
         iconUrl: "../../../static/images/Flames_Large.svg",
@@ -859,6 +870,9 @@ $(function() {
                     },
                     {
                         label: 'IFPLs', layer: ifpl
+                    },
+                    {
+                        label: '4th of July Hotspots', layer: july4th_hotspots
                     },
                 ],
                 collapsed: true

@@ -148,7 +148,6 @@ $(function() {
     NWS_warnings.bindPopup(function(evt) {
         var t = moment.utc(evt.feature.properties['expiration']).local().fromNow();
         var s = moment.utc(evt.feature.properties['issuance']).local().fromNow();
-        // This is a ghetto fix until the NWS decides to do things the right way
         var alert_id = evt.feature.properties['url']
        
         return L.Util.template(
@@ -280,6 +279,17 @@ $(function() {
         "</div>", featureCollection.features[0].properties 
 
     )});
+
+    // TEMPORARY - 4th of July Hotspots
+    var july4th_hotspots = L.esri.featureLayer({
+        url: "https://services.arcgis.com/4x406oNViizbGo13/arcgis/rest/services/july_4th_responses_hotspots/FeatureServer/0",
+        pane: "overlays",
+        style: function (feature) {
+            return {
+                fillOpacity: '0.5',
+            };
+        },
+    });
 
     // NWCC daily fires icon
     var fireIcon = L.icon({
@@ -860,6 +870,9 @@ $(function() {
                     },
                     {
                         label: 'IFPLs', layer: ifpl
+                    },
+                    {
+                        label: '4th of July Hotspots', layer: july4th_hotspots
                     },
                 ],
                 collapsed: true

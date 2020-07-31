@@ -127,7 +127,7 @@ $(function() {
         $('#dnrfires48').css('backgroundColor', '#218c71');
     } else if(8 <= $('#dnrfires48_id').text() && $('#dnrfires48_id').text() <= 18){
         $('#dnrfires48').css('backgroundColor', '#F1B34D');
-    } else if($('#dnrfires48_id').text() > 19 ){
+    } else if($('#dnrfires48_id').text() >= 19 ){
         $('#dnrfires48').css('backgroundColor', '#CA304B');
     }
 

@@ -790,7 +790,7 @@ $(function() {
         center: [home.lat, home.lng],
         zoom: home.zoom,
         minZoom: 6,
-        layers: [counties, NWS_warnings, daily_fires, sit209_fires, wildcad_fires],
+        layers: [counties, NWS_warnings, sit209_fires, wildcad_fires],
         attributionControl: false,
         cursor: false
     });

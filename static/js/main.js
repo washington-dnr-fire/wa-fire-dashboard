@@ -1031,7 +1031,7 @@ $(function() {
                     plugins: {
                         datalabels: { 
                             display: function(context) {
-                                return context.dataset.data[context.dataIndex] >= 10; // or >= 1 or ...
+                                return context.dataset.data[context.dataIndex] >= 15; // or >= 1 or ...
                              },
                             color: '#000000',
                             font:{

@@ -5,7 +5,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('', views.season_end, name='index'),
     path('home', views.index, name='home'),
     path('profile', views.profile, name='profile'),
     path('egp_data/<str:layer_type>/<int:layer_id>', views.egp_data, name="egp_data"),

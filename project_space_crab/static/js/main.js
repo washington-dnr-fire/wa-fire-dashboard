@@ -972,7 +972,7 @@ $(function() {
             var fires = []
             var ac_dict = {}
             for (i in results.features){
-                if (results.features[i].attributes.PROTECTION_TYPE != 'DNR Assist Other Agency'){
+                if ((results.features[i].attributes.PROTECTION_TYPE != 'DNR Assist Other Agency' && results.features[i].attributes.FIREEVNT_CLASS_LABEL_NM =='Classified')){
                     month = moment(results.features[i].attributes.START_DT).format('MMMM')
                     prot_type = results.features[i].attributes.PROTECTION_TYPE
                     acres = results.features[i].attributes.ACRES_BURNED

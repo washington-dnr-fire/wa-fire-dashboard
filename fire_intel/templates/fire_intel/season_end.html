@@ -4,30 +4,63 @@
 
 
 <style>
-html, body{
-    height: 100%;
-}
+    html,
+    body {
+        height: 100%;
+    }
 </style>
 <div class="container-fluid" style="min-height: 100%">
-<div class="row">
-    <div class="col-1 dnr-blue-bg" style="min-height:100vh">
-    </div>
-    <div class="col-9 h-100 text-left text-dark align-middle mt-4">
-        <img class="img-responsive d-inline-block" src="{%  static '/images/em_dnr_logo_wildfire.png' %}" alt="DNR Logo" style="max-height: 60px; padding: 0; margin:0;"><h5 class="d-inline-block font-weight-bold">The Fire Season has ended and this site will no longer be updated!</h5>
-        <hr class="login-line">
-        <p class="text-muted small ml-4">It is no longer fire season and this site will not be updated until the Spring time. Contact <a href="mailto:sarah.krock@dnr.wa.gov?subject=[MORE INFO] DNR Fire Dashboard">the WA DNR Fire Intel team</a> for more information.</a></p>
-        <p class="d-inline-block ml-4 font-weight-bold">You can still use the map for situational awareness, but it will not reflect current numbers!  &nbsp;</p>  
-        <br> 
-        <hr>
-        <p class="ml-4">
-            <button type="button" class="btn btn-sm border-0 text-white btn-secondary" style="padding:5px 10px;" onclick="location.href='{% url 'home' %}'"><i class="fas fa-chevron-left"></i>&nbsp;&nbsp;Back to the map</button>
-        </p>
+    <div class="row">
+        <div class="col-1 dnr-blue-bg" style="min-height:100vh">
+        </div>
+        <div class="col-9 h-100 text-left text-dark align-middle mt-4">
+            <img class="img-responsive d-inline-block" src="{%  static '/images/em_dnr_logo_wildfire.png' %}"
+                alt="DNR Logo" style="max-height: 60px; padding: 0; margin:0;">
+            <h5 class="d-inline-block font-weight-bold">The Fire Season has ended and this site will no longer be
+                updated!</h5>
+            <hr class="login-line">
+            <p class="text-muted small ml-4">While fire activity has picked up slightly, fire season is not in full
+                swing. We will start maintaining much of this site on May 1st, 2021! </p>
+            <p class="d-inline-block ml-4"><b>You can still use the map for situational awareness regarding current fire
+                    locations, lightning, rain forecasting and the like, but it will not reflect current statistics.</b>
+                Contact <a href="mailto:sarah.krock@dnr.wa.gov?subject=[MORE INFO] DNR Fire Dashboard">the WA DNR Fire
+                    Intel team</a> for more information.</a> &nbsp;</p>
+            <br>
+            <hr>
+            <p class="ml-4">
+                <button type="button" class="btn btn-sm border-0 text-white btn-secondary" style="padding:5px 10px;"
+                    onclick="location.href='{% url 'home' %}'"><i class="fas fa-chevron-left"></i>&nbsp;&nbsp;Back to
+                    the map</button>
+            </p>
+            <br>
+            <div class="card bg-light">
+                <div class="card-header font-weight-bold"><i class="fas fa-cloud-sun">&nbsp;</i>IMPORTANT SEASONAL INFORMATION</div>
+                    <div class="card-body small">
+                        <p>Spring is considered the time of year where people start the process of cleaning
+                        up after winter storms, creating fire safe zones around their homes, and dispose or burn
+                        debris.<b><em> Did you know that last year 80% of DNR’s statistical fires were caused by
+                                humans?</em></b> &nbsp;Did you know that last year <b><em>33% of human caused fires are
+                                associated with debris burning?</b></em>
+                        </p>
+                        <p class="font-weight-bold"><u>Tips for burning safely: </u></p>
+                        <ol>
+                            <li>Plan on burning when fire risk is at its lowest (usually late fall and winter).</li>
+                            <li>Fire can spread any time of year, so only burn when weather conditions are favorable (low winds, high humidity, low temperature). <em>Do not burn on windy days</em></li>
+                            <li>Check before you do any burning.   <em>Do you have to have a permit?  Are there restrictions in your town that don’t allow for any burning, regardless of how small your pile is?</em></li>
+                            <li>Always have water and tools available in case your debris pile gets out of control.</li>
+                            <li>Clear an area around your debris pile of at least 10 feet to prevent it from escaping.  <em>Keep piles away from powerlines, fuel tanks, and structures!</em></li>
+                            <li>Keep debris piles small, feeding additional debris only when the pile has burned down to a smaller footprint.</li>
+                            <li>Do not leave debris burning unattended. <em>Make sure it is DEAD OUT before you leave the site.</em></li>
+                        </ol>
+                        <p>For more information regarding DNR burn permits, see <a href="https://www.dnr.wa.gov/programs-and-services/wildfire/outdoor-burning/burn-permits" target="blank">https://www.dnr.wa.gov/programs-and-services/wildfire/outdoor-burning/burn-permits.</a> Otherwise, contact your local fire authority.</p>
+                    </div>
+                </div>
+                <br>
+            </div>
 
+            <div class="col-2 h-100">
+            </div>
+        </div>
     </div>
 
-    <div class="col-2 h-100">
-    </div>
-    </div>
-</div>
-
-{% endblock %}
+    {% endblock %}

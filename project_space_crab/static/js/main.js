@@ -967,7 +967,7 @@ $(function() {
     $.getJSON({ 
         type: "GET",
         async:true,
-        url: 'https://gis.dnr.wa.gov/site3/rest/services/Public_Wildfire/WADNR_PUBLIC_WD_WildFire_Data/MapServer/2/query?where=START_DT+%3E+DATE+%27' + defaultStart + '%27&outSR=4326&outFields=*&returnGeometry=false&f=pjson', 
+        url: 'https://gis.dnr.wa.gov/site3/rest/services/Public_Wildfire/WADNR_PUBLIC_WD_WildFire_Data/MapServer/2/query?where=START_DT+%3E+DATE+%27' + defaultStart + '%27&FIREEVNT_CLASS_LABEL_NM%3D%27Classified%27&PROTECTION_TYPE<>%27DNR+Assist+Other+Agency%27&outSR=4326&outFields=*&returnGeometry=false&f=pjson', 
         success: function(results) { 
             var fires = []
             var ac_dict = {}
@@ -1009,7 +1009,6 @@ $(function() {
                 }],
                 labels: Object.keys(causes)
             };
-
             var ctx = $('#chart1');
             var myChart = new Chart(ctx, {
                 type: 'doughnut',

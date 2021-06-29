@@ -967,18 +967,18 @@ $(function() {
     $.getJSON({ 
         type: "GET",
         async:true,
-        url: 'https://gis.dnr.wa.gov/site3/rest/services/Public_Wildfire/WADNR_PUBLIC_WD_WildFire_Data/MapServer/2/query?where=START_DT+%3E+DATE+%27' + defaultStart + '%27&FIREEVNT_CLASS_LABEL_NM%3D%27Classified%27&PROTECTION_TYPE<>%27DNR+Assist+Other+Agency%27&outSR=4326&outFields=*&returnGeometry=false&f=pjson', 
+        url: 'https://gis.dnr.wa.gov/site3/rest/services/Public_Wildfire/WADNR_PUBLIC_WD_WildFire_Data/MapServer/2/query?where=DSCVR_DT+%3E+DATE+%27' + defaultStart + '%27&FIREEVNT_CLASS_LABEL_NM%3D%27Classified%27&PROTECTION_TYPE<>%27DNR+Assist+Other+Agency%27&outSR=4326&outFields=*&returnGeometry=false&f=pjson', 
         success: function(results) { 
             var fires = []
             var ac_dict = {}
             for (i in results.features){
                 if ((results.features[i].attributes.PROTECTION_TYPE != 'DNR Assist Other Agency' && results.features[i].attributes.FIREEVNT_CLASS_LABEL_NM =='Classified')){
-                    month = moment(results.features[i].attributes.START_DT).format('MMMM')
+                    month = moment(results.features[i].attributes.DSCVR_DT).format('MMMM')
                     prot_type = results.features[i].attributes.PROTECTION_TYPE
                     acres = results.features[i].attributes.ACRES_BURNED
                     county = results.features[i].attributes.COUNTY_LABEL_NM
                     cause = results.features[i].attributes.FIREGCAUSE_LABEL_NM
-                    date_delta = moment().diff(moment(results.features[i].attributes.START_DT), 'days')
+                    date_delta = moment().diff(moment(results.features[i].attributes.DSCVR_DT), 'days')
                     fires.push([month, prot_type, acres, county, cause, date_delta])
                     if(!ac_dict[month]){
                         ac_dict[month]=[];

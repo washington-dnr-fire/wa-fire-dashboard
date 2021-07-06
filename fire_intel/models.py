@@ -208,12 +208,12 @@ class AviationIntelReport(DateTimeStampMixin):
     westside_rotors = models.SmallIntegerField("Westside Helicopters", blank=False, validators=[MinValueValidator(0), MaxValueValidator(100)])
     westside_firebosses = models.SmallIntegerField("Westside SEATs", blank=False,
                                                    validators=[MinValueValidator(0), MaxValueValidator(100)])
-    westside_atgs = models.SmallIntegerField("Westside ATGS", blank=False, validators=[MinValueValidator(0), MaxValueValidator(100)])
+    westside_atgs = models.SmallIntegerField("Westside Air Attack/Recon", blank=False, validators=[MinValueValidator(0), MaxValueValidator(100)])
 
     eastside_rotors = models.SmallIntegerField("Eastside Helicopters", blank=False, validators=[MinValueValidator(0), MaxValueValidator(100)])
     eastside_firebosses = models.SmallIntegerField("Eastside SEATs", blank=False,
                                                    validators=[MinValueValidator(0), MaxValueValidator(100)])
-    eastside_atgs = models.SmallIntegerField("Eastside ATGS", blank=False, validators=[MinValueValidator(0), MaxValueValidator(100)])
+    eastside_atgs = models.SmallIntegerField("Eastside Air Attack/Recon", blank=False, validators=[MinValueValidator(0), MaxValueValidator(100)])
 
     in_region_vlat = models.SmallIntegerField("In Region VLATs", blank=False, validators=[MinValueValidator(0), MaxValueValidator(100)])
     in_region_lat = models.SmallIntegerField("In Region LATs", blank=False, validators=[MinValueValidator(0), MaxValueValidator(100)])

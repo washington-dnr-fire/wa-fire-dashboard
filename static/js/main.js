@@ -595,6 +595,116 @@ $(function() {
     var sit209_fires = L.layerGroup([large_fires, large_fires_other]);
     var wildcad_fires = L.layerGroup([emerging_incidents_less24,emerging_incidents_greater24]);
 
+    // DNR IFPLs
+    var fire_perimeters = L.esri.featureLayer({
+        url: "https://services9.arcgis.com/RHVPKKiFTONKtxq3/arcgis/rest/services/USA_Wildfires_v1/FeatureServer/1",
+        // layers: [0],
+        pane: "overlays",
+        opacity: 0.7,
+    });
+
+    // Fire Perimeters popup template
+    fire_perimeters.bindPopup(function(evt) {
+        var t = moment(evt.feature.properties.CreateDate).local().fromNow();
+        var current_date = moment(evt.feature.properties.DateCurrent).local().format('MMMM Do YYYY, h:mm:ss a');
+        var acres = evt.feature.properties.GISAcres.toFixed(1).toString()
+        return L.Util.template(
+        "<div class='container rounded-0' style='max-width:375px;margin-top:5px;'>" +
+        "<div class='row'>" +
+        "<div class='col-xs-12' style='padding:0;'>" +
+        "<span style='text-align: center;'>{FeatureCategory}</span>" +
+        "</div>" + // col
+        "</div>" + // row
+        "<div class='row'>" +
+        "<div class='col-xs-12' style='padding:0;'>" +
+            "<div class='table-responsive'>" +
+                "<table class='table table-sm' style='font-size: 1em; margin-bottom: 0;'>" +
+                    "<thead>" +
+                        "<tr>" +
+                            "<th colspan='4' class='mx-0 px-0' style='font-size: 2em; font-weight: 700;color: #003d6b; border-top: none;'>" + titleCase(evt.feature.properties.IncidentName) + "</th>" +
+                        "</tr>" +
+                    "</thead>" +
+                    "<tbody>" +
+                    "<tr>" +
+                    "<td class='mx-0 px-0' style='font-weight: 700;'>Current as of</td>" +
+                    "<td class='text-muted' colspan='3'>" + current_date + "</td>" +
+                    "</tr>" +
+                        "<tr>" +
+                            "<td class='mx-0 px-0' style='font-weight: 700;'>Perimeter Created</td>" +
+                            "<td class='text-muted'>" + t + "</td>" +
+                            "<td class='mx-0 px-0' style='font-weight: 700;'>Acres</td>" +
+                            "<td class='text-muted'>"+ acres +"</td>" +
+                        "</tr>" +
+
+                    "</tbody>" +
+                "</table>" + //table
+            "</div>" + //responsive table
+            "<span class='text-muted'><small>Source: <a href='https://data-nifc.opendata.arcgis.com/datasets/wfigs-2021-wildland-fire-perimeters-to-date' target='_blank'>NIFC National Incident Feature Service</a></small></span>" +
+        "</div>" + // col
+        "</div>" + // row
+        "</div>", evt.feature.properties 
+
+    )});
+
+    // Negative polarity lightning icon
+    var nationalFireIcon = L.icon({
+        iconUrl: "../../../static/images/wildfire.png",
+        iconSize: [15, 15], // size of the icon
+        });
+
+    var fire_locations = L.esri.featureLayer({
+        url: "https://services9.arcgis.com/RHVPKKiFTONKtxq3/arcgis/rest/services/USA_Wildfires_v1/FeatureServer/0",
+        useCors: false,
+        ignoreRenderer: true,
+        pointToLayer: function (feature, latlng) {
+            return L.marker(latlng, {icon: nationalFireIcon});
+        },
+    });
+        // Fire Perimeters popup template
+        fire_locations.bindPopup(function(evt) {
+            var lat = evt.feature.geometry.coordinates[1].toFixed(3);
+            var lng = evt.feature.geometry.coordinates[0].toFixed(3);
+            var t = moment(evt.feature.properties.FireDiscoveryDateTime).local().fromNow();
+            return L.Util.template(
+                "<div class='container rounded-0' style='max-width:375px;margin-top:5px;'>" +
+                "<div class='row'>" +
+                "<div class='col-xs-12' style='padding:0;'>" +
+                "<span>Current Wildfire Location at " + lat + ', ' + lng + "</span>" +
+                "</div>" + // col
+                "</div>" + // row
+                "<div class='row'>" +
+                    "<div class='col-xs-12' style='padding:0;'>" +
+                        "<div class='table-responsive'>" +
+                            "<table class='table table-sm' style='font-size: 1em; margin-bottom: 0;'>" +
+                                "<thead>" +
+                                    "<tr>" +
+                                        "<th colspan='4' class='mx-0 px-0' style='font-size: 2em; font-weight: 700;color: #003d6b; border-top: none;'>" + titleCase(evt.feature.properties.IncidentName) + "</th>" +
+                                    "</tr>" +
+                                "</thead>" +
+                                "<tbody>" +
+                                    "<tr>" +
+                                        "<td class='mx-0 px-0' style='font-weight: 700;'>Incident #</td>" +
+                                        "<td class='text-muted' colspan='3'>{UniqueFireIdentifier}</td>" +
+                                    "</tr>" +
+                                    "<tr>" +
+                                        "<td class='mx-0 px-0' style='font-weight: 700;'>Start</td>" +
+                                        "<td class='text-muted' colspan='3'>" + t + "</td>" +
+                                    "</tr>" +
+                                    "<tr>" +
+                                        "<td class='mx-0 px-0' style='font-weight: 700;'>Acres</td>" +
+                                        "<td class='text-muted'>{DailyAcres}</td>" +
+                                        "<td class='mx-0 px-0' style='font-weight: 700;'>Cause</td>" +
+                                        "<td class='text-muted'>{FireCause}</td>" +
+    
+                                    "</tr>" +
+                                "</tbody>" +
+                            "</table>" + //table
+                        "</div>" + //responsive table
+                        "<span class='text-muted'><small>Source: <a href='https://data-nifc.opendata.arcgis.com/datasets/wfigs-current-wildland-fire-locations' target='_blank'>NIFC Open Data/IRWIN</a></small></span>" +
+                    "</div>" + // col
+                "</div>" + // row
+            "</div>", evt.feature.properties 
+        )});
 
     // MODIS Satellite Detections
     var modis_hotspot_centroids = new L.GeoJSON.AJAX(location.origin + "/egp_data/hotspots/0",{
@@ -855,6 +965,12 @@ $(function() {
                 },
                 {
                     label: 'WildCAD Fires', layer: wildcad_fires
+                },
+                {
+                    label: 'National Current Fire Perimeters (NIFC 2021)', layer: fire_perimeters
+                },
+                {
+                    label: 'National Current Fire Locations (NIFC 2021)', layer: fire_locations
                 },
                 {
                     label: 'Satellite Hotspots', layer: satellite_detects
